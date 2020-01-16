@@ -57,24 +57,42 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
 
 		std::string fileName = "Blueberry.jpg";
 
 		
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 35, 35);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
+		float shrinkX = tempSpr.GetWidth() / 2.f - 1;
+		float shrinkY = tempSpr.GetWidth() / 1.f + 14;
 	
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+
+		tempDef.type = b2_dynamicBody;
+		tempDef.position.Set(float32(0.f), float32(0.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempPhsBody = PhysicsBody(tempBody, 10.f, vec2(0.f, 0.f), false);
+
+
+		tempPhsBody.SetFriction(0.15f);
+		tempPhsBody.SetMaxVelo(85.f);
+		tempPhsBody.SetGravity(false);
 
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blueberry");
 
-		m_player = entity;
+		m_blueberry = entity;
 	}
 
 

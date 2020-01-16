@@ -12,6 +12,6 @@ public:
 
 private:
 	int m_background;
-	int m_player;
+	int m_blueberry;
 };
 
