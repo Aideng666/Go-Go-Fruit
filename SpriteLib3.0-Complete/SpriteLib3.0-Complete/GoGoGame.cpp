@@ -47,6 +47,36 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		m_background = entity;
 	}
 
+	//Blueberry
+	{
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::SetIsMainPlayer(entity, true);
+		EntityIdentifier::MainPlayer(entity);
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "Blueberry.jpg";
+
+		
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 35, 35);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+
+	
+
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Blueberry");
+
+		m_player = entity;
+	}
+
 
 
 

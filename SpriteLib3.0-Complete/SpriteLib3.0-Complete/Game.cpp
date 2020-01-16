@@ -203,9 +203,25 @@ void Game::GamepadTrigger(XInputController * con)
 
 void Game::KeyboardHold()
 {
-	//Active scene now captures this input and can use it
-	//Look at base Scene class for more info.
-	m_activeScene->KeyboardHold();
+	vec3 position = m_register->get<Transform>(EntityIdentifier::MainPlayer()).GetPosition();
+	float speed = 100.f;
+
+	if (Input::GetKey(Key::A))
+	{
+		m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(position.x - (speed * Timer::deltaTime));
+	}
+	if (Input::GetKey(Key::S))
+	{
+		m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionY(position.y - (speed * Timer::deltaTime));
+	}
+	if (Input::GetKey(Key::D))
+	{
+		m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(position.x + (speed * Timer::deltaTime));
+	}
+	if (Input::GetKey(Key::W))
+	{
+		m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionY(position.y + (speed * Timer::deltaTime));
+	}
 }
 
 void Game::KeyboardDown()
