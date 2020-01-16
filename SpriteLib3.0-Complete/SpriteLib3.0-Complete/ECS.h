@@ -9,8 +9,6 @@
 #include "Sprite.h"
 #include "AnimationController.h"
 #include "PhysicsBody.h"
-#include "VerticalScroll.h"
-#include "HorizontalScroll.h"
 
 
 class ECS abstract

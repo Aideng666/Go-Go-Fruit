@@ -139,17 +139,6 @@ inline void to_json(nlohmann::json& j, const Scene& scene)
 		//you need to #1 add a static (unique) bit for that class
 		//And then add more if statements after this point
 
-		if (identity & EntityIdentifier::HoriScrollCameraBit())
-		{
-			//Stores the horizontal scrolling camera
-			j[std::to_string(counter)]["HoriScrollCam"] = scene.GetScene()->get<HorizontalScroll>(entity);
-		}
-
-		if (identity & EntityIdentifier::VertScrollCameraBit())
-		{
-			//Stores the vertical scrolling camera
-			j[std::to_string(counter)]["VertScrollCam"] = scene.GetScene()->get<VerticalScroll>(entity);
-		}
 
 		//For each loop increase the counter
 		counter++;
@@ -171,11 +160,6 @@ inline void from_json(const nlohmann::json& j, Scene& scene)
 	//Reference to the registry
 	auto &reg = *scene.GetScene();
 
-	//Is there a horizontal scroll?
-	bool scrollHori = false;
-
-	//Is there a vertical scroll?
-	bool scrollVert = false;
 	
 	//Allows you to create each entity
 	for (unsigned i = 0; i < numEntities; i++)
@@ -271,45 +255,10 @@ inline void from_json(const nlohmann::json& j, Scene& scene)
 			reg.get<PhysicsBody>(entity) = j["Scene"][std::to_string(i)]["PhysicsBody"];
 		}
 
-		//If Identity includes the vertical scrolling camera bit
-			//This means that the entity contains a vertical scrolling camera
-		if (identity & EntityIdentifier::HoriScrollCameraBit())
-		{
-			//Adds vertical scrolling camera to the entity
-			reg.assign<HorizontalScroll>(entity);
-			//Sets the vertical scrolling camera to our saved version
-			reg.get<HorizontalScroll>(entity) = j["Scene"][std::to_string(i)]["HoriScrollCam"];
 
-			scrollHori = true;
-		}
-
-		//If Identity includes the vertical scrolling camera bit
-			//This means that the entity contains a vertical scrolling camera
-		if (identity & EntityIdentifier::VertScrollCameraBit())
-		{
-			//Adds vertical scrolling camera to the entity
-			reg.assign<VerticalScroll>(entity);
-			//Sets the vertical scrolling camera to our saved version
-			reg.get<VerticalScroll>(entity) = j["Scene"][std::to_string(i)]["VertScrollCam"];
-
-			scrollVert = true;
-		}
 	}
 
-	if (scrollHori)
-	{
-		//attaches the vertical scroll to the camera within the entity it's attached to
-		reg.get<HorizontalScroll>(EntityIdentifier::MainCamera()).SetCam(&reg.get<Camera>(EntityIdentifier::MainCamera()));
-		//Makes the camera focus on the MainPlayer
-		reg.get<HorizontalScroll>(EntityIdentifier::MainCamera()).SetFocus(&reg.get<Transform>(EntityIdentifier::MainPlayer()));
-	}
-	if (scrollVert)
-	{
-		//attaches the vertical scroll to the camera within the entity it's attached to
-		reg.get<VerticalScroll>(EntityIdentifier::MainCamera()).SetCam(&reg.get<Camera>(EntityIdentifier::MainCamera()));
-		//Makes the camera focus on the MainPlayer
-		reg.get<VerticalScroll>(EntityIdentifier::MainCamera()).SetFocus(&reg.get<Transform>(EntityIdentifier::MainPlayer()));
-	}
+
 }
 
 #endif // !__TRANSFORMJSON_H__

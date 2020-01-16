@@ -78,9 +78,6 @@
     <ClInclude Include="GreyscaleEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HorizontalScroll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -150,9 +147,6 @@
     <ClInclude Include="VertexManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VerticalScroll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VignetteEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -219,9 +213,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GreyscaleEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HorizontalScroll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
@@ -294,9 +285,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VertexManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VerticalScroll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VignetteEffect.cpp">

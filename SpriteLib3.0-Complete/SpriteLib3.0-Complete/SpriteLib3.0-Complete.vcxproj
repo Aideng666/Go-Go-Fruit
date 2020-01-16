@@ -150,7 +150,6 @@
     <ClInclude Include="GoGoGame.h" />
     <ClInclude Include="GrainEffect.h" />
     <ClInclude Include="GreyscaleEffect.h" />
-    <ClInclude Include="HorizontalScroll.h" />
     <ClInclude Include="include\imgui\imconfig.h" />
     <ClInclude Include="include\imgui\imgui.h" />
     <ClInclude Include="include\imgui\imgui_impl.h" />
@@ -181,7 +180,6 @@
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="VertexManager.h" />
-    <ClInclude Include="VerticalScroll.h" />
     <ClInclude Include="VignetteEffect.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="Xinput.h" />
@@ -201,7 +199,6 @@
     <ClCompile Include="GoGoGame.cpp" />
     <ClCompile Include="GrainEffect.cpp" />
     <ClCompile Include="GreyscaleEffect.cpp" />
-    <ClCompile Include="HorizontalScroll.cpp" />
     <ClCompile Include="include\imgui\imgui.cpp" />
     <ClCompile Include="include\imgui\imgui_demo.cpp" />
     <ClCompile Include="include\imgui\imgui_draw.cpp" />
@@ -231,7 +228,6 @@
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="VertexManager.cpp" />
-    <ClCompile Include="VerticalScroll.cpp" />
     <ClCompile Include="VignetteEffect.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="XInput.cpp" />

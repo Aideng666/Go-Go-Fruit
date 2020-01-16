@@ -6,7 +6,6 @@
 #include "Shader.h"
 #include "VertexManager.h"
 #include "EffectManager.h"
-#include "VerticalScroll.h"
 
 //A system utilizing ECS, the namespace just holds all the different functions
 namespace RenderingSystem
