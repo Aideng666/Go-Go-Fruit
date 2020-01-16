@@ -2,6 +2,7 @@
 #define __GAME_H__
 
 #include "BackEnd.h"
+#include "GoGoGame.h"
 
 //Our main class for running our game
 class Game
@@ -67,6 +68,11 @@ private:
 	//The window
 	Window *m_window = nullptr;
 	
+	//Scene name
+	std::string m_name;
+	//Clear colour for clearing windows
+	vec4 m_clearColor;
+
 	//The main register for our ECS
 	entt::registry* m_register = nullptr;
 

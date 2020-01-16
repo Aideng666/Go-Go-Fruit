@@ -162,6 +162,9 @@
     <ClInclude Include="Xinput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GoGoGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\imgui\imgui.cpp">
@@ -303,6 +306,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="XInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GoGoGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

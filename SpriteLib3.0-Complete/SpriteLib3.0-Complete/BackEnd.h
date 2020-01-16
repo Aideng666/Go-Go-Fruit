@@ -26,7 +26,7 @@ public:
 	//Initializes the backend
 	//*Inits GLEW and SDL
 	//*Along with rendering system and 
-	static void InitBackEnd(float windowWidth, float windowHeight);
+	static void InitBackEnd(std::string name);
 	//Initializes GLEW
 	//*Finds all gl functions usable by your system
 	//*Does all other GL setup
@@ -74,6 +74,8 @@ public:
 	static ClickEvent GetClickEvent();
 	//Wheel Event
 	static WheelEvent GetWheelEvent();
+
+	static void GetDesktopResolution(int& horizontal, int& vertical);
 
 	//Setters
 	//Window Width

@@ -10,17 +10,17 @@ MotionEvent BackEnd::m_motion;
 ClickEvent BackEnd::m_click;
 WheelEvent BackEnd::m_wheel;
 
-void BackEnd::InitBackEnd(float windowWidth, float windowHeight)
+void BackEnd::InitBackEnd(std::string name)
 {
 	//Initializes SDL
 	InitSDL();
 
 	//Sets the backend window width, height, and aspect ratio
-	m_windowWidth = (GLsizei)windowWidth;
-	m_windowHeight = (GLsizei)windowHeight;
+	GetDesktopResolution(m_windowWidth, m_windowHeight);
+
 	m_aspectRatio = float(m_windowWidth) / float(m_windowHeight);
 	//Creates new window with name of the scene as a caption
-	m_window = new Window("", BackEnd::GetWindowWidth(), BackEnd::GetWindowHeight());
+	m_window = new Window(name, BackEnd::GetWindowWidth(), BackEnd::GetWindowHeight());
 
 	//Initializes GLEW
 	InitGLEW();
@@ -225,6 +225,21 @@ ClickEvent BackEnd::GetClickEvent()
 WheelEvent BackEnd::GetWheelEvent()
 {
 	return m_wheel;
+}
+
+void BackEnd::GetDesktopResolution(int& horizontal, int& vertical)
+{
+
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	// The top left corner will have coordinates (0,0)
+	// and the bottom right corner will have coordinates
+	// (horizontal, vertical)
+	horizontal = desktop.right;
+	vertical = desktop.bottom;
 }
 
 void BackEnd::SetWindowWidth(GLsizei windowWidth)

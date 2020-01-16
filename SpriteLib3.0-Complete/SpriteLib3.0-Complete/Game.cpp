@@ -27,26 +27,26 @@ Game::~Game()
 
 void Game::InitGame()
 {
+
+	std::string gameName = "Level 1";
+
+
+	m_name = gameName;
+	m_clearColor = vec4(0.f, 0.f, 0.f, 1.f);
+
 	//Initializes the backend with window width and height values
-	BackEnd::InitBackEnd(719.f, 436.f);
+	BackEnd::InitBackEnd(m_name);
 
 	//Grabs the initialized window
 	m_window = BackEnd::GetWindow();
 
 	//Creates a new scene.
-	//Replace this with your own scene.
-	m_scenes.push_back(new Scene("Default Scene"));
+	m_scenes.push_back(new GoGoGame(gameName));
 
 	//Sets active scene reference to our scene
+	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[0]->GetScene();
 	m_activeScene = m_scenes[0];
-
-	m_activeScene->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-
-	//Sets m_register to point to the register in the active scene
-	m_register = m_activeScene->GetScene();
-
-	BackEnd::SetWindowName(m_activeScene->GetName());
-
 	PhysicsSystem::Init();
 }
 
@@ -210,9 +210,10 @@ void Game::KeyboardHold()
 
 void Game::KeyboardDown()
 {
-	//Active scene now captures this input and can use it
-	//Look at base Scene class for more info.
-	m_activeScene->KeyboardDown();
+	if (Input::GetKeyDown(Key::Escape))
+	{
+		exit(1);
+	}
 }
 
 void Game::KeyboardUp()
