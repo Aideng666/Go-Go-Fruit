@@ -27,9 +27,8 @@ Game::~Game()
 
 void Game::InitGame()
 {
-
 	std::string gameName = "Level 1";
-
+	std::string menuName = "Menu";
 
 	m_name = gameName;
 	m_clearColor = vec4(0.f, 0.f, 0.f, 1.f);
@@ -42,6 +41,7 @@ void Game::InitGame()
 
 	//Creates a new scene.
 	m_scenes.push_back(new GoGoGame(gameName));
+	m_scenes.push_back(new GoGoMenu(menuName));
 
 	//Sets active scene reference to our scene
 	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
@@ -208,7 +208,6 @@ void Game::KeyboardHold()
 	GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto water = scene->GetWatermelon();
 	auto blue = scene->GetBlueberry();
-
 
 	if (Input::GetKey(Key::A))
 	{

@@ -3,6 +3,7 @@
 
 #include "BackEnd.h"
 #include "GoGoGame.h"
+#include "GoGoMenu.h"
 
 //Our main class for running our game
 class Game
