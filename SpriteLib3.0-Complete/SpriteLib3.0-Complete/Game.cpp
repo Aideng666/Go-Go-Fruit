@@ -203,24 +203,44 @@ void Game::GamepadTrigger(XInputController * con)
 
 void Game::KeyboardHold()
 {
-	vec3 position = m_register->get<Transform>(EntityIdentifier::MainPlayer()).GetPosition();
-	float speed = 100.f;
+	vec3 forceX = vec3(100.f, 0.f, 0.f);
+	vec3 forceY = vec3(0.f, 100.f, 0.f);
+	GoGoGame* scene = (GoGoGame*)m_activeScene;
+	auto water = scene->GetWatermelon();
+	auto blue = scene->GetBlueberry();
+
 
 	if (Input::GetKey(Key::A))
 	{
-		m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(position.x - (speed * Timer::deltaTime));
+		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX);
 	}
 	if (Input::GetKey(Key::S))
 	{
-		m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionY(position.y - (speed * Timer::deltaTime));
+		m_register->get<PhysicsBody>(blue).ApplyForce(-forceY);
 	}
 	if (Input::GetKey(Key::D))
 	{
-		m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(position.x + (speed * Timer::deltaTime));
+		m_register->get<PhysicsBody>(blue).ApplyForce(forceX);
 	}
 	if (Input::GetKey(Key::W))
 	{
-		m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionY(position.y + (speed * Timer::deltaTime));
+		m_register->get<PhysicsBody>(blue).ApplyForce(forceY);
+	}
+	if (Input::GetKey(Key::LeftArrow))
+	{
+		m_register->get<PhysicsBody>(water).ApplyForce(-forceX);
+	}
+	if (Input::GetKey(Key::DownArrow))
+	{
+		m_register->get<PhysicsBody>(water).ApplyForce(-forceY);
+	}
+	if (Input::GetKey(Key::RightArrow))
+	{
+		m_register->get<PhysicsBody>(water).ApplyForce(forceX);
+	}
+	if (Input::GetKey(Key::UpArrow))
+	{
+		m_register->get<PhysicsBody>(water).ApplyForce(forceY);
 	}
 }
 
