@@ -249,6 +249,17 @@ void Game::KeyboardDown()
 	{
 		exit(1);
 	}
+	if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
+	{
+
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[1]->GetScene();
+		m_activeScene = m_scenes[1];
+	}
 }
 
 void Game::KeyboardUp()
