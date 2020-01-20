@@ -40,8 +40,8 @@ void Game::InitGame()
 	m_window = BackEnd::GetWindow();
 
 	//Creates a new scene.
-	m_scenes.push_back(new GoGoGame(gameName));
 	m_scenes.push_back(new GoGoMenu(menuName));
+	m_scenes.push_back(new GoGoGame(gameName));
 
 	//Sets active scene reference to our scene
 	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
@@ -211,35 +211,35 @@ void Game::KeyboardHold()
 
 	if (Input::GetKey(Key::A))
 	{
-		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX);
+		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX * Timer::deltaTime * 500);
 	}
 	if (Input::GetKey(Key::S))
 	{
-		m_register->get<PhysicsBody>(blue).ApplyForce(-forceY);
+		m_register->get<PhysicsBody>(blue).ApplyForce(-forceY * Timer::deltaTime * 500);
 	}
 	if (Input::GetKey(Key::D))
 	{
-		m_register->get<PhysicsBody>(blue).ApplyForce(forceX);
+		m_register->get<PhysicsBody>(blue).ApplyForce(forceX * Timer::deltaTime * 500);
 	}
 	if (Input::GetKey(Key::W))
 	{
-		m_register->get<PhysicsBody>(blue).ApplyForce(forceY);
+		m_register->get<PhysicsBody>(blue).ApplyForce(forceY * Timer::deltaTime * 500);
 	}
 	if (Input::GetKey(Key::LeftArrow))
 	{
-		m_register->get<PhysicsBody>(water).ApplyForce(-forceX);
+		m_register->get<PhysicsBody>(water).ApplyForce(-forceX * Timer::deltaTime * 500);
 	}
 	if (Input::GetKey(Key::DownArrow))
 	{
-		m_register->get<PhysicsBody>(water).ApplyForce(-forceY);
+		m_register->get<PhysicsBody>(water).ApplyForce(-forceY * Timer::deltaTime * 500);
 	}
 	if (Input::GetKey(Key::RightArrow))
 	{
-		m_register->get<PhysicsBody>(water).ApplyForce(forceX);
+		m_register->get<PhysicsBody>(water).ApplyForce(forceX * Timer::deltaTime * 500);
 	}
 	if (Input::GetKey(Key::UpArrow))
 	{
-		m_register->get<PhysicsBody>(water).ApplyForce(forceY);
+		m_register->get<PhysicsBody>(water).ApplyForce(forceY * Timer::deltaTime * 500);
 	}
 }
 
@@ -276,6 +276,7 @@ void Game::KeyboardUp()
 		}
 		m_guiActive = !m_guiActive;
 	}
+	
 	if (Input::GetKeyUp(Key::P))
 	{
 		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());

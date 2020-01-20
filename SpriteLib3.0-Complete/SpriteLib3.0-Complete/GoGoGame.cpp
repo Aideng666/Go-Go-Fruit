@@ -49,9 +49,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 	//Blueberry
 	{
-
 		auto entity = ECS::CreateEntity();
-
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
@@ -59,11 +57,8 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "Blueberry.jpg";
 
-		
-
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -77,16 +72,13 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempDef.type = b2_dynamicBody;
 		tempDef.position.Set(float32(0.f), float32(0.f));
 
-
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempPhsBody = PhysicsBody(tempBody, 10.f, vec2(0.f, 0.f), false);
 
-
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
 		tempPhsBody.SetGravity(false);
-
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blueberry");
@@ -96,9 +88,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 	//Watermelon
 	{
-
 		auto entity = ECS::CreateEntity();
-
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
@@ -106,11 +96,8 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "Watermelon.jpg";
 
-
-
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40, 40);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-75.f, 0.f, 100.f));
-
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -128,7 +115,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 20.f, vec2(0.f, 0.f), false);
 
-
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
 		tempPhsBody.SetGravity(false);
@@ -139,10 +125,38 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		m_watermelon = entity;
 	}
 
+	//Test for Collision Box Drawings
+	{
+		auto entity = ECS::CreateEntity();
 
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
 
+		std::string fileName = "Blue.png";
 
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40, 40);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = tempSpr.GetWidth() / 40.f;
+		float shrinkY = tempSpr.GetWidth() / 40.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_dynamicBody;
+		tempDef.position.Set(float32(100.f), float32(50.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
+			vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Test");
+	}
 }
 
 int GoGoGame::GetBackground()
