@@ -133,9 +133,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "Blue.png";
+		std::string fileName = "Platform.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40, 40);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 100, 15);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -146,16 +146,17 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
-		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(100.f), float32(50.f));
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(100.f), float32(0.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
 			vec2(0.f, 0.f), false);
 
+
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Test");
+		ECS::SetUpIdentifier(entity, bitHolder, "Platform");
 	}
 }
 

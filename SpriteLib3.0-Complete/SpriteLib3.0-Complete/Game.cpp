@@ -203,8 +203,8 @@ void Game::GamepadTrigger(XInputController * con)
 
 void Game::KeyboardHold()
 {
-	vec3 forceX = vec3(1000000.f, 0.f, 0.f);
-	vec3 forceY = vec3(0.f, 1000000.f, 0.f);
+	vec3 forceX = vec3(100000.f, 0.f, 0.f);
+	vec3 forceY = vec3(0.f, 100000.f, 0.f);
 	GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto water = scene->GetWatermelon();
 	auto blue = scene->GetBlueberry();
