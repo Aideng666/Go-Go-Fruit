@@ -211,7 +211,7 @@ void Game::KeyboardHold()
 
 	if (Input::GetKey(Key::A))
 	{
-<<<<<<< Updated upstream
+
 		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX * Timer::deltaTime * 500);
 	}
 	if (Input::GetKey(Key::S))
@@ -241,7 +241,7 @@ void Game::KeyboardHold()
 	if (Input::GetKey(Key::UpArrow))
 	{
 		m_register->get<PhysicsBody>(water).ApplyForce(forceY * Timer::deltaTime * 500);
-=======
+
 		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX * (Timer::deltaTime * 1000));
 		std::cout << Timer::deltaTime << std::endl;
 	}
@@ -272,7 +272,7 @@ void Game::KeyboardHold()
 	if (Input::GetKey(Key::UpArrow))
 	{
 		m_register->get<PhysicsBody>(water).ApplyForce(forceY * (Timer::deltaTime * 1000));
->>>>>>> Stashed changes
+
 	}
 }
 
