@@ -107,13 +107,12 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
-
 		tempDef.type = b2_dynamicBody;
 		tempDef.position.Set(float32(-50.f), float32(-50.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-		tempPhsBody = PhysicsBody(tempBody, 20.f, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, tempSpr.GetWidth() / 2.f, vec2(0.f, 0.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);

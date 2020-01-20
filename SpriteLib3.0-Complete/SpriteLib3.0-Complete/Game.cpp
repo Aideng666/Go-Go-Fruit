@@ -209,7 +209,6 @@ void Game::KeyboardHold()
 	auto water = scene->GetWatermelon();
 	auto blue = scene->GetBlueberry();
 
-	
 	if (Input::GetKey(Key::A))
 	{
 		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX * (Timer::deltaTime));
