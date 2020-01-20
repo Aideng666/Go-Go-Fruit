@@ -203,14 +203,15 @@ void Game::GamepadTrigger(XInputController * con)
 
 void Game::KeyboardHold()
 {
-	vec3 forceX = vec3(100.f, 0.f, 0.f);
-	vec3 forceY = vec3(0.f, 100.f, 0.f);
+	vec3 forceX = vec3(50.f, 0.f, 0.f);
+	vec3 forceY = vec3(0.f, 50.f, 0.f);
 	GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto water = scene->GetWatermelon();
 	auto blue = scene->GetBlueberry();
 
 	if (Input::GetKey(Key::A))
 	{
+<<<<<<< Updated upstream
 		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX * Timer::deltaTime * 500);
 	}
 	if (Input::GetKey(Key::S))
@@ -240,6 +241,38 @@ void Game::KeyboardHold()
 	if (Input::GetKey(Key::UpArrow))
 	{
 		m_register->get<PhysicsBody>(water).ApplyForce(forceY * Timer::deltaTime * 500);
+=======
+		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX * (Timer::deltaTime * 1000));
+		std::cout << Timer::deltaTime << std::endl;
+	}
+	if (Input::GetKey(Key::S))
+	{
+		m_register->get<PhysicsBody>(blue).ApplyForce(-forceY * (Timer::deltaTime * 1000));
+	}
+	if (Input::GetKey(Key::D))
+	{
+		m_register->get<PhysicsBody>(blue).ApplyForce(forceX * (Timer::deltaTime * 1000));
+	}
+	if (Input::GetKey(Key::W))
+	{
+		m_register->get<PhysicsBody>(blue).ApplyForce(forceY * (Timer::deltaTime * 1000));
+	}
+	if (Input::GetKey(Key::LeftArrow))
+	{
+		m_register->get<PhysicsBody>(water).ApplyForce(-forceX * (Timer::deltaTime * 1000));
+	}
+	if (Input::GetKey(Key::DownArrow))
+	{
+		m_register->get<PhysicsBody>(water).ApplyForce(-forceY * (Timer::deltaTime * 1000));
+	}
+	if (Input::GetKey(Key::RightArrow))
+	{
+		m_register->get<PhysicsBody>(water).ApplyForce(forceX * (Timer::deltaTime * 1000));
+	}
+	if (Input::GetKey(Key::UpArrow))
+	{
+		m_register->get<PhysicsBody>(water).ApplyForce(forceY * (Timer::deltaTime * 1000));
+>>>>>>> Stashed changes
 	}
 }
 
