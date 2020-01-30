@@ -74,7 +74,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-		tempPhsBody = PhysicsBody(tempBody, 10.f, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 20.f, 20.f,vec2(0.f, 0.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
@@ -112,7 +112,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-		tempPhsBody = PhysicsBody(tempBody, tempSpr.GetWidth() / 2.f, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, tempSpr.GetWidth(), tempSpr.GetHeight(), vec2(0.f, 0.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
@@ -124,7 +124,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		m_watermelon = entity;
 	}
 
-	//Test for Collision Box Drawings
+	//Platform
 	{
 		auto entity = ECS::CreateEntity();
 
