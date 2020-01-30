@@ -203,8 +203,8 @@ void Game::GamepadTrigger(XInputController * con)
 
 void Game::KeyboardHold()
 {
-	vec3 forceX = vec3(100000.f, 0.f, 0.f);
-	vec3 forceY = vec3(0.f, 100000.f, 0.f);
+	vec3 forceX = vec3(200000.f, 0.f, 0.f);
+	vec3 forceY = vec3(0.f, 200000.f, 0.f);
 	GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto water = scene->GetWatermelon();
 	auto blue = scene->GetBlueberry();
@@ -221,31 +221,29 @@ void Game::KeyboardHold()
 	{
 		m_register->get<PhysicsBody>(blue).ApplyForce(forceX * (Timer::deltaTime));
 	}
-	if (Input::GetKey(Key::W))
-	{
-		m_register->get<PhysicsBody>(blue).ApplyForce(forceY * (Timer::deltaTime));
-	}
+
 	if (Input::GetKey(Key::LeftArrow))
 	{
-		m_register->get<PhysicsBody>(water).ApplyForce(-forceX * (Timer::deltaTime));
+		m_register->get<PhysicsBody>(water).ApplyForce(-forceX * 5 * (Timer::deltaTime));
 	}
 	if (Input::GetKey(Key::DownArrow))
 	{
-		m_register->get<PhysicsBody>(water).ApplyForce(-forceY * (Timer::deltaTime));
+		m_register->get<PhysicsBody>(water).ApplyForce(-forceY * 5 *(Timer::deltaTime));
 	}
 	if (Input::GetKey(Key::RightArrow))
 	{
-		m_register->get<PhysicsBody>(water).ApplyForce(forceX * (Timer::deltaTime));
-	}
-	if (Input::GetKey(Key::UpArrow))
-	{
-		m_register->get<PhysicsBody>(water).ApplyForce(forceY * (Timer::deltaTime));
-
+		m_register->get<PhysicsBody>(water).ApplyForce(forceX * 5 *(Timer::deltaTime));
 	}
 }
 
 void Game::KeyboardDown()
 {
+	vec3 forceX = vec3(200000.f, 0.f, 0.f);
+	vec3 forceY = vec3(0.f, 200000.f, 0.f);
+	GoGoGame* scene = (GoGoGame*)m_activeScene;
+	auto water = scene->GetWatermelon();
+	auto blue = scene->GetBlueberry();
+
 	if (Input::GetKeyDown(Key::Escape))
 	{
 		exit(1);
@@ -260,6 +258,16 @@ void Game::KeyboardDown()
 		m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 		m_register = m_scenes[1]->GetScene();
 		m_activeScene = m_scenes[1];
+	}
+
+	if (Input::GetKeyDown(Key::W))
+	{
+		m_register->get<PhysicsBody>(blue).ApplyForce(forceY * 1.2f);
+	}
+	if (Input::GetKeyDown(Key::UpArrow))
+	{
+		m_register->get<PhysicsBody>(water).ApplyForce(forceY * 2.2f);
+
 	}
 }
 

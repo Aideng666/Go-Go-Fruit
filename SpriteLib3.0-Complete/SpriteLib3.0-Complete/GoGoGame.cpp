@@ -4,7 +4,8 @@
 GoGoGame::GoGoGame(std::string name)
 	: Scene(name)
 {
-
+	m_gravity = b2Vec2(float32(0.f), float32(-1.f));
+	m_physicsWorld->SetGravity(m_gravity);
 }
 
 void GoGoGame::InitScene(float windowWidth, float windowHeight)
@@ -30,22 +31,22 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::SetIsMainCamera(entity, true);
 	}
 
-	//Background Initialization
-	{
-		auto entity = ECS::CreateEntity();
+	////Background Initialization
+	//{
+	//	auto entity = ECS::CreateEntity();
 
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
+	//	ECS::AttachComponent<Sprite>(entity);
+	//	ECS::AttachComponent<Transform>(entity);
 
-		std::string fileName = "TempBack.jpg";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 384, 200);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 50.f));
+	//	std::string fileName = "TempBack.jpg";
+	//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 384, 200);
+	//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 50.f));
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Temp Background");
+	//	unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+	//	ECS::SetUpIdentifier(entity, bitHolder, "Temp Background");
 
-		m_background = entity;
-	}
+	//	m_background = entity;
+	//}
 
 	//Blueberry
 	{

@@ -25,4 +25,10 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::CameraBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Main Menu Camera");
 	}
+
+	//Menu Image
+	{
+
+	}
+
 }
