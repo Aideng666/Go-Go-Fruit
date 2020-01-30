@@ -1,11 +1,11 @@
-#include "GoGoMenu.h"
+#include "GoGoExit.h"
 
-GoGoMenu::GoGoMenu(std::string name)
+GoGoExit::GoGoExit(std::string name)
 	: Scene(name)
 {
 }
 
-void GoGoMenu::InitScene(float windowWidth, float windowHeight)
+void GoGoExit::InitScene(float windowWidth, float windowHeight)
 {
 	m_sceneReg = new entt::registry;
 
@@ -13,7 +13,7 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 
 	float aspectRatio = windowWidth / windowHeight;
 
-	//Main Menu Camera
+	//Exit Camera
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -23,22 +23,22 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Camera>(entity).Orthographic(aspectRatio, temp.x, temp.y, temp.z, temp.w, -100.f, 100.f);
 
 		unsigned int bitHolder = EntityIdentifier::CameraBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Main Menu Camera");
+		ECS::SetUpIdentifier(entity, bitHolder, "Exit Camera");
 	}
 
-	//Menu Image
+	//Exit Image
 	{
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 
-		std::string fileName = "GoGoFruitMenu.png";
+		std::string fileName = "GoGoExit.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 384, 200);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 50.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Go Go Fruit Menu");
+		ECS::SetUpIdentifier(entity, bitHolder, "Go Go Fruit Exit");
 	}
 }

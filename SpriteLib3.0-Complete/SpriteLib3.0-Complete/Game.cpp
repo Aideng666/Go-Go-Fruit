@@ -27,10 +27,13 @@ Game::~Game()
 
 void Game::InitGame()
 {
-	std::string gameName = "Level 1";
 	std::string menuName = "Menu";
+	std::string ruleName = "Rules";
+	std::string levelsName = "Levels";
+	std::string exitName = "Exit";
+	std::string gameName = "Level 1";
 
-	m_name = gameName;
+	m_name = menuName;
 	m_clearColor = vec4(0.f, 0.f, 0.f, 1.f);
 
 	//Initializes the backend with window width and height values
@@ -41,6 +44,10 @@ void Game::InitGame()
 
 	//Creates a new scene.
 	m_scenes.push_back(new GoGoMenu(menuName));
+	m_scenes.push_back(new GoGoRules(ruleName));
+	m_scenes.push_back(new GoGoLevels(levelsName));
+	m_scenes.push_back(new GoGoExit(exitName));
+
 	m_scenes.push_back(new GoGoGame(gameName));
 
 	//Sets active scene reference to our scene
@@ -203,37 +210,42 @@ void Game::GamepadTrigger(XInputController * con)
 
 void Game::KeyboardHold()
 {
-	vec3 forceX = vec3(200000.f, 0.f, 0.f);
-	vec3 forceY = vec3(0.f, 200000.f, 0.f);
-	GoGoGame* scene = (GoGoGame*)m_activeScene;
-	auto water = scene->GetWatermelon();
-	auto blue = scene->GetBlueberry();
+	if (m_activeScene == m_scenes[4])
+	{
+		vec3 forceX = vec3(200000.f, 0.f, 0.f);
+		vec3 forceY = vec3(0.f, 200000.f, 0.f);
+		GoGoGame* scene = (GoGoGame*)m_activeScene;
+		auto water = scene->GetWatermelon();
+		auto blue = scene->GetBlueberry();
 
-	if (Input::GetKey(Key::A))
-	{
-		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX * (Timer::deltaTime));
-	}
-	if (Input::GetKey(Key::S))
-	{
-		m_register->get<PhysicsBody>(blue).ApplyForce(-forceY * (Timer::deltaTime));
-	}
-	if (Input::GetKey(Key::D))
-	{
-		m_register->get<PhysicsBody>(blue).ApplyForce(forceX * (Timer::deltaTime));
+		if (Input::GetKey(Key::A))
+		{
+			m_register->get<PhysicsBody>(blue).ApplyForce(-forceX * (Timer::deltaTime));
+		}
+		if (Input::GetKey(Key::S))
+		{
+			m_register->get<PhysicsBody>(blue).ApplyForce(-forceY * (Timer::deltaTime));
+		}
+		if (Input::GetKey(Key::D))
+		{
+			m_register->get<PhysicsBody>(blue).ApplyForce(forceX * (Timer::deltaTime));
+		}
+
+		if (Input::GetKey(Key::LeftArrow))
+		{
+			m_register->get<PhysicsBody>(water).ApplyForce(-forceX * 5 * (Timer::deltaTime));
+		}
+		if (Input::GetKey(Key::DownArrow))
+		{
+			m_register->get<PhysicsBody>(water).ApplyForce(-forceY * 5 * (Timer::deltaTime));
+		}
+		if (Input::GetKey(Key::RightArrow))
+		{
+			m_register->get<PhysicsBody>(water).ApplyForce(forceX * 5 * (Timer::deltaTime));
+		}
 	}
 
-	if (Input::GetKey(Key::LeftArrow))
-	{
-		m_register->get<PhysicsBody>(water).ApplyForce(-forceX * 5 * (Timer::deltaTime));
-	}
-	if (Input::GetKey(Key::DownArrow))
-	{
-		m_register->get<PhysicsBody>(water).ApplyForce(-forceY * 5 *(Timer::deltaTime));
-	}
-	if (Input::GetKey(Key::RightArrow))
-	{
-		m_register->get<PhysicsBody>(water).ApplyForce(forceX * 5 *(Timer::deltaTime));
-	}
+	
 }
 
 void Game::KeyboardDown()
@@ -248,9 +260,32 @@ void Game::KeyboardDown()
 	{
 		exit(1);
 	}
+
+	//Space on play goes to game
 	if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 	{
+		SceneEditor::ResetEditor();
 
+		m_activeScene->Unload();
+
+		m_scenes[4]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[4]->GetScene();
+		m_activeScene = m_scenes[4];
+	}
+	//Up arrow goes to exit
+	if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[3]->GetScene();
+		m_activeScene = m_scenes[3];
+	}
+	//Down arrow goes to rules
+	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[0])
+	{
 		SceneEditor::ResetEditor();
 
 		m_activeScene->Unload();
@@ -259,15 +294,90 @@ void Game::KeyboardDown()
 		m_register = m_scenes[1]->GetScene();
 		m_activeScene = m_scenes[1];
 	}
-
-	if (Input::GetKeyDown(Key::W))
+	//Up arrow on rules goes to menu
+	else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
 	{
-		m_register->get<PhysicsBody>(blue).ApplyForce(forceY * 1.2f);
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[0]->GetScene();
+		m_activeScene = m_scenes[0];
 	}
-	if (Input::GetKeyDown(Key::UpArrow))
+	//Down arrow on rules goes to levels
+	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
 	{
-		m_register->get<PhysicsBody>(water).ApplyForce(forceY * 2.2f);
+		SceneEditor::ResetEditor();
 
+		m_activeScene->Unload();
+
+		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[2]->GetScene();
+		m_activeScene = m_scenes[2];
+	}
+	//Up arrow on levels goes to rules
+	else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[2])
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[1]->GetScene();
+		m_activeScene = m_scenes[1];
+	}
+	//Down arrow on levels goes to exit
+	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[2])
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[3]->GetScene();
+		m_activeScene = m_scenes[3];
+	}
+	//Up arrow on exit goes to levels
+	else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[3])
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[2]->GetScene();
+		m_activeScene = m_scenes[2];
+	}
+	//Down arrow on exit goes to menu
+	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[3])
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[0]->GetScene();
+		m_activeScene = m_scenes[0];
+	}
+	//Exits the game
+	if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[3])
+	{
+		exit(1);
+	}
+
+	//Jumping
+	if (m_activeScene == m_scenes[4])
+	{
+		if (Input::GetKeyDown(Key::W))
+		{
+			m_register->get<PhysicsBody>(blue).ApplyForce(forceY * 1.2f);
+		}
+		if (Input::GetKeyDown(Key::UpArrow))
+		{
+			m_register->get<PhysicsBody>(water).ApplyForce(forceY * 2.2f);
+
+		}
 	}
 }
 
