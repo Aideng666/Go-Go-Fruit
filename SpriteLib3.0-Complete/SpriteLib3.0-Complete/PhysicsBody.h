@@ -111,6 +111,8 @@ public:
 	//Get whether or not we are currently drawing our physics bodies
 	static bool GetDraw();
 
+	bool GetJump();
+
 	//Setters
 	//Sets the pointer to the box2D body
 	void SetBody(b2Body* body);
@@ -165,6 +167,8 @@ public:
 	//Does the object not move?
 	void SetDynamic(bool isDynamic);
 
+	void SetJump(bool jump);
+
 private:
 	//The actual box2D body
 	b2Body* m_body = nullptr;
@@ -193,6 +197,8 @@ private:
 
 	//Mass of the body
 	float m_mass = 1.f;
+
+	bool jump = true;
 
 	//Body type
 	BodyType m_bodyType = BodyType::CIRCLE;

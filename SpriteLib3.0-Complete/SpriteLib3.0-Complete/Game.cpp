@@ -93,6 +93,8 @@ bool Game::Run()
 
 void Game::Update()
 {
+	
+
 	//Update timer
 	Timer::Update();
 	//Update the backend
@@ -103,6 +105,7 @@ void Game::Update()
 
 	//Updates the active scene
 	m_activeScene->Update();
+
 }
 
 void Game::GUI()
@@ -258,7 +261,12 @@ void Game::KeyboardDown()
 
 	if (Input::GetKeyDown(Key::Escape))
 	{
+
 		exit(1);
+
+		m_register->get<PhysicsBody>(blue).ApplyForce(-forceX * (Timer::deltaTime));
+		std::cout << m_register->get<PhysicsBody>(blue).GetBody()->GetPosition().y;
+
 	}
 
 	//Space on play goes to game
@@ -356,6 +364,7 @@ void Game::KeyboardDown()
 
 		m_activeScene->Unload();
 
+
 		m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 		m_register = m_scenes[0]->GetScene();
 		m_activeScene = m_scenes[0];
@@ -369,15 +378,20 @@ void Game::KeyboardDown()
 	//Jumping
 	if (m_activeScene == m_scenes[4])
 	{
-		if (Input::GetKeyDown(Key::W))
+
+		if (Input::GetKeyDown(Key::W) && m_register->get<PhysicsBody>(blue).GetBody()->GetPosition().y < -89.f)
 		{
 			m_register->get<PhysicsBody>(blue).ApplyForce(forceY * 1.2f);
-		}
-		if (Input::GetKeyDown(Key::UpArrow))
-		{
-			m_register->get<PhysicsBody>(water).ApplyForce(forceY * 2.2f);
+			m_register->get<PhysicsBody>(blue).SetJump(false);
 
 		}
+		if (Input::GetKeyDown(Key::UpArrow) && m_register->get<PhysicsBody>(water).GetBody()->GetPosition().y < -79.f)
+		{
+			m_register->get<PhysicsBody>(water).ApplyForce(forceY * 2.2f);
+			m_register->get<PhysicsBody>(water).SetJump(false);
+
+		}
+
 	}
 }
 

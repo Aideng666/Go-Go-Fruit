@@ -147,6 +147,8 @@ void PhysicsBody::Update(Transform * trans)
 	//Sets the transform position to the position of the physics body
 	trans->SetPosition(vec3(m_body->GetPosition().x, m_body->GetPosition().y, trans->GetPosition().z));
 	trans->SetRotationAngleZ(Degrees(m_body->GetAngle()));
+
+
 }
 
 void PhysicsBody::ApplyForce(vec3 force)
@@ -298,6 +300,11 @@ bool PhysicsBody::GetDraw()
 	return m_drawBodies;
 }
 
+bool PhysicsBody::GetJump()
+{
+	return this->jump;;
+}
+
 void PhysicsBody::SetBody(b2Body * body)
 {
 	m_body = body;
@@ -430,4 +437,9 @@ void PhysicsBody::SetDynamic(bool isDynamic)
 {
 	//Is this body moving?
 	m_dynamic = isDynamic;
+}
+
+void PhysicsBody::SetJump(bool jump)
+{
+	this->jump = jump;
 }
