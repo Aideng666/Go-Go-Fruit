@@ -215,8 +215,6 @@ void Game::KeyboardHold()
 {
 	if (m_activeScene == m_scenes[4])
 	{		
-		vec3 forceX = vec3(200000.f, 0.f, 0.f);
-		vec3 forceY = vec3(0.f, 200000.f, 0.f);
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto water = scene->GetWatermelon();
 		auto blue = scene->GetBlueberry();
@@ -226,33 +224,6 @@ void Game::KeyboardHold()
 		b2Vec2 velWater = waterBody->GetLinearVelocity();
 		float desiredVelBlue = 0.f;
 		float desiredVelWater = 0.f;
-
-
-
-		//b2Vec2 blueVelocity = b2Vec2(0.f, 0.f);
-		//b2Vec2 waterVelocity = b2Vec2(0.f, 0.f);
-		//float inputVal = 7.f;
-
-		/*if (Input::GetKey(Key::A))
-		{
-			waterVelocity += b2Vec2(-inputVal, 0.f);
-		}
-		if (Input::GetKey(Key::D))
-		{
-			waterVelocity += b2Vec2(inputVal, 0.f);
-		}
-
-		if (Input::GetKey(Key::LeftArrow))
-		{
-			blueVelocity += b2Vec2(-inputVal, 0.f);
-		}
-		if (Input::GetKey(Key::RightArrow))
-		{
-			blueVelocity += b2Vec2(inputVal, 0.f);
-		}
-
-		waterBody->SetLinearVelocity(waterVelocity);
-		blueBody->SetLinearVelocity(blueVelocity);*/
 
 		if (Input::GetKey(Key::A))
 		{
@@ -424,21 +395,28 @@ void Game::KeyboardDown()
 		auto blueBody = ECS::GetComponent<PhysicsBody>(blue).GetBody();
 		auto waterBody = ECS::GetComponent<PhysicsBody>(water).GetBody();
 
-		if (Input::GetKeyDown(Key::W) && blueBody->GetLinearVelocity().y == 0)
+
+
+		if (Input::GetKeyDown(Key::W))
 		{
-			b2Vec2 vel = blueBody->GetLinearVelocity();
-			vel.y = 35;
-			blueBody->SetLinearVelocity(vel);
+			if (blueBody->GetLinearVelocity().y < 0.001 && blueBody->GetLinearVelocity().y > -0.001)
+			{
+				b2Vec2 vel = blueBody->GetLinearVelocity();
+				vel.y = 35;
+				blueBody->SetLinearVelocity(vel);
+			}
 
 		}
-		if (Input::GetKeyDown(Key::UpArrow) && waterBody->GetLinearVelocity().y == 0)
+		if (Input::GetKeyDown(Key::UpArrow))
 		{
-			b2Vec2 vel = waterBody->GetLinearVelocity();
-			vel.y = 15;
-			waterBody->SetLinearVelocity(vel);
+			if (waterBody->GetLinearVelocity().y < 0.001 && waterBody->GetLinearVelocity().y > -0.001)
+			{
+				b2Vec2 vel = waterBody->GetLinearVelocity();
+				vel.y = 15;
+				waterBody->SetLinearVelocity(vel);
+			}
 
 		}
-	
 
 	}
 }
