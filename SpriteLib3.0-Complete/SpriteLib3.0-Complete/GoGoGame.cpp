@@ -4,7 +4,7 @@
 GoGoGame::GoGoGame(std::string name)
 	: Scene(name)
 {
-	m_gravity = b2Vec2(float32(0.f), float32(-1.f));
+	m_gravity = b2Vec2(float32(0.f), float32(-9.f));
 	m_physicsWorld->SetGravity(m_gravity);
 }
 
