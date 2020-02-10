@@ -162,12 +162,6 @@
     <ClInclude Include="GoGoMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GoGoRules.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GoGoLevels.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GoGoExit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -312,12 +306,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GoGoMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GoGoRules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GoGoLevels.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GoGoExit.cpp">
