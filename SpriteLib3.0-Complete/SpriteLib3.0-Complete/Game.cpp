@@ -28,8 +28,6 @@ Game::~Game()
 void Game::InitGame()
 {
 	std::string menuName = "Menu";
-	std::string ruleName = "Rules";
-	std::string levelsName = "Levels";
 	std::string exitName = "Exit";
 	std::string gameName = "Level 1";
 
@@ -44,8 +42,6 @@ void Game::InitGame()
 
 	//Creates a new scene.
 	m_scenes.push_back(new GoGoMenu(menuName));
-	m_scenes.push_back(new GoGoRules(ruleName));
-	m_scenes.push_back(new GoGoLevels(levelsName));
 	m_scenes.push_back(new GoGoExit(exitName));
 	m_scenes.push_back(new GoGoGame(gameName));
 
@@ -210,7 +206,7 @@ void Game::GamepadTrigger(XInputController * con)
 
 void Game::KeyboardHold()
 {
-	if (m_activeScene == m_scenes[4])
+	if (m_activeScene == m_scenes[2])
 	{		
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto water = scene->GetWatermelon();
@@ -262,9 +258,9 @@ void Game::KeyboardDown()
 
 		m_activeScene->Unload();
 
-		m_scenes[4]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[4]->GetScene();
-		m_activeScene = m_scenes[4];
+		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[2]->GetScene();
+		m_activeScene = m_scenes[2];
 	}
 	//Up arrow goes to exit
 	if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
@@ -273,11 +269,11 @@ void Game::KeyboardDown()
 
 		m_activeScene->Unload();
 
-		m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[3]->GetScene();
-		m_activeScene = m_scenes[3];
+		m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[1]->GetScene();
+		m_activeScene = m_scenes[1];
 	}
-	//Down arrow goes to rules
+	//Down arrow on menu goes to exit
 	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[0])
 	{
 		SceneEditor::ResetEditor();
@@ -288,7 +284,7 @@ void Game::KeyboardDown()
 		m_register = m_scenes[1]->GetScene();
 		m_activeScene = m_scenes[1];
 	}
-	//Up arrow on rules goes to menu
+	//Up arrow on exit goes to menu
 	else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
 	{
 		SceneEditor::ResetEditor();
@@ -299,52 +295,8 @@ void Game::KeyboardDown()
 		m_register = m_scenes[0]->GetScene();
 		m_activeScene = m_scenes[0];
 	}
-	//Down arrow on rules goes to levels
-	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[2]->GetScene();
-		m_activeScene = m_scenes[2];
-	}
-	//Up arrow on levels goes to rules
-	else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[2])
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[1]->GetScene();
-		m_activeScene = m_scenes[1];
-	}
-	//Down arrow on levels goes to exit
-	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[2])
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[3]->GetScene();
-		m_activeScene = m_scenes[3];
-	}
-	//Up arrow on exit goes to levels
-	else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[3])
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[2]->GetScene();
-		m_activeScene = m_scenes[2];
-	}
 	//Down arrow on exit goes to menu
-	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[3])
+	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
 	{
 		SceneEditor::ResetEditor();
 
@@ -355,13 +307,13 @@ void Game::KeyboardDown()
 		m_activeScene = m_scenes[0];
 	}
 	//Exits the game
-	if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[3])
+	if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 	{
 		exit(1);
 	}
 
 	//Jumping
-	if (m_activeScene == m_scenes[4])
+	if (m_activeScene == m_scenes[2])
 	{
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto water = scene->GetWatermelon();

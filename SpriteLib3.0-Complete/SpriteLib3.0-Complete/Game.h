@@ -4,8 +4,6 @@
 #include "BackEnd.h"
 #include "GoGoGame.h"
 #include "GoGoMenu.h"
-#include "GoGoRules.h"
-#include "GoGoLevels.h"
 #include "GoGoExit.h"
 
 //Our main class for running our game

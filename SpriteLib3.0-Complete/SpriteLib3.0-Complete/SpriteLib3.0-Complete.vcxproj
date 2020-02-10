@@ -149,9 +149,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GoGoExit.h" />
     <ClInclude Include="GoGoGame.h" />
-    <ClInclude Include="GoGoLevels.h" />
     <ClInclude Include="GoGoMenu.h" />
-    <ClInclude Include="GoGoRules.h" />
     <ClInclude Include="GrainEffect.h" />
     <ClInclude Include="GreyscaleEffect.h" />
     <ClInclude Include="include\imgui\imconfig.h" />
@@ -202,9 +200,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GoGoExit.cpp" />
     <ClCompile Include="GoGoGame.cpp" />
-    <ClCompile Include="GoGoLevels.cpp" />
     <ClCompile Include="GoGoMenu.cpp" />
-    <ClCompile Include="GoGoRules.cpp" />
     <ClCompile Include="GrainEffect.cpp" />
     <ClCompile Include="GreyscaleEffect.cpp" />
     <ClCompile Include="include\imgui\imgui.cpp" />
