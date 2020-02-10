@@ -61,7 +61,7 @@ PhysicsBody::PhysicsBody(b2Body * body, float radius, vec2 centerOffset, bool is
 	InitBody();
 }
 
-PhysicsBody::PhysicsBody(b2Body * body, float width, float height, vec2 centerOffset, bool isDynamic)
+PhysicsBody::PhysicsBody(b2Body * body, float width, float height, vec2 centerOffset, bool isDynamic, int catID, int maskID, int groupIndex)
 {
 	//Bodies don't reference a shape by themselves
 	//they need a shape that has been linked to a fixture
@@ -75,6 +75,9 @@ PhysicsBody::PhysicsBody(b2Body * body, float width, float height, vec2 centerOf
 	tempFixture.shape = &tempShape;
 	tempFixture.density = 1.f;
 	tempFixture.friction = 0.3f;
+	tempFixture.filter.categoryBits = catID;
+	tempFixture.filter.maskBits = maskID;
+	tempFixture.filter.groupIndex = groupIndex;
 
 	m_body = body;
 	m_body->CreateFixture(&tempFixture);
@@ -92,6 +95,8 @@ PhysicsBody::PhysicsBody(b2Body * body, float width, float height, vec2 centerOf
 	m_topRight = vec2(centerOffset.x + (width / 2.f), centerOffset.y + (height / 2.f));
 
 	m_dynamic = isDynamic;
+
+
 
 	InitBody();
 }
