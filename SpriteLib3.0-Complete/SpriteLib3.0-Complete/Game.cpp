@@ -273,8 +273,33 @@ void Game::KeyboardDown()
 		m_register = m_scenes[1]->GetScene();
 		m_activeScene = m_scenes[1];
 	}
+<<<<<<< HEAD
 
 
+=======
+	//Down arrow on menu goes to exit
+	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[0])
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[1]->GetScene();
+		m_activeScene = m_scenes[1];
+	}
+	//Up arrow on exit goes to menu
+	else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[0]->GetScene();
+		m_activeScene = m_scenes[0];
+	}
+>>>>>>> Temp
 	//Down arrow on exit goes to menu
 	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
 	{
