@@ -273,10 +273,7 @@ void Game::KeyboardDown()
 		m_register = m_scenes[1]->GetScene();
 		m_activeScene = m_scenes[1];
 	}
-<<<<<<< HEAD
 
-
-=======
 	//Down arrow on menu goes to exit
 	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[0])
 	{
@@ -299,7 +296,6 @@ void Game::KeyboardDown()
 		m_register = m_scenes[0]->GetScene();
 		m_activeScene = m_scenes[0];
 	}
->>>>>>> Temp
 	//Down arrow on exit goes to menu
 	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
 	{
