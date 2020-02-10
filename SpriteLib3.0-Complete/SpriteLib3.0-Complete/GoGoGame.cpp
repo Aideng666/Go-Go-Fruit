@@ -56,7 +56,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "Blueberry.jpg";
+		std::string fileName = "Blueberry.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
@@ -96,7 +96,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "Watermelon.jpg";
+		std::string fileName = "Watermelon.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40, 40);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-75.f, 0.f, 100.f));
