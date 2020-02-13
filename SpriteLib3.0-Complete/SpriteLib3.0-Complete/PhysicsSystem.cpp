@@ -5,7 +5,7 @@ void PhysicsSystem::Init()
 	physicsDrawShader.Load("./assets/shader/PhysicsDraw.vert", "./assets/shader/PhysicsDraw.frag");
 }
 
-void PhysicsSystem::Update(entt::registry * reg, b2World & world)
+void PhysicsSystem::Update(entt::registry * reg)
 {
 	auto view = reg->view<PhysicsBody, Transform>();
 
@@ -17,12 +17,12 @@ void PhysicsSystem::Update(entt::registry * reg, b2World & world)
 		auto& trans = view.get<Transform>(entity);
 
 		//Updates physics body
-		physBod.Update(&trans);
+		physBod.Update(&trans, Timer::deltaTime);
 	}
 
 	//Runs the various things
 	//(currently just checking collisions)
-	Run(world);
+	Run(reg);
 }
 
 void PhysicsSystem::Draw(entt::registry * reg)
@@ -83,62 +83,69 @@ void PhysicsSystem::Draw(entt::registry * reg)
 	}
 }
 
-void PhysicsSystem::Run(b2World & world)
+void PhysicsSystem::Run(entt::registry* reg)
 {
-	//Timestep is constant, regardless of deltatime
-	float32 timeStep = 1.f / 60.f;
+	auto view = reg->view<PhysicsBody, Transform>();
 
-	//Box2D uses an algorithm called an integrator,
-	//this simulates the physics algorithms at discrete points in time
-	//we need to give it iterations for the velocity and position, along with
-	//our timestep
-	int32 velocityIterations = 8;
-	int32 positionIterations = 3;
+	for (auto entity : view)
+	{
+		auto& trans1 = view.get<Transform>(entity);
+		auto& body1 = view.get<PhysicsBody>(entity);
 
-	//steps through the world
-	world.Step(timeStep, velocityIterations, positionIterations);
+		Box worldPosB;
+
+		switch (body1.GetBodyType())
+		{
+		case BodyType::BOX:
+			worldPosB.m_center = trans1.GetPosition() + vec3(body1.GetCenterOffset().x, body1.GetCenterOffset().y, 0.f);
+			worldPosB.m_bottomLeft = trans1.GetPosition() + vec3(body1.GetBottomLeft().x, body1.GetBottomLeft().y, 0.f);
+			worldPosB.m_topRight = trans1.GetPosition() + vec3(body1.GetTopRight().x, body1.GetTopRight().y, 0.f);
+			worldPosB.m_bottomRight = vec3(worldPosB.m_topRight.x, worldPosB.m_bottomLeft.y, 0.f);
+			worldPosB.m_topLeft = vec3(worldPosB.m_bottomLeft.x, worldPosB.m_topRight.y, 0.f);
+			break;
+		}
+
+		if (body1.GetDynamic())
+		{
+			for (auto entity2 : view)
+			{
+				if (entity != entity2)
+				{
+					auto& trans2 = view.get<Transform>(entity2);
+					auto& body2 = view.get<PhysicsBody>(entity2);
+
+					Box worldPosB2;
+
+					switch (body2.GetBodyType())
+					{
+					case BodyType::BOX:
+						worldPosB2.m_center = trans2.GetPosition() + vec3(body2.GetCenterOffset().x, body2.GetCenterOffset().y, 0.f);
+						worldPosB2.m_bottomLeft = trans2.GetPosition() + vec3(body2.GetBottomLeft().x, body2.GetBottomLeft().y, 0.f);
+						worldPosB2.m_topRight = trans2.GetPosition() + vec3(body2.GetTopRight().x, body2.GetTopRight().y, 0.f);
+						worldPosB2.m_bottomRight = vec3(worldPosB2.m_topRight.x, worldPosB2.m_bottomLeft.y, 0.f);
+						worldPosB2.m_topLeft = vec3(worldPosB2.m_bottomLeft.x, worldPosB2.m_topRight.y, 0.f);
+						break;
+					}
+					if (body1.GetBodyType() == BodyType::BOX)
+					{
+						if (body2.GetBodyType() == BodyType::BOX)
+						{
+							//Perform Box-Box collision
+							if (BoxBoxCollision(std::pair<PhysicsBody&, Box>(body1, worldPosB), std::pair<PhysicsBody&, Box>(body2, worldPosB2)))
+							{
+								trans1.SetPosition(trans1.GetPosition() + (-body1.GetVelocity() * (Timer::deltaTime)));
+								body1.SetAcceleration(vec3(0.f, 0.f, 0.f));
+								body1.SetVelocity(vec3(0.f, 0.f, 0.f));
+							}
+						}
+					}
+
+				}
+			}
+		}
+	}
 }
 
-bool PhysicsSystem::BoxCircleCollision(std::pair<PhysicsBody&, Circle> group1, std::pair<PhysicsBody&, Box> group2)
-{
-	//Doesn't work.
-	////Circle position
-	//vec2 circlePos = vec2(group1.second.m_center.x, group1.second.m_center.y);
-	////Circle Radius
-	//float circleRad = group1.second.m_radius;
-	////Box position
-	//vec2 boxPos = vec2(group2.second.m_center.x, group2.second.m_center.y);
-	////Box width and height
-	//float boxWidth = group2.first.GetWidth();
-	//float boxHeight = group2.first.GetHeight();
-	////Edges//
-	////Left edge
-	//float left = boxPos.x - ((1.f / 2.f) * boxWidth);
-	////Right edge
-	//float right = boxPos.x + ((1.f / 2.f) * boxWidth);
-	////Top edge
-	//float top = boxPos.y + ((1.f / 2.f) * boxHeight);
-	////Bottom edge
-	//float bottom = boxPos.y - ((1.f / 2.f) * boxHeight);
-
-	//vec2 edgeBot 
-
-
-	////Makes line from circle center to the test edge
-	////Then gets the length of the line.
-	//vec2 circleToEdge = circlePos - testVec;
-	//float distance = circleToEdge.GetMagnitude();
-
-	////If the distance is less than or equal to the radius, there's a collision.
-	//if (distance <= circleRad)
-	//{
-	//	return true;
-	//}
-
-	////If the previous statement isn't true, there is no collision.
-	//return false;
-	return false;
-}
 
 bool PhysicsSystem::BoxBoxCollision(std::pair<PhysicsBody&, Box> group1, std::pair<PhysicsBody&, Box> group2)
 {

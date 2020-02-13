@@ -10,7 +10,7 @@
 class Scene
 {
 public:
-	Scene() { m_sceneReg = new entt::registry(); m_physicsWorld = new b2World(m_gravity); }
+	Scene() { m_sceneReg = new entt::registry(); }
 	Scene(std::string name);
 	~Scene() { }
 
@@ -58,17 +58,10 @@ public:
 	//Sets the name of the scene
 	void SetName(std::string name);
 	
-	//Gravity
-	b2Vec2 GetGravity() const;
-	void SetGravity(b2Vec2 grav);
-	//Physics world
-	b2World& GetPhysicsWorld();
 
 	//Set window size (makes sure the camera aspect is proper)
 	void SetWindowSize(float windowWidth, float windowHeight);
 protected:
-	b2World* m_physicsWorld = nullptr;
-	b2Vec2 m_gravity = b2Vec2(float32(0.f), float32(0.f));
 
 	vec4 m_clearColor = vec4(0.15f, 0.33f, 0.58f, 1.f);
 

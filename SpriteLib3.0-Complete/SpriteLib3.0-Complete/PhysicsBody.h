@@ -1,7 +1,6 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <Box2D/Box2D.h>
 
 #include "JSON.h"
 #include "Vector.h"
@@ -36,12 +35,12 @@ class PhysicsBody
 {
 public:
 	PhysicsBody() { };
-	//Constructs a circle collider
-	PhysicsBody(b2Body* body, float radius, vec2 centerOffset, bool isDynamic);
-	//Constructs a box collider
-	PhysicsBody(b2Body* body, float width, float height, vec2 centerOffset, bool isDynamic, int catID, int maskID, int groupIndex);
 
-	void DeleteBody();
+	//Constructs a box collider
+	PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic = false);
+	PhysicsBody(float width, float height, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic = false);
+
+
 
 	//Initializes body for drawing
 	void InitBody();
@@ -49,7 +48,7 @@ public:
 	void DrawBody();
 
 	//Update physics stuffs
-	void Update(Transform* trans);
+	void Update(Transform* trans, float dt);
 
 	//Apply a force to the physics body
 	void ApplyForce(vec3 force);
@@ -57,10 +56,7 @@ public:
 	void AddCollideID(unsigned int collideID);
 
 	//Getters
-	//Get the Box2D physics body
-	b2Body* GetBody() const;
-	//Get position of body
-	b2Vec2 GetPosition() const;
+
 	//Gets current force
 	vec3 GetForce() const;
 	//Gets the current acceleration
@@ -114,10 +110,6 @@ public:
 	bool GetJump();
 
 	//Setters
-	//Sets the pointer to the box2D body
-	void SetBody(b2Body* body);
-	//Set position (just sets the variable, doesn't actually set the position)
-	void SetPosition(b2Vec2 bodyPos);
 	//Sets force to be applied to this body
 	void SetForce(vec3 force);
 	//Sets the acceleration to be applied to this body
@@ -170,9 +162,6 @@ public:
 	void SetJump(bool jump);
 
 private:
-	//The actual box2D body
-	b2Body* m_body = nullptr;
-	b2Vec2 m_position = b2Vec2(0.f, 0.f);
 
 	//The applied force
 	vec3 m_appliedForce = vec3(0.f, 0.f, 0.f);
@@ -234,8 +223,7 @@ private:
 //Sends body TO json file
 inline void to_json(nlohmann::json& j, const PhysicsBody& phys)
 {
-	//Position
-	j["BodyPosition"] = { phys.GetPosition().x, phys.GetPosition().y };
+	
 	//Stores body type
 	j["BodyType"] = phys.GetBodyType();
 	//Center offset
@@ -271,8 +259,7 @@ inline void to_json(nlohmann::json& j, const PhysicsBody& phys)
 //Reads body in FROM json file
 inline void from_json(const nlohmann::json& j, PhysicsBody& phys)
 {
-	//Set position
-	phys.SetPosition(b2Vec2(j["BodyPosition"][0], j["BodyPosition"][1]));
+
 	//Sets body type
 	phys.SetBodyType(j["BodyType"]);
 	//Set the center offset

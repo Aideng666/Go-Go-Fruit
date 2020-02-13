@@ -23,66 +23,33 @@ unsigned int CollisionIDs::Enemy()
 vec3 PhysicsBody::m_gravityAcceleration = vec3(0.f, -35.f, 0.f);
 bool PhysicsBody::m_drawBodies = false;
 
-PhysicsBody::PhysicsBody(b2Body * body, float radius, vec2 centerOffset, bool isDynamic)
+
+
+PhysicsBody::PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic)
 {
-	//Bodies don't reference a shape by themselves
-	//they need a shape that has been linked to a fixture
-	//in order to have a shape
-	b2CircleShape tempShape;
-	tempShape.m_p = b2Vec2(float32(centerOffset.x), float32(centerOffset.y));
-	tempShape.m_radius = radius;
+	m_bodyType = BodyType::BOX;
 
-	//Creates the actual fixture (aka, shape, mass, etc);
-	b2FixtureDef tempFixture;
-	tempFixture.shape = &tempShape;
-	tempFixture.density = 1.f;
-	tempFixture.friction = 0.3f;
+	m_bottomLeft = botLeft;
+	m_topLeft = vec2(botLeft.x, topRight.y);
+	m_topRight = topRight;
+	m_bottomRight = vec2(topRight.x, botLeft.y);
 
-	m_body = body;
-	m_body->CreateFixture(&tempFixture);
-
-	m_body = body;
-	m_bodyType = BodyType::CIRCLE;
-
-	//Stores the position;
-	m_position = m_body->GetPosition();
-
-	m_width = radius * 2.f;
-	m_height = radius * 2.f;
+	m_width = m_bottomRight.x - m_bottomLeft.x;
+	m_height = m_topLeft.y - m_bottomLeft.y;
 
 	m_centerOffset = centerOffset;
-	m_bottomLeft = vec2(centerOffset.x - (radius), centerOffset.y - (radius));
-	m_bottomRight = vec2(centerOffset.x + (radius), centerOffset.y - (radius));
-	m_topLeft = vec2(centerOffset.x - (radius), centerOffset.y + (radius));
-	m_topRight = vec2(centerOffset.x + (radius), centerOffset.y + (radius));
+
+	m_bodyID = objectSpecifier;
+
+	m_collideID = collidesWith;
 
 	m_dynamic = isDynamic;
 
 	InitBody();
 }
 
-PhysicsBody::PhysicsBody(b2Body * body, float width, float height, vec2 centerOffset, bool isDynamic, int catID, int maskID, int groupIndex)
+PhysicsBody::PhysicsBody(float width, float height, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic)
 {
-	//Bodies don't reference a shape by themselves
-	//they need a shape that has been linked to a fixture
-	//in order to have a shape
-	b2PolygonShape tempShape;
-	tempShape.SetAsBox(float32(width / 2.f), float32(height / 2.f),
-		b2Vec2(float32(centerOffset.x), float32(centerOffset.y)), float32(0.f));
-
-	//Creates the actual fixture (aka, shape, mass, etc);
-	b2FixtureDef tempFixture;
-	tempFixture.shape = &tempShape;
-	tempFixture.density = 1.f;
-	tempFixture.friction = 0.3f;
-	tempFixture.filter.categoryBits = catID;
-	tempFixture.filter.maskBits = maskID;
-	tempFixture.filter.groupIndex = groupIndex;
-
-	m_body = body;
-	m_body->CreateFixture(&tempFixture);
-
-	m_body = body;
 	m_bodyType = BodyType::BOX;
 
 	m_width = width;
@@ -94,19 +61,12 @@ PhysicsBody::PhysicsBody(b2Body * body, float width, float height, vec2 centerOf
 	m_topLeft = vec2(centerOffset.x - (width / 2.f), centerOffset.y + (height / 2.f));
 	m_topRight = vec2(centerOffset.x + (width / 2.f), centerOffset.y + (height / 2.f));
 
+	m_collideID = collidesWith;
+	m_bodyID = objectSpecifier;
+
 	m_dynamic = isDynamic;
 
-
-
 	InitBody();
-}
-
-void PhysicsBody::DeleteBody()
-{
-	if (m_body != nullptr)
-	{
-		m_body->GetWorld()->DestroyBody(m_body);
-	}
 }
 
 void PhysicsBody::InitBody()
@@ -144,24 +104,48 @@ void PhysicsBody::DrawBody()
 	glBindVertexArray(GL_NONE);
 }
 
-void PhysicsBody::Update(Transform * trans)
+void PhysicsBody::Update(Transform * trans, float dt)
 {
-	//Stores the position;
-	m_position = m_body->GetPosition();
 
-	//Sets the transform position to the position of the physics body
-	trans->SetPosition(vec3(m_body->GetPosition().x, m_body->GetPosition().y, trans->GetPosition().z));
-	trans->SetRotationAngleZ(Degrees(m_body->GetAngle()));
+	vec3 transPosition = trans->GetPosition();
+	
+	if (m_velocity.GetMagnitude() > 0.f)
+	{
+		if (m_applyGravity)
+		{
+			m_frictionForce = vec3(-m_velocity.x, 0.f, 0.f) * m_friction;
+		}
+		else
+		{
+			m_frictionForce = -m_velocity * m_friction;
+		}
+	}
 
+	m_frictionForce = vec3(0.f, 0.f, 0.f);
+	m_appliedForce = vec3(0.f, 0.f, 0.f);
 
+	float tempX = m_velocity.x;
+	float tempY = m_velocity.y;
+
+	m_velocity = m_velocity + (m_acceleration * dt);
+
+	if (abs(m_velocity.x) > abs(m_maxVelo))
+	{
+		m_velocity.x = tempX;
+	}
+	if (abs(m_velocity.y) > abs(m_maxVelo))
+	{
+		m_velocity.y = tempY;
+	}
+
+	transPosition = transPosition + (m_velocity * dt);
+
+	trans->SetPosition(transPosition);
 }
 
 void PhysicsBody::ApplyForce(vec3 force)
 {
-	m_body->ApplyForce(b2Vec2(float32(force.x), float32(force.y)),
-						b2Vec2(float32(m_body->GetPosition().x), float32(m_body->GetPosition().y)),
-						 true);
-
+	m_appliedForce = m_appliedForce + force;
 }
 
 void PhysicsBody::AddCollideID(unsigned int collideID)
@@ -170,15 +154,6 @@ void PhysicsBody::AddCollideID(unsigned int collideID)
 	m_collideID |= collideID;
 }
 
-b2Body * PhysicsBody::GetBody() const
-{
-	return m_body;
-}
-
-b2Vec2 PhysicsBody::GetPosition() const
-{
-	return m_position;
-}
 
 vec3 PhysicsBody::GetForce() const
 {
@@ -310,15 +285,6 @@ bool PhysicsBody::GetJump()
 	return this->jump;;
 }
 
-void PhysicsBody::SetBody(b2Body * body)
-{
-	m_body = body;
-}
-
-void PhysicsBody::SetPosition(b2Vec2 bodyPos)
-{
-	m_position = bodyPos;
-}
 
 void PhysicsBody::SetForce(vec3 force)
 {

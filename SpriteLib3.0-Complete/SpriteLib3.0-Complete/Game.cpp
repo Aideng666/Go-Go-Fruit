@@ -94,7 +94,7 @@ void Game::Update()
 	BackEnd::Update(m_register);
 
 	//Update Physics System
-	PhysicsSystem::Update(m_register, m_activeScene->GetPhysicsWorld());
+	PhysicsSystem::Update(m_register);
 
 	//Updates the active scene
 	m_activeScene->Update();
@@ -211,36 +211,27 @@ void Game::KeyboardHold()
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto water = scene->GetWatermelon();
 		auto blue = scene->GetBlueberry();
-		auto blueBody = ECS::GetComponent<PhysicsBody>(blue).GetBody();
-		auto waterBody = ECS::GetComponent<PhysicsBody>(water).GetBody();
-		b2Vec2 velBlue = blueBody->GetLinearVelocity();
-		b2Vec2 velWater = waterBody->GetLinearVelocity();
-		float desiredVelBlue = 0.f;
-		float desiredVelWater = 0.f;
+		vec3 positionBlue = m_register->get<Transform>(blue).GetPosition();
+		vec3 positionWater = m_register->get<Transform>(water).GetPosition();
+		float speed = 100.f;
+		
 
 		if (Input::GetKey(Key::A))
 		{
-			desiredVelBlue = -10.f;
+			m_register->get<Transform>(blue).SetPositionX(positionBlue.x - (speed * Timer::deltaTime));
 		}
 		if (Input::GetKey(Key::D))
 		{
-			desiredVelBlue = 10.f;
+			m_register->get<Transform>(blue).SetPositionX(positionBlue.x + (speed * Timer::deltaTime));
 		}
 		if (Input::GetKey(Key::LeftArrow))
 		{
-			desiredVelWater = -10.f;
+			m_register->get<Transform>(water).SetPositionX(positionWater.x - (speed * Timer::deltaTime));
 		}
 		if (Input::GetKey(Key::RightArrow))
 		{
-			desiredVelWater = 10.f;
+			m_register->get<Transform>(water).SetPositionX(positionWater.x + (speed * Timer::deltaTime));
 		}
-
-		float velChangeBlue = desiredVelBlue - velBlue.x;
-		float velChangeWater = desiredVelWater - velWater.x;
-		float forceBlue = (blueBody->GetMass() * velChangeBlue);
-		blueBody->ApplyForce(b2Vec2(forceBlue, 0), blueBody->GetWorldCenter(), true);
-		float forceWater = (waterBody->GetMass() * velChangeWater);
-		waterBody->ApplyForce(b2Vec2(forceWater, 0), waterBody->GetWorldCenter(), true);	
 	}
 }
 
@@ -257,6 +248,7 @@ void Game::KeyboardDown()
 		SceneEditor::ResetEditor();
 
 		m_activeScene->Unload();
+
 
 		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 		m_register = m_scenes[2]->GetScene();
@@ -314,33 +306,10 @@ void Game::KeyboardDown()
 	}
 
 	//Jumping
-	if (m_activeScene == m_scenes[2])
+	/*if (m_activeScene == m_scenes[2])
 	{
-		GoGoGame* scene = (GoGoGame*)m_activeScene;
-		auto water = scene->GetWatermelon();
-		auto blue = scene->GetBlueberry();
-		auto blueBody = ECS::GetComponent<PhysicsBody>(blue).GetBody();
-		auto waterBody = ECS::GetComponent<PhysicsBody>(water).GetBody();
-
-		if (Input::GetKeyDown(Key::W))
-		{
-			if (blueBody->GetLinearVelocity().y < 0.001 && blueBody->GetLinearVelocity().y > -0.001)
-			{
-				b2Vec2 vel = blueBody->GetLinearVelocity();
-				vel.y = 35;
-				blueBody->SetLinearVelocity(vel);
-			}
-		}
-		if (Input::GetKeyDown(Key::UpArrow))
-		{
-			if (waterBody->GetLinearVelocity().y < 0.001 && waterBody->GetLinearVelocity().y > -0.001)
-			{
-				b2Vec2 vel = waterBody->GetLinearVelocity();
-				vel.y = 15;
-				waterBody->SetLinearVelocity(vel);
-			}
-		}
-	}
+		
+	}*/
 }
 
 void Game::KeyboardUp()

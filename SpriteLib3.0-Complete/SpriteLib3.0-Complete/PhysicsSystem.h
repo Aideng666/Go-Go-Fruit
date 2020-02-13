@@ -30,7 +30,7 @@ namespace PhysicsSystem
 	void Init();
 
 	//Update the system
-	void Update(entt::registry* reg, b2World& world);
+	void Update(entt::registry* reg);
 
 	//Draw all entities with physics bodies
 	//*only if the static "m_drawBodies" is true
@@ -40,7 +40,7 @@ namespace PhysicsSystem
 	//Includes:
 	//Box-Circle
 	//Box-Box
-	void Run(b2World& world);
+	void Run(entt::registry* reg);
 
 	//Run our Box-Circle Collision detection system.
 	bool BoxCircleCollision(std::pair<PhysicsBody&, Circle> group1, std::pair<PhysicsBody&, Box> group2);
