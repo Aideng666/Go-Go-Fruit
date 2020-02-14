@@ -58,7 +58,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "Blueberry.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-100.f, -85.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-100.f, 50.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -66,10 +66,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 	
 		tempPhsBody = PhysicsBody(10.f, 10.f, vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), true);
 
-
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
-		tempPhsBody.SetGravity(false);
+		tempPhsBody.SetGravity(true);
 		
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
@@ -89,7 +88,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "Watermelon.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40, 40);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-150.f, -70.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-150.f, 10.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -97,16 +96,12 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		float shrinkX = tempSpr.GetWidth() / 2.f - 1;
 		float shrinkY = tempSpr.GetWidth() / 1.f + 14;
 
-
 		tempPhsBody = PhysicsBody(20, 20, vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), true);
-		
-		
-
+			
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
-		tempPhsBody.SetGravity(false);
+		tempPhsBody.SetGravity(true);
 		
-
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Watermelon");
 

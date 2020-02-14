@@ -23,8 +23,6 @@ unsigned int CollisionIDs::Enemy()
 vec3 PhysicsBody::m_gravityAcceleration = vec3(0.f, -35.f, 0.f);
 bool PhysicsBody::m_drawBodies = false;
 
-
-
 PhysicsBody::PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic)
 {
 	m_bodyType = BodyType::BOX;
@@ -106,7 +104,6 @@ void PhysicsBody::DrawBody()
 
 void PhysicsBody::Update(Transform * trans, float dt)
 {
-
 	vec3 transPosition = trans->GetPosition();
 	
 	if (m_velocity.GetMagnitude() > 0.f)
@@ -118,6 +115,17 @@ void PhysicsBody::Update(Transform * trans, float dt)
 		else
 		{
 			m_frictionForce = -m_velocity * m_friction;
+		}
+	}
+
+	m_netForce = m_appliedForce + m_frictionForce;
+	m_acceleration = (m_netForce / m_mass);
+
+	if (m_applyGravity)
+	{
+		if (m_dynamic)
+		{
+			m_acceleration = m_acceleration + (m_gravityAcceleration * m_mass);
 		}
 	}
 
