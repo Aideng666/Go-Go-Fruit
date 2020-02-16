@@ -13,6 +13,10 @@ public:
 	//Gets main player entity
 	static unsigned int MainPlayer();
 	bool GetIsMainPlayer() const;
+
+	static unsigned int MainPlayer2();
+	bool GetIsMainPlayer2() const;
+
 	//Gets main camera entity
 	static unsigned int MainCamera();
 	bool GetIsMainCamera() const;
@@ -36,6 +40,10 @@ public:
 	//Sets main player entity
 	static void MainPlayer(unsigned int entity);
 	void SetIsMainPlayer(bool main);
+
+	static void MainPlayer2(unsigned int entity);
+	void SetIsMainPlayer2(bool main);
+
 	//Sets main camera entity
 	static void MainCamera(unsigned int entity);
 	void SetIsMainCamera(bool main);
@@ -52,6 +60,10 @@ private:
 	//Main player
 	static unsigned int m_mainPlayer;
 	bool m_isMainPlayer = false;
+
+	static unsigned int m_mainPlayer2;
+	bool m_isMainPlayer2 = false;
+
 	//Main camera
 	static unsigned int m_mainCamera;
 	bool m_isMainCamera = false;
@@ -92,6 +104,9 @@ inline void to_json(nlohmann::json& j, const EntityIdentifier& id)
 	//Stores whether or not this is the main player
 	j["MainPlayer"] = id.GetIsMainPlayer();
 
+	//Stores whether or not this is the main player 2
+	j["MainPlayer2"] = id.GetIsMainPlayer2();
+
 	//Stores the name of this entity
 	j["Name"] = id.GetName();
 }
@@ -107,6 +122,9 @@ inline void from_json(const nlohmann::json& j, EntityIdentifier& id)
 
 	//Grabs whether or not this is the main player
 	id.SetIsMainPlayer(j["MainPlayer"]);
+
+	//Grabs whether or not this is the main player 2
+	id.SetIsMainPlayer2(j["MainPlayer2"]);
 
 	//Grabs the name of this entity
 	id.SetName(j["Name"]);

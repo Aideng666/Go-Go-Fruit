@@ -51,6 +51,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 	{
 		auto entity = ECS::CreateEntity();
 
+		ECS::SetIsMainPlayer(entity, true);
+		EntityIdentifier::MainPlayer(entity);
+
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
@@ -64,7 +67,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 	
-		tempPhsBody = PhysicsBody(10.f, 10.f, vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), 0,  true);
+		tempPhsBody = PhysicsBody(10.f, 10.f, vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Player() | CollisionIDs::Environment(), 0,  true);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
@@ -81,6 +84,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 	{
 		auto entity = ECS::CreateEntity();
 
+		ECS::SetIsMainPlayer2(entity, true);
+		EntityIdentifier::MainPlayer2(entity);
+
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
@@ -88,28 +94,19 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "Watermelon.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40, 40);
-<<<<<<< Updated upstream
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-150.f, 10.f, 100.f));
-=======
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-150.f, -80.f, 100.f));
->>>>>>> Stashed changes
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-150.f, 60.f, 100.f));
+
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 		float shrinkX = tempSpr.GetWidth() / 2.f - 1;
 		float shrinkY = tempSpr.GetWidth() / 1.f + 14;
-
-<<<<<<< Updated upstream
-		tempPhsBody = PhysicsBody(20, 20, vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), true);
 			
-=======
-
-		tempPhsBody = PhysicsBody(20, 20, vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), 0, true);
-		
+		tempPhsBody = PhysicsBody(20, 20, vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Player() | CollisionIDs::Environment(), 1, true);
 		
 
->>>>>>> Stashed changes
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
 		tempPhsBody.SetGravity(true);
@@ -291,7 +288,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		float shrinkY = tempSpr.GetWidth() / 400.f;
 		
 		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), true);
+			vec2(0.f, 0.f), CollisionIDs::Environment(), CollisionIDs::Enemy() | CollisionIDs::Player(), 2, true);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Wall");

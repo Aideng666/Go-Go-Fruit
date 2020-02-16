@@ -289,10 +289,11 @@ bool PhysicsBody::GetDraw()
 	return m_drawBodies;
 }
 
-bool PhysicsBody::GetJump()
+int PhysicsBody::GetType()
 {
-	return this->jump;;
+	return m_type;
 }
+
 
 
 void PhysicsBody::SetForce(vec3 force)
@@ -419,7 +420,4 @@ void PhysicsBody::SetDynamic(bool isDynamic)
 	m_dynamic = isDynamic;
 }
 
-void PhysicsBody::SetJump(bool jump)
-{
-	this->jump = jump;
-}
+

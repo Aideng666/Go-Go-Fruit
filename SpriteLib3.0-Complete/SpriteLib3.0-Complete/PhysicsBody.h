@@ -105,7 +105,9 @@ public:
 	//Get whether or not we are currently drawing our physics bodies
 	static bool GetDraw();
 
-	bool GetJump();
+	int GetType();
+
+
 
 	//Setters
 	//Sets force to be applied to this body
@@ -157,7 +159,6 @@ public:
 	//Does the object not move?
 	void SetDynamic(bool isDynamic);
 
-	void SetJump(bool jump);
 
 private:
 
@@ -184,8 +185,6 @@ private:
 
 	//Mass of the body
 	float m_mass = 1.f;
-
-	bool jump = true;
 
 	//Body type
 	BodyType m_bodyType = BodyType::CIRCLE;

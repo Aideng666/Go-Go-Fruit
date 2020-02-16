@@ -63,3 +63,13 @@ void ECS::SetIsMainPlayer(unsigned entity, bool mainPlayer)
 
 	EntityIdentifier::MainPlayer(entity);
 }
+
+void ECS::SetIsMainPlayer2(unsigned entity, bool mainPlayer)
+{
+	//Gets reference to the component
+	auto& id = GetComponent<EntityIdentifier>(entity);
+	//Sets whether this entity is the main player
+	id.SetIsMainPlayer2(mainPlayer);
+
+	EntityIdentifier::MainPlayer2(entity);
+}

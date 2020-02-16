@@ -237,6 +237,8 @@ void Game::KeyboardHold()
 
 void Game::KeyboardDown()
 {
+
+
 	if (Input::GetKeyDown(Key::Escape))
 	{
 		exit(1);
@@ -306,10 +308,29 @@ void Game::KeyboardDown()
 	}
 
 	//Jumping
-	/*if (m_activeScene == m_scenes[2])
+	if (m_activeScene == m_scenes[2])
 	{
+
+		GoGoGame* scene = (GoGoGame*)m_activeScene;
+		auto water = scene->GetWatermelon();
+		auto blue = scene->GetBlueberry();
+		auto& blueBod = ECS::GetComponent<PhysicsBody>(blue);
+		auto& waterBod = ECS::GetComponent<PhysicsBody>(water);
+
+		if (Input::GetKeyDown(Key::W) && ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer()).GetJump())
+		{
+			blueBod.SetAcceleration(vec3(0.f, 85.f, 0.f));
+			blueBod.SetVelocity(vec3(0.f, 85.f, 0.f));
+			ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer()).SetJump(false);
+		}
+		if (Input::GetKeyDown(Key::UpArrow) && ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).GetJump())
+		{
+			waterBod.SetAcceleration(vec3(0.f, 65.f, 0.f));
+			waterBod.SetVelocity(vec3(0.f, 65.f, 0.f));
+			ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).SetJump(false);
+		}
 		
-	}*/
+	}
 }
 
 void Game::KeyboardUp()

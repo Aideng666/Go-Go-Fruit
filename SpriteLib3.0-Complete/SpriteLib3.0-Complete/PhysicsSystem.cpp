@@ -85,6 +85,8 @@ void PhysicsSystem::Draw(entt::registry * reg)
 
 void PhysicsSystem::Run(entt::registry* reg)
 {
+
+
 	auto view = reg->view<PhysicsBody, Transform>();
 
 	for (auto entity : view)
@@ -133,6 +135,16 @@ void PhysicsSystem::Run(entt::registry* reg)
 							//Perform Box-Box collision
 							if (BoxBoxCollision(std::pair<PhysicsBody&, Box>(body1, worldPosB), std::pair<PhysicsBody&, Box>(body2, worldPosB2)))
 							{
+								if (body2.GetType() == 2 && body1.GetType() == 0)
+								{
+									ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer()).SetJump(true);
+								}
+								if (body2.GetType() == 2 && body1.GetType() == 1)
+								{
+									ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).SetJump(true);
+								}
+
+
 								trans1.SetPosition(trans1.GetPosition() + (-body1.GetVelocity() * (Timer::deltaTime)));
 								body1.SetAcceleration(vec3(0.f, 0.f, 0.f));
 								body1.SetVelocity(vec3(0.f, 0.f, 0.f));
@@ -163,6 +175,11 @@ bool PhysicsSystem::BoxBoxCollision(std::pair<PhysicsBody&, Box> group1, std::pa
 		//Are the y-axes colliding?
 		bool axisYCollide = group1.second.m_topLeft.y >= group2.second.m_bottomLeft.y &&
 			group2.second.m_topLeft.y >= group1.second.m_bottomLeft.y;
+
+		std::cout << axisXCollide << "This is for X" << std::endl;
+
+		std::cout << axisYCollide << "This is for Y" << std::endl;
+		
 
 		//If both axes are overlapping, it means the bodies are colliding
 		//If not, then they're not colliding

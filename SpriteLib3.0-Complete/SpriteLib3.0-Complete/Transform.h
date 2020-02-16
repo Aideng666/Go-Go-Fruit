@@ -30,6 +30,7 @@ public:
 	void SetRotationAngleZ(Degrees newAngle);
 	void SetScale(vec3 newScale);
 	void SetScale(float x, float y, float z);
+	void SetJump(bool jump);
 
 	//Getters
 	vec3 GetPosition() const;
@@ -41,6 +42,7 @@ public:
 	Degrees GetRotationAngleZ() const;
 	vec3 GetScale() const;
 	mat4 GetLocalToWorldMatrix();
+	bool GetJump();
 	
 	//Simple conversion functions (written in private so they can't be accessed elsewhere)
 	static Degrees ToDegrees(Radians angle);
@@ -69,6 +71,8 @@ public:
 	//Model Matrix
 	mat4 m_localToWorldMatrix;
 private:
+
+	bool m_jump = false;
 
 };
 
