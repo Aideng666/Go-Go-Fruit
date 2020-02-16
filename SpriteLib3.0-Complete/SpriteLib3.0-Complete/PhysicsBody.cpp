@@ -46,7 +46,7 @@ PhysicsBody::PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigne
 	InitBody();
 }
 
-PhysicsBody::PhysicsBody(float width, float height, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic)
+PhysicsBody::PhysicsBody(float width, float height, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, int type, bool isDynamic)
 {
 	m_bodyType = BodyType::BOX;
 
@@ -63,6 +63,7 @@ PhysicsBody::PhysicsBody(float width, float height, vec2 centerOffset, unsigned 
 	m_bodyID = objectSpecifier;
 
 	m_dynamic = isDynamic;
+	m_type = type;
 
 	InitBody();
 }

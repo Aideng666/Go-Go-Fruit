@@ -38,7 +38,7 @@ public:
 
 	//Constructs a box collider
 	PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic = false);
-	PhysicsBody(float width, float height, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic = false);
+	PhysicsBody(float width, float height, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, int type, bool isDynamic = false);
 
 	//Initializes body for drawing
 	void InitBody();
@@ -212,6 +212,8 @@ private:
 
 	//Is the object non-moving
 	bool m_dynamic = false;
+
+	int m_type;
 
 	//Physics body drawing stuff
 	GLuint m_vao = GL_NONE;
