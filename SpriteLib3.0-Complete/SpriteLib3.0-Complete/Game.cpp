@@ -211,7 +211,7 @@ void Game::KeyboardHold()
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		vec3 positionBlue = m_register->get<Transform>(EntityIdentifier::MainPlayer()).GetPosition();
 		vec3 positionWater = m_register->get<Transform>(EntityIdentifier::MainPlayer2()).GetPosition();
-		float speed = 100.f;
+		float speed = 60.f;
 		
 
 		if (Input::GetKey(Key::A))
@@ -320,8 +320,8 @@ void Game::KeyboardDown()
 		}
 		if (Input::GetKeyDown(Key::UpArrow) && ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).GetJump())
 		{
-			waterBod.SetAcceleration(vec3(0.f, 50.f, 0.f));
-			waterBod.SetVelocity(vec3(0.f, 50.f, 0.f));
+			waterBod.SetAcceleration(vec3(0.f, 60.f, 0.f));
+			waterBod.SetVelocity(vec3(0.f, 60.f, 0.f));
 			ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).SetJump(false);
 		}	
 	}
