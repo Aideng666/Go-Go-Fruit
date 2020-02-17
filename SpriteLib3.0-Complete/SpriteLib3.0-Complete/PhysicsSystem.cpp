@@ -135,7 +135,7 @@ void PhysicsSystem::Run(entt::registry* reg)
 							//Perform Box-Box collision
 							if (BoxBoxCollision(std::pair<PhysicsBody&, Box>(body1, worldPosB), std::pair<PhysicsBody&, Box>(body2, worldPosB2)))
 							{
-								if (body2.GetType() == 2 && body1.GetType() == 0)
+								if (body2.GetType() == 1 && body1.GetType() == 0 || body1.GetType() == 2)
 								{
 									ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer()).SetJump(true);
 								}
@@ -143,7 +143,6 @@ void PhysicsSystem::Run(entt::registry* reg)
 								{
 									ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).SetJump(true);
 								}
-
 
 								trans1.SetPosition(trans1.GetPosition() + (-body1.GetVelocity() * (Timer::deltaTime)));
 								body1.SetAcceleration(vec3(0.f, 0.f, 0.f));

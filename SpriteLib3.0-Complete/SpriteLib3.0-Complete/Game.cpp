@@ -209,28 +209,26 @@ void Game::KeyboardHold()
 	if (m_activeScene == m_scenes[2])
 	{		
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
-		auto water = scene->GetWatermelon();
-		auto blue = scene->GetBlueberry();
-		vec3 positionBlue = m_register->get<Transform>(blue).GetPosition();
-		vec3 positionWater = m_register->get<Transform>(water).GetPosition();
+		vec3 positionBlue = m_register->get<Transform>(EntityIdentifier::MainPlayer()).GetPosition();
+		vec3 positionWater = m_register->get<Transform>(EntityIdentifier::MainPlayer2()).GetPosition();
 		float speed = 100.f;
 		
 
 		if (Input::GetKey(Key::A))
 		{
-			m_register->get<Transform>(blue).SetPositionX(positionBlue.x - (speed * Timer::deltaTime));
+			m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(positionBlue.x - (speed * Timer::deltaTime));
 		}
 		if (Input::GetKey(Key::D))
 		{
-			m_register->get<Transform>(blue).SetPositionX(positionBlue.x + (speed * Timer::deltaTime));
+			m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(positionBlue.x + (speed * Timer::deltaTime));
 		}
 		if (Input::GetKey(Key::LeftArrow))
 		{
-			m_register->get<Transform>(water).SetPositionX(positionWater.x - (speed * Timer::deltaTime));
+			m_register->get<Transform>(EntityIdentifier::MainPlayer2()).SetPositionX(positionWater.x - (speed * Timer::deltaTime));
 		}
 		if (Input::GetKey(Key::RightArrow))
 		{
-			m_register->get<Transform>(water).SetPositionX(positionWater.x + (speed * Timer::deltaTime));
+			m_register->get<Transform>(EntityIdentifier::MainPlayer2()).SetPositionX(positionWater.x + (speed * Timer::deltaTime));
 		}
 	}
 }
@@ -250,7 +248,6 @@ void Game::KeyboardDown()
 		SceneEditor::ResetEditor();
 
 		m_activeScene->Unload();
-
 
 		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 		m_register = m_scenes[2]->GetScene();
@@ -312,10 +309,8 @@ void Game::KeyboardDown()
 	{
 
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
-		auto water = scene->GetWatermelon();
-		auto blue = scene->GetBlueberry();
-		auto& blueBod = ECS::GetComponent<PhysicsBody>(blue);
-		auto& waterBod = ECS::GetComponent<PhysicsBody>(water);
+		auto& blueBod = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer());
+		auto& waterBod = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2());
 
 		if (Input::GetKeyDown(Key::W) && ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer()).GetJump())
 		{
@@ -325,11 +320,10 @@ void Game::KeyboardDown()
 		}
 		if (Input::GetKeyDown(Key::UpArrow) && ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).GetJump())
 		{
-			waterBod.SetAcceleration(vec3(0.f, 65.f, 0.f));
-			waterBod.SetVelocity(vec3(0.f, 65.f, 0.f));
+			waterBod.SetAcceleration(vec3(0.f, 50.f, 0.f));
+			waterBod.SetVelocity(vec3(0.f, 50.f, 0.f));
 			ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).SetJump(false);
-		}
-		
+		}	
 	}
 }
 

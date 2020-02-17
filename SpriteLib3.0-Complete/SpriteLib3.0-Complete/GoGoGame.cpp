@@ -65,19 +65,19 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
 	
-		tempPhsBody = PhysicsBody(10.f, 10.f, vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Player() | CollisionIDs::Environment(), 0,  true);
+		float shrinkX = tempSpr.GetWidth() / 2.f; 
+		float shrinkY = tempSpr.GetWidth() / 2.f / 7;
+
+		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), vec2(0.f, -1.f), 
+			CollisionIDs::Player(), CollisionIDs::Player() | CollisionIDs::Environment(), 0,  true);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
 		tempPhsBody.SetGravity(true);
 		
-
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blueberry");
-
-		m_blueberry = entity;
 	}
 
 	//Watermelon
@@ -97,24 +97,21 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-150.f, 60.f, 100.f));
 
-
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 2.f - 1;
-		float shrinkY = tempSpr.GetWidth() / 1.f + 14;
+		float shrinkX = tempSpr.GetWidth() / 2.f - 10;
+		float shrinkY = tempSpr.GetWidth() / 2.f - 10;
 			
-		tempPhsBody = PhysicsBody(20, 20, vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Player() | CollisionIDs::Environment(), 1, true);
+		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), vec2(0.f, -5.f), 
+			CollisionIDs::Player(), CollisionIDs::Player() | CollisionIDs::Environment(), 1, true);
 		
-
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
 		tempPhsBody.SetGravity(true);
 		
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Watermelon");
-
-		m_watermelon = entity;
 	}
 
 	//PLATFORMS
@@ -298,14 +295,4 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 int GoGoGame::GetBackground()
 {
 	return m_background;
-}
-
-int GoGoGame::GetBlueberry()
-{
-	return m_blueberry;
-}
-
-int GoGoGame::GetWatermelon()
-{
-	return m_watermelon;
 }
