@@ -133,7 +133,7 @@ void PhysicsSystem::Run(entt::registry* reg)
 						if (body2.GetBodyType() == BodyType::BOX)
 						{
 							//Perform Box-Box collision
-							if (BoxBoxCollision(std::pair<PhysicsBody&, Box>(body1, worldPosB), std::pair<PhysicsBody&, Box>(body2, worldPosB2)))
+							if (BoxBoxCollision(std::pair<PhysicsBody&, Box>(body1, worldPosB), std::pair<PhysicsBody&, Box>(body2, worldPosB2))) 		
 							{
 								if (body2.GetType() == 2 && body1.GetType() == 0)
 								{
@@ -142,12 +142,19 @@ void PhysicsSystem::Run(entt::registry* reg)
 								if (body2.GetType() == 2 && body1.GetType() == 1)
 								{
 									ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).SetJump(true);
-								}
+								}			
 
 								trans1.SetPosition(trans1.GetPosition() + (-body1.GetVelocity() * (Timer::deltaTime)));
 								body1.SetAcceleration(vec3(0.f, 0.f, 0.f));
 								body1.SetVelocity(vec3(0.f, 0.f, 0.f));
-							}
+							}		
+
+							/*if (BoxBoxCollision2(std::pair<PhysicsBody&, Box>(body1, worldPosB), std::pair<PhysicsBody&, Box>(body2, worldPosB2)))
+							{
+								trans1.SetPosition(trans1.GetPosition() + (-body1.GetVelocity() * (Timer::deltaTime)));
+								body1.SetAcceleration(vec3(0.f, 0.f, 0.f));
+								body1.SetVelocity(vec3(0.f, 0.f, 0.f));
+							}*/
 						}
 					}
 
@@ -156,7 +163,6 @@ void PhysicsSystem::Run(entt::registry* reg)
 		}
 	}
 }
-
 
 bool PhysicsSystem::BoxBoxCollision(std::pair<PhysicsBody&, Box> group1, std::pair<PhysicsBody&, Box> group2)
 {
@@ -179,6 +185,32 @@ bool PhysicsSystem::BoxBoxCollision(std::pair<PhysicsBody&, Box> group1, std::pa
 
 		std::cout << axisYCollide << "This is for Y" << std::endl;
 		
+		//If both axes are overlapping, it means the bodies are colliding
+		//If not, then they're not colliding
+		return axisXCollide && axisYCollide;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool PhysicsSystem::BoxBoxCollision2(std::pair<PhysicsBody&, Box> group1, std::pair<PhysicsBody&, Box> group2)
+{
+	//if body 1 actually collides with body 2
+		//Perform AABB bounding box checks
+	//else
+		//There's no collision
+	if (group1.first.GetCollideID() & group2.first.GetBodyID())
+	{
+		//Perform bounding box checks
+		//Are the x-axes colliding?
+		bool axisXCollide = group1.second.m_bottomRight.x >= group2.second.m_bottomLeft.x &&
+			group2.second.m_bottomLeft.x >= group1.second.m_bottomRight.x;
+
+		//Are the y-axes colliding?
+		bool axisYCollide = group1.second.m_bottomRight.y >= group2.second.m_topLeft.y &&
+			group2.second.m_bottomRight.y <= group1.second.m_topLeft.y;
 
 		//If both axes are overlapping, it means the bodies are colliding
 		//If not, then they're not colliding

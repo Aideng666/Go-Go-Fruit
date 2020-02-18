@@ -107,8 +107,6 @@ public:
 
 	int GetType();
 
-
-
 	//Setters
 	//Sets force to be applied to this body
 	void SetForce(vec3 force);

@@ -42,9 +42,7 @@ namespace PhysicsSystem
 	//Box-Box
 	void Run(entt::registry* reg);
 
-	//Run our Box-Circle Collision detection system.
-	bool BoxCircleCollision(std::pair<PhysicsBody&, Circle> group1, std::pair<PhysicsBody&, Box> group2);
-
 	//Run our Box-Box Collision detection system
 	bool BoxBoxCollision(std::pair<PhysicsBody&, Box> group1, std::pair<PhysicsBody&, Box> group2);
+	bool BoxBoxCollision2(std::pair<PhysicsBody&, Box> group1, std::pair<PhysicsBody&, Box> group2);
 }
