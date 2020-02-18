@@ -99,6 +99,37 @@ void Game::Update()
 	//Updates the active scene
 	m_activeScene->Update();
 
+	if (m_activeScene == m_scenes[2])
+	{
+		GoGoGame* scene = (GoGoGame*)m_activeScene;
+		auto button = scene->GetButton();
+		auto platform = scene->GetPlat();
+
+		if (ECS::GetComponent<PhysicsBody>(button).GetPressed())
+		{
+	
+			if (ECS::GetComponent<Transform>(platform).GetPosition().y <= -92.f && ECS::GetComponent<Transform>(platform).GetPosition().y <= 10.f)
+			{
+				SetUp(true);
+			}
+			if (ECS::GetComponent<Transform>(platform).GetPosition().y >= 10.f && ECS::GetComponent<Transform>(platform).GetPosition().y >= -92.f)
+			{
+				SetUp(false);
+			}
+
+			if (GetUp())
+			{
+				m_register->get<Transform>(platform).SetPositionY(ECS::GetComponent<Transform>(platform).GetPosition().y + (40 * Timer::deltaTime));
+			}
+			if (!GetUp())
+			{
+				m_register->get<Transform>(platform).SetPositionY(ECS::GetComponent<Transform>(platform).GetPosition().y - (40 * Timer::deltaTime));
+			}
+		}
+		
+
+	}
+
 }
 
 void Game::GUI()
@@ -398,4 +429,14 @@ void Game::MouseWheel(SDL_MouseWheelEvent evnt)
 	}
 	//Resets the enabled flag
 	m_wheel = false;
+}
+
+bool Game::GetUp()
+{
+	return this->goingUp;
+}
+
+void Game::SetUp(bool up)
+{
+	this->goingUp = up;
 }

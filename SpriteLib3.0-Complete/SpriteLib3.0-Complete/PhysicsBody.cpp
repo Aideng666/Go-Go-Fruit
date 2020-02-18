@@ -418,4 +418,15 @@ void PhysicsBody::SetDynamic(bool isDynamic)
 	m_dynamic = isDynamic;
 }
 
+bool PhysicsBody::GetPressed()
+{
+	return isPressed;
+}
+
+void PhysicsBody::SetPressed(bool isPressed)
+{
+	this->isPressed = isPressed;
+}
+
+
 

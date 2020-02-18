@@ -9,8 +9,12 @@ public:
 
 	void InitScene(float windowWidth, float windowHeight);
 	int GetBackground();
+	int GetButton();
+	int GetPlat();
 
 private:
 	int m_background;
+	int m_button;
+	int m_movingPlat;
 };
 

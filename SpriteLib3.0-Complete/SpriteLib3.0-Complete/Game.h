@@ -66,6 +66,10 @@ public:
 	void MouseMotion(SDL_MouseMotionEvent evnt);
 	void MouseClick(SDL_MouseButtonEvent evnt);
 	void MouseWheel(SDL_MouseWheelEvent evnt);
+
+	bool GetUp();
+	void SetUp(bool up);
+
 private:
 	//The window
 	Window *m_window = nullptr;
@@ -92,6 +96,8 @@ private:
 	bool m_wheel = false;
 
 	XInputManager input;
+
+	bool goingUp = true;
 };
 
 

@@ -157,6 +157,9 @@ public:
 	//Does the object not move?
 	void SetDynamic(bool isDynamic);
 
+	bool GetPressed();
+	void SetPressed(bool isPressed);
+
 
 private:
 
@@ -215,6 +218,8 @@ private:
 	//Physics body drawing stuff
 	GLuint m_vao = GL_NONE;
 	GLuint m_vboPos = GL_NONE;
+
+	bool isPressed = false;
 };
 
 //Sends body TO json file
