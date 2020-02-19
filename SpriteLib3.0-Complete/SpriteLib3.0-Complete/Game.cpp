@@ -245,19 +245,19 @@ void Game::KeyboardHold()
 		float speed = 60.f;
 		
 
-		if (Input::GetKey(Key::A))
+		if (Input::GetKey(Key::A) && m_register->get<PhysicsBody>(EntityIdentifier::MainPlayer()).GetCanMoveL())
 		{
 			m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(positionBlue.x - (speed * Timer::deltaTime));
 		}
-		if (Input::GetKey(Key::D))
+		if (Input::GetKey(Key::D) && m_register->get<PhysicsBody>(EntityIdentifier::MainPlayer()).GetCanMoveR())
 		{
 			m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(positionBlue.x + (speed * Timer::deltaTime));
 		}
-		if (Input::GetKey(Key::LeftArrow))
+		if (Input::GetKey(Key::LeftArrow) && m_register->get<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetCanMoveL())
 		{
 			m_register->get<Transform>(EntityIdentifier::MainPlayer2()).SetPositionX(positionWater.x - (speed * Timer::deltaTime));
 		}
-		if (Input::GetKey(Key::RightArrow))
+		if (Input::GetKey(Key::RightArrow) && m_register->get<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetCanMoveR())
 		{
 			m_register->get<Transform>(EntityIdentifier::MainPlayer2()).SetPositionX(positionWater.x + (speed * Timer::deltaTime));
 		}

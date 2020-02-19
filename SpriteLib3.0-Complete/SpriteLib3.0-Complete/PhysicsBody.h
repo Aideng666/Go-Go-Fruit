@@ -160,6 +160,13 @@ public:
 	bool GetPressed();
 	void SetPressed(bool isPressed);
 
+	bool GetCanMove();
+	void SetCanMove(bool canMove);
+	bool GetCanMoveL();
+	void SetCanMoveL(bool canMove);
+	bool GetCanMoveR();
+	void SetCanMoveR(bool canMove);
+
 
 private:
 
@@ -220,6 +227,9 @@ private:
 	GLuint m_vboPos = GL_NONE;
 
 	bool isPressed = false;
+	bool canMove = true;
+	bool canMoveL = true;
+	bool canMoveR = true;
 };
 
 //Sends body TO json file

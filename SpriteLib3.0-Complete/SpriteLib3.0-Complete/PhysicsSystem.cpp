@@ -1,6 +1,8 @@
 #include "PhysicsSystem.h"
 #include "PhysicsBody.h"
 
+using namespace std;
+
 void PhysicsSystem::Init()
 {
 	physicsDrawShader.Load("./assets/shader/PhysicsDraw.vert", "./assets/shader/PhysicsDraw.frag");
@@ -136,6 +138,90 @@ void PhysicsSystem::Run(entt::registry* reg)
 							//Perform Box-Box collision
 							if (BoxBoxCollision(std::pair<PhysicsBody&, Box>(body1, worldPosB), std::pair<PhysicsBody&, Box>(body2, worldPosB2))) 		
 							{
+
+								vec3 position1 = trans1.GetPosition();
+								float tempWidth1 = body1.GetWidth() / 2;
+								vec3 position2 = trans2.GetPosition();
+								float tempWidth2 = body2.GetWidth() / 2;
+
+								float front1 = position1.x + tempWidth1;
+								float back1 = position1.x - tempWidth1;
+								float front2 = position2.x + tempWidth2;
+								float back2 = position2.x - tempWidth2;
+								float bottom = trans1.GetPosition().y - (body1.GetHeight() / 2);
+								float bottom2 = trans2.GetPosition().y - (body2.GetHeight() / 2);
+								float top = trans1.GetPosition().y + (body1.GetHeight() / 2);
+								float top2 = trans2.GetPosition().y + (body2.GetHeight() / 2);
+
+
+								if ((front1 < back2 || back1 > front2) || (bottom > top2 || bottom2 > top))
+								{
+									body1.SetCanMoveL(true);
+									body1.SetCanMoveR(true);
+								}
+								if (front1 >= back2 && (bottom < top2 && top > bottom2))
+								{
+									body1.SetCanMoveR(false);
+									body1.SetCanMoveL(true);
+									if (body2.GetType() == 0 || body2.GetType() == 1)
+									{
+										body2.SetCanMoveR(true);
+										body2.SetCanMoveL(false);
+									}
+								}
+								if (back1 <= front2 && (bottom < top2 && top > bottom2))
+								{
+									body1.SetCanMoveL(false);
+									body1.SetCanMoveR(true);
+									if (body2.GetType() == 0 || body2.GetType() == 1)
+									{
+										body2.SetCanMoveL(true);
+										body2.SetCanMoveR(false);
+									}
+								}
+								/*if (front1 <= back2)
+								{
+									cout << "HI";
+									body1.SetCanMoveL(true);
+								}
+								if (back1 >= front2)
+								{
+									body1.SetCanMoveR(true);
+								}*/
+								/*else
+								{
+
+									if (front1 >= back2 && (body1.GetType() == 0 || body1.GetType() == 1))
+									{
+
+										if (body2.GetType() != 0 && body2.GetType() != 1)
+										{
+											trans1.SetPosition(vec3(trans1.GetPosition().x - 2.f, trans1.GetPosition().y, trans1.GetPosition().z));
+										}
+										if (body2.GetType() == 0 || body2.GetType() == 1)
+										{
+											trans1.SetPosition(vec3(trans1.GetPosition().x - 2.f, trans1.GetPosition().y, trans1.GetPosition().z));
+											trans2.SetPosition(vec3(trans2.GetPosition().x + 2.f, trans2.GetPosition().y, trans2.GetPosition().z));
+										}
+									}
+									if (back1 <= front2 && (body1.GetType() == 0 || body1.GetType() == 1))
+									{
+										if (body2.GetType() != 0 && body2.GetType() != 1)
+										{
+											trans1.SetPosition(vec3(trans1.GetPosition().x + 2.f, trans1.GetPosition().y, trans1.GetPosition().z));
+										}
+										else
+										{
+											trans1.SetPosition(vec3(trans1.GetPosition().x + 2.f, trans1.GetPosition().y, trans1.GetPosition().z));
+											trans2.SetPosition(vec3(trans2.GetPosition().x - 2.f, trans2.GetPosition().y, trans2.GetPosition().z));
+										}
+									}
+								}*/
+								
+
+
+
+								//Allows the players to jump after they have landed on something
 								if (body1.GetType() == 0)
 								{
 									ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer()).SetJump(true);
@@ -145,22 +231,18 @@ void PhysicsSystem::Run(entt::registry* reg)
 									ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).SetJump(true);
 								}	
 
+								//Checks if a button was pressed
 								if (body2.GetType() == 4)
 								{
 									body2.SetPressed(true);
 								}
 
-								trans1.SetPosition(trans1.GetPosition() + (-body1.GetVelocity() * (Timer::deltaTime)));
-								body1.SetAcceleration(vec3(0.f, 0.f, 0.f));
-								body1.SetVelocity(vec3(0.f, 0.f, 0.f));
+									trans1.SetPosition(trans1.GetPosition() + (-body1.GetVelocity() * (Timer::deltaTime)));
+									body1.SetAcceleration(vec3(0.f, 0.f, 0.f));
+									body1.SetVelocity(vec3(0.f, 0.f, 0.f));
+								
 							}		
 
-							/*if (BoxBoxCollision2(std::pair<PhysicsBody&, Box>(body1, worldPosB), std::pair<PhysicsBody&, Box>(body2, worldPosB2)))
-							{
-								trans1.SetPosition(trans1.GetPosition() + (-body1.GetVelocity() * (Timer::deltaTime)));
-								body1.SetAcceleration(vec3(0.f, 0.f, 0.f));
-								body1.SetVelocity(vec3(0.f, 0.f, 0.f));
-							}*/
 						}
 					}
 

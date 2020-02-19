@@ -428,5 +428,36 @@ void PhysicsBody::SetPressed(bool isPressed)
 	this->isPressed = isPressed;
 }
 
+bool PhysicsBody::GetCanMove()
+{
+	return this->canMove;
+}
+
+void PhysicsBody::SetCanMove(bool canMove)
+{
+	this->canMove = canMove;
+}
+
+bool PhysicsBody::GetCanMoveL()
+{
+	return this->canMoveL;
+}
+
+void PhysicsBody::SetCanMoveL(bool canMove)
+{
+	this->canMoveL = canMove;
+}
+
+bool PhysicsBody::GetCanMoveR()
+{
+	return this->canMoveR;
+}
+
+void PhysicsBody::SetCanMoveR(bool canMove)
+{
+	this->canMoveR = canMove;
+}
+
+
 
 
