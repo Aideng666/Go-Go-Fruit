@@ -283,32 +283,26 @@ void Game::KeyboardHold()
 		blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
 		waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
 
-		//vec3 positionBlue = m_register->get<Transform>(EntityIdentifier::MainPlayer()).GetPosition();
-		//vec3 positionWater = m_register->get<Transform>(EntityIdentifier::MainPlayer2()).GetPosition();
-		//float speed = 60.f;
-		
+		//ZOOMING
+		auto cam = scene->GetCam();
 
-		/*if (Input::GetKey(Key::A) && m_register->get<PhysicsBody>(EntityIdentifier::MainPlayer()).GetCanMoveL())
+		if (Input::GetKey(Key::Z))
 		{
-			m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(positionBlue.x - (speed * Timer::deltaTime));
+			ECS::GetComponent<Camera>(cam).Zoom(2.f);
 		}
-		if (Input::GetKey(Key::D) && m_register->get<PhysicsBody>(EntityIdentifier::MainPlayer()).GetCanMoveR())
+		if (Input::GetKey(Key::X))
 		{
-			m_register->get<Transform>(EntityIdentifier::MainPlayer()).SetPositionX(positionBlue.x + (speed * Timer::deltaTime));
+			ECS::GetComponent<Camera>(cam).Zoom(-2.f);
 		}
-		if (Input::GetKey(Key::LeftArrow) && m_register->get<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetCanMoveL())
-		{
-			m_register->get<Transform>(EntityIdentifier::MainPlayer2()).SetPositionX(positionWater.x - (speed * Timer::deltaTime));
-		}
-		if (Input::GetKey(Key::RightArrow) && m_register->get<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetCanMoveR())
-		{
-			m_register->get<Transform>(EntityIdentifier::MainPlayer2()).SetPositionX(positionWater.x + (speed * Timer::deltaTime));
-		}*/
+
+		
 	}
 }
 
 void Game::KeyboardDown()
 {
+
+
 
 
 	if (Input::GetKeyDown(Key::Escape))
@@ -381,7 +375,6 @@ void Game::KeyboardDown()
 	//Jumping
 	if (m_activeScene == m_scenes[2])
 	{
-
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
 		auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
@@ -400,7 +393,7 @@ void Game::KeyboardDown()
 		{
 			if (Input::GetKeyDown(Key::UpArrow))
 			{
-				float impulse = waterBody->GetMass() * 7.5;
+				float impulse = waterBody->GetMass() * 10;
 				waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
 				listener.SetWGrounded(false);
 			}
