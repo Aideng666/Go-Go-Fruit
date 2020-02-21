@@ -8,7 +8,26 @@ void PhysicsSystem::Init()
 	physicsDrawShader.Load("./assets/shader/PhysicsDraw.vert", "./assets/shader/PhysicsDraw.frag");
 }
 
-void PhysicsSystem::Update(entt::registry * reg)
+void PhysicsSystem::Update(entt::registry* reg, b2World& world)
+{
+	auto view = reg->view<PhysicsBody, Transform>();
+
+	for (auto entity : view)
+	{
+		auto& physBod = view.get<PhysicsBody>(entity);
+		auto& trans = view.get<Transform>(entity);
+
+		physBod.Update(&trans);
+	}
+
+	Run(world);
+}
+
+
+
+
+//OLD UPDATE
+/*void PhysicsSystem::Update(entt::registry * reg)
 {
 	auto view = reg->view<PhysicsBody, Transform>();
 
@@ -26,7 +45,7 @@ void PhysicsSystem::Update(entt::registry * reg)
 	//Runs the various things
 	//(currently just checking collisions)
 	Run(reg);
-}
+}*/
 
 void PhysicsSystem::Draw(entt::registry * reg)
 {
@@ -86,7 +105,8 @@ void PhysicsSystem::Draw(entt::registry * reg)
 	}
 }
 
-void PhysicsSystem::Run(entt::registry* reg)
+//OLD RUN
+/*void PhysicsSystem::Run(entt::registry* reg)
 {
 
 
@@ -187,8 +207,8 @@ void PhysicsSystem::Run(entt::registry* reg)
 								if (back1 >= front2)
 								{
 									body1.SetCanMoveR(true);
-								}*/
-								/*else
+								}
+								else
 								{
 
 									if (front1 >= back2 && (body1.GetType() == 0 || body1.GetType() == 1))
@@ -216,7 +236,7 @@ void PhysicsSystem::Run(entt::registry* reg)
 											trans2.SetPosition(vec3(trans2.GetPosition().x - 2.f, trans2.GetPosition().y, trans2.GetPosition().z));
 										}
 									}
-								}*/
+								}
 								
 
 
@@ -241,7 +261,7 @@ void PhysicsSystem::Run(entt::registry* reg)
 									body1.SetAcceleration(vec3(0.f, 0.f, 0.f));
 									body1.SetVelocity(vec3(0.f, 0.f, 0.f));
 								
-							}		
+							}*	
 
 						}
 					}
@@ -250,6 +270,16 @@ void PhysicsSystem::Run(entt::registry* reg)
 			}
 		}
 	}
+}*/
+
+void PhysicsSystem::Run(b2World& world)
+{
+	float32 timeStep = 1.f / 60.f;
+
+	int32 velocityIterations = 8;
+	int32 positionIterations = 3;
+
+	world.Step(timeStep, velocityIterations, positionIterations);
 }
 
 bool PhysicsSystem::BoxBoxCollision(std::pair<PhysicsBody&, Box> group1, std::pair<PhysicsBody&, Box> group2)

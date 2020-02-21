@@ -7,6 +7,7 @@
 #include "VertexManager.h"
 #include "EntityIdentifier.h"
 #include "Transform.h"
+#include "Box2D/Box2D.h"
 
 enum class BodyType
 {
@@ -28,6 +29,7 @@ private:
 	static unsigned int m_playerID;
 	static unsigned int m_environmentID;
 	static unsigned int m_enemyID;
+
 };
 
 
@@ -37,8 +39,9 @@ public:
 	PhysicsBody() { };
 
 	//Constructs a box collider
-	PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic = false);
-	PhysicsBody(float width, float height, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, int type, bool isDynamic = false);
+	//PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic = false);
+	//PhysicsBody(float width, float height, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, int type, bool isDynamic = false);
+	PhysicsBody(b2Body* body, float width, float height, vec2 centerOffset, bool isDynamic);
 
 	//Initializes body for drawing
 	void InitBody();
@@ -46,7 +49,8 @@ public:
 	void DrawBody();
 
 	//Update physics stuffs
-	void Update(Transform* trans, float dt);
+	//void Update(Transform* trans, float dt);
+	void Update(Transform* trans);
 
 	//Apply a force to the physics body
 	void ApplyForce(vec3 force);
@@ -167,6 +171,11 @@ public:
 	bool GetCanMoveR();
 	void SetCanMoveR(bool canMove);
 
+	b2Body* GetBody() const;
+	b2Vec2 GetPosition() const;
+	void SetBody(b2Body* body);
+	void SetPosition(b2Vec2 bodyPos);
+
 
 private:
 
@@ -230,12 +239,17 @@ private:
 	bool canMove = true;
 	bool canMoveL = true;
 	bool canMoveR = true;
+
+	b2Body* m_body = nullptr;
+	b2Vec2 m_position = b2Vec2(0.f, 0.f);
 };
 
 //Sends body TO json file
 inline void to_json(nlohmann::json& j, const PhysicsBody& phys)
 {
-	
+
+	//Position
+	j["BodyPosition"] = { phys.GetPosition().x, phys.GetPosition().y };
 	//Stores body type
 	j["BodyType"] = phys.GetBodyType();
 	//Center offset
@@ -272,6 +286,7 @@ inline void to_json(nlohmann::json& j, const PhysicsBody& phys)
 inline void from_json(const nlohmann::json& j, PhysicsBody& phys)
 {
 
+	phys.SetPosition(b2Vec2(j["BodyPosition"][0], j["bodyPosition"][1]));
 	//Sets body type
 	phys.SetBodyType(j["BodyType"]);
 	//Set the center offset

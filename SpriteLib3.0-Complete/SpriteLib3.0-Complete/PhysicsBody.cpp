@@ -20,10 +20,31 @@ unsigned int CollisionIDs::Enemy()
 	return m_enemyID;
 }
 
+b2Body* PhysicsBody::GetBody() const
+{
+	return m_body;
+}
+
+b2Vec2 PhysicsBody::GetPosition() const
+{
+	return m_position;
+}
+
+void PhysicsBody::SetBody(b2Body* body)
+{
+	m_body = body;
+}
+
+void PhysicsBody::SetPosition(b2Vec2 bodyPos)
+{
+	m_position = bodyPos;
+}
+
 vec3 PhysicsBody::m_gravityAcceleration = vec3(0.f, -185.f, 0.f);//-35 | -175
 bool PhysicsBody::m_drawBodies = false;
 
-PhysicsBody::PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic)
+//OLD CONSTRUCTORS
+/*PhysicsBody::PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic)
 {
 	m_bodyType = BodyType::BOX;
 
@@ -66,6 +87,37 @@ PhysicsBody::PhysicsBody(float width, float height, vec2 centerOffset, unsigned 
 	m_type = type;
 
 	InitBody();
+}*/
+
+PhysicsBody::PhysicsBody(b2Body* body, float width, float height, vec2 centerOffset, bool isDynamic)
+{
+	b2PolygonShape tempShape;
+	tempShape.SetAsBox(float32(width / 2.f), float32(height / 2.f),
+		b2Vec2(float32(centerOffset.x), float32(centerOffset.y)), float32(0.f));
+
+	b2FixtureDef tempFixture;
+	tempFixture.shape = &tempShape;
+	tempFixture.density = 1.f;
+	tempFixture.friction = 0.3f;
+
+	m_body = body;
+	m_body->CreateFixture(&tempFixture);
+
+	m_body = body;
+	m_bodyType = BodyType::BOX;
+
+	m_width = width;
+	m_height = height;
+
+	m_centerOffset = centerOffset;
+	m_bottomLeft = vec2(centerOffset.x - (width / 2.f), centerOffset.y - (height / 2.f));
+	m_bottomRight = vec2(centerOffset.x + (width / 2.f), centerOffset.y - (height / 2.f));
+	m_topLeft = vec2(centerOffset.x - (width / 2.f), centerOffset.y + (height / 2.f));
+	m_topRight = vec2(centerOffset.x + (width / 2.f), centerOffset.y + (height / 2.f));
+
+	m_dynamic = isDynamic;
+
+	InitBody();
 }
 
 void PhysicsBody::InitBody()
@@ -103,7 +155,8 @@ void PhysicsBody::DrawBody()
 	glBindVertexArray(GL_NONE);
 }
 
-void PhysicsBody::Update(Transform * trans, float dt)
+//OLD UPDATE
+/*void PhysicsBody::Update(Transform * trans, float dt)
 {
 	vec3 transPosition = trans->GetPosition();
 	
@@ -150,12 +203,28 @@ void PhysicsBody::Update(Transform * trans, float dt)
 	transPosition = transPosition + (m_velocity * dt);
 
 	trans->SetPosition(transPosition);
+}*/
+
+void PhysicsBody::Update(Transform* trans)
+{
+	m_position = m_body->GetPosition();
+
+	trans->SetPosition(vec3(m_body->GetPosition().x, m_body->GetPosition().y, trans->GetPosition().z));
+	trans->SetRotationAngleZ(Degrees(m_body->GetAngle()));
 }
 
 void PhysicsBody::ApplyForce(vec3 force)
 {
-	m_appliedForce = m_appliedForce + force;
+	m_body->ApplyForce(b2Vec2(float32(force.x), float32(force.y)),
+		b2Vec2(float32(m_body->GetPosition().x), float32(m_body->GetPosition().y)),
+		true);
 }
+
+//OLD APPLYFORCE
+/*void PhysicsBody::ApplyForce(vec3 force)
+{
+	m_appliedForce = m_appliedForce + force;
+}*/
 
 void PhysicsBody::AddCollideID(unsigned int collideID)
 {
