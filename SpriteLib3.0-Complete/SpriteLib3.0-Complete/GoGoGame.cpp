@@ -80,13 +80,15 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempBody->SetFixedRotation(true);
 
+		tempBody->SetUserData((void*)entity);
+
 		tempPhsBody = PhysicsBody(tempBody, tempSpr.GetWidth(), tempSpr.GetHeight(), vec2(0.f, 0.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(150.f);
 		tempPhsBody.SetGravity(true);
 		
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueberryBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blueberry");
 	}
 
@@ -121,6 +123,8 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempBody->SetFixedRotation(true);
+
+		tempBody->SetUserData((void*)entity);
 			
 		tempPhsBody = PhysicsBody(tempBody, tempSpr.GetWidth(), tempSpr.GetHeight(), vec2(0.f, 0.f), false);
 		
@@ -128,7 +132,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody.SetMaxVelo(85.f);
 		tempPhsBody.SetGravity(true);
 		
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::WatermelonBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Watermelon");
 	}
 
@@ -158,10 +162,12 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
+		tempBody->SetUserData((void*)entity);
+
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), 
 			vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Ground");
 	}
 

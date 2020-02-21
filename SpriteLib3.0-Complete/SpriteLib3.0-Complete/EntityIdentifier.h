@@ -36,6 +36,10 @@ public:
 	static unsigned int PhysicsBit();
 	static unsigned int HoriScrollCameraBit();
 	static unsigned int VertScrollCameraBit();
+	static unsigned int BlueberryBit();
+	static unsigned int WatermelonBit();
+	static unsigned int GroundBit();
+
 	//Setters
 	//Sets main player entity
 	static void MainPlayer(unsigned int entity);
@@ -87,6 +91,9 @@ private:
 	static unsigned int m_physicsBit;
 	static unsigned int m_horiScrollCameraBit;
 	static unsigned int m_vertScrollCameraBit;
+	static unsigned int m_blueberryBit;
+	static unsigned int m_watermelonBit;
+	static unsigned int m_groundBit;
 };
 
 #ifndef __ENTITYIDENTIFIERJSON_H__

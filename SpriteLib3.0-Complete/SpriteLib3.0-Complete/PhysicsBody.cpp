@@ -101,7 +101,7 @@ PhysicsBody::PhysicsBody(b2Body* body, float width, float height, vec2 centerOff
 	tempFixture.friction = 0.3f;
 
 	m_body = body;
-	m_body->CreateFixture(&tempFixture);
+	m_body->CreateFixture(&tempFixture)->SetUserData(this);
 
 	m_body = body;
 	m_bodyType = BodyType::BOX;

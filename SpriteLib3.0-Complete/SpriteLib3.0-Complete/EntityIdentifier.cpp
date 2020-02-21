@@ -11,6 +11,9 @@ unsigned int EntityIdentifier::m_animationBit		= 0x1000;
 unsigned int EntityIdentifier::m_physicsBit			= 0x10000;
 unsigned int EntityIdentifier::m_horiScrollCameraBit= 0x100000;
 unsigned int EntityIdentifier::m_vertScrollCameraBit= 0x1000000;
+unsigned int EntityIdentifier::m_groundBit          = 0x10000000;
+unsigned int EntityIdentifier::m_blueberryBit       = 0x2;
+unsigned int EntityIdentifier::m_watermelonBit      = 0x20;
 
 //(having just camera means the bit = 1)
 //(having sprite, animation and transform)
@@ -123,6 +126,21 @@ unsigned int EntityIdentifier::HoriScrollCameraBit()
 unsigned int EntityIdentifier::VertScrollCameraBit()
 {
 	return m_vertScrollCameraBit;
+}
+
+unsigned int EntityIdentifier::BlueberryBit()
+{
+	return m_blueberryBit;
+}
+
+unsigned int EntityIdentifier::WatermelonBit()
+{
+	return m_watermelonBit;
+}
+
+unsigned int EntityIdentifier::GroundBit()
+{
+	return m_groundBit;
 }
 
 void EntityIdentifier::MainPlayer(unsigned int entity)

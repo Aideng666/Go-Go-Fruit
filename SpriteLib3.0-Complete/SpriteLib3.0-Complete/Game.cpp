@@ -1,6 +1,9 @@
 #include "Game.h"
+#include "ContactListener.h"
 
 #include <random>
+
+ContactListener listener;
 
 
 Game::~Game()
@@ -50,6 +53,12 @@ void Game::InitGame()
 	m_register = m_scenes[0]->GetScene();
 	m_activeScene = m_scenes[0];
 	PhysicsSystem::Init();
+
+	for (int i = 0; i < m_scenes.size(); ++i)
+	{
+		m_scenes[i]->GetPhysicsWorld().SetContactListener(&listener);
+	}
+
 }
 
 bool Game::Run()
@@ -377,33 +386,25 @@ void Game::KeyboardDown()
 		auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
 		auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
 
-		if (Input::GetKeyDown(Key::W))
+		if (listener.GetBJump() || listener.GetBGrounded())
 		{
-			float impulse = blueBody->GetMass() * 18;
-			blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
-		}
-		if (Input::GetKeyDown(Key::UpArrow))
-		{
-			float impulse = waterBody->GetMass() * 7.5;
-			waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
+			if (Input::GetKeyDown(Key::W))
+			{
+				float impulse = blueBody->GetMass() * 18;
+				blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
+				listener.SetBGrounded(false);
+			}
 		}
 
-
-		/*auto& blueBod = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer());
-		auto& waterBod = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2());
-
-		if (Input::GetKeyDown(Key::W) && ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer()).GetJump())
+		if (listener.GetWJump() || listener.GetWGrounded())
 		{
-			blueBod.SetAcceleration(vec3(0.f, 110.f, 0.f));
-			blueBod.SetVelocity(vec3(0.f, 110.f, 0.f));
-			ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer()).SetJump(false);
+			if (Input::GetKeyDown(Key::UpArrow))
+			{
+				float impulse = waterBody->GetMass() * 7.5;
+				waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
+				listener.SetWGrounded(false);
+			}
 		}
-		if (Input::GetKeyDown(Key::UpArrow) && ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).GetJump())
-		{
-			waterBod.SetAcceleration(vec3(0.f, 65.f, 0.f));
-			waterBod.SetVelocity(vec3(0.f, 65.f, 0.f));
-			ECS::GetComponent<Transform>(EntityIdentifier::MainPlayer2()).SetJump(false);
-		}*/
 	}
 }
 
