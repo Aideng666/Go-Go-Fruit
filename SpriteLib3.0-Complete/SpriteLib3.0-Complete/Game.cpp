@@ -383,7 +383,7 @@ void Game::KeyboardDown()
 		{
 			if (Input::GetKeyDown(Key::W))
 			{
-				float impulse = blueBody->GetMass() * 18;
+				float impulse = blueBody->GetMass() * 30;
 				blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
 				listener.SetBGrounded(false);
 			}
@@ -393,7 +393,7 @@ void Game::KeyboardDown()
 		{
 			if (Input::GetKeyDown(Key::UpArrow))
 			{
-				float impulse = waterBody->GetMass() * 10;
+				float impulse = waterBody->GetMass() * 18;//18
 				waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
 				listener.SetWGrounded(false);
 			}

@@ -4,7 +4,7 @@
 GoGoGame::GoGoGame(std::string name)
 	: Scene(name)
 {
-	m_gravity = b2Vec2(float32(0.f), float32(-3.f));
+	m_gravity = b2Vec2(float32(0.f), float32(-9.f));
 	m_physicsWorld->SetGravity(m_gravity);
 
 }
@@ -63,15 +63,14 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<PhysicsBody>(entity);
 
 		std::string fileName = "Blueberry.png";
-
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 30.2597402598f, 20);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-100.f, 50.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 	
-		float shrinkX = tempSpr.GetWidth() / 2.f; 
-		float shrinkY = tempSpr.GetWidth() / 2.f / 7;
+		float shrinkX = tempSpr.GetWidth() / 30.2597402598f + 17;
+		float shrinkY = tempSpr.GetWidth() / 20.f;
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
@@ -79,12 +78,11 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempDef.position.Set(float32(-125.f), float32(-80));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
 		tempBody->SetFixedRotation(true);
-
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, tempSpr.GetWidth(), tempSpr.GetHeight(), vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
+			vec2(0.f, 0.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(150.f);
@@ -114,8 +112,8 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 2.f - 10;
-		float shrinkY = tempSpr.GetWidth() / 2.f - 10;
+		float shrinkX = tempSpr.GetWidth() / 40.3463203464f + 10;
+		float shrinkY = tempSpr.GetWidth() / 26.6666666667f + 5;
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
@@ -128,7 +126,8 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempBody->SetUserData((void*)entity);
 			
-		tempPhsBody = PhysicsBody(tempBody, tempSpr.GetWidth(), tempSpr.GetHeight(), vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), 
+			vec2(0.f, -2.f), false);
 		
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
@@ -172,6 +171,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Ground");
 	}
+
 	//WALLS AND ROOF
 	{
 		auto entity = ECS::CreateEntity();
@@ -179,7 +179,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
-
 
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 100.f));
 
@@ -256,7 +255,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Ground");
 	}
-	//Platform
+
+
+	//PLATFORMS
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -266,7 +267,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "Wall.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 60, 5);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 62, 5);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -278,7 +279,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-50.f), float32(-95));
+		tempDef.position.Set(float32(-50.f), float32(-85));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -311,7 +312,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-17.f), float32(-65));
+		tempDef.position.Set(float32(-17.f), float32(-53));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -344,7 +345,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(15.f), float32(-32.5));
+		tempDef.position.Set(float32(15.f), float32(-21));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -365,7 +366,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "Wall.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40, 5);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 5);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -377,7 +378,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(64.f), float32(-29));
+		tempDef.position.Set(float32(69.f), float32(-17));
 
 		tempDef.angle = Transform::ToRadians(10.f);
 
@@ -400,7 +401,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "Wall.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 100, 5);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 85, 5);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -412,7 +413,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(133.f), float32(-25.5));
+		tempDef.position.Set(float32(136.f), float32(-13));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
