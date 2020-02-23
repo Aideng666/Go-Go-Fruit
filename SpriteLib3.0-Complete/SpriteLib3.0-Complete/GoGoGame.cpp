@@ -34,23 +34,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		m_cam = entity;
 	}
 
-	//Background Initialization
-	/*{
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-
-		std::string fileName = "TempBack.jpg";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 384, 200);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 50.f));
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Temp Background");
-
-		m_background = entity;
-	}*/
-
+#pragma region PLAYER ENTITIES
 	//Blueberry
 	{
 		auto entity = ECS::CreateEntity();
@@ -68,7 +52,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-	
+
 		float shrinkX = tempSpr.GetWidth() / 30.2597402598f + 17;
 		float shrinkY = tempSpr.GetWidth() / 20.f;
 
@@ -87,7 +71,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(150.f);
 		tempPhsBody.SetGravity(true);
-		
+
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueberryBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blueberry");
 	}
@@ -104,9 +88,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<PhysicsBody>(entity);
 
 		std::string fileName = "Watermelon.png";
-
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40.3463203464f, 26.6666666667f);
-
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-160.f, 60.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -121,21 +103,22 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempDef.position.Set(float32(-150.f), float32(-80));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
 		tempBody->SetFixedRotation(true);
-
 		tempBody->SetUserData((void*)entity);
-			
-		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), 
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
 			vec2(0.f, -2.f), false);
-		
+
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(85.f);
 		tempPhsBody.SetGravity(true);
-		
+
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::WatermelonBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Watermelon");
 	}
+#pragma endregion
+
+
 
 	//Ground
 	{
@@ -172,7 +155,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Ground");
 	}
 
-	//WALLS AND ROOF
+#pragma region BARRIERS
+	//BARRIERS
+	//Top Wall
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -180,10 +165,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
@@ -191,15 +175,14 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempDef.position.Set(float32(0.f), float32(102));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, 400, 5, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Ground");
+		ECS::SetUpIdentifier(entity, bitHolder, "Top Wall");
 	}
-
+	//Left Wall
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -207,11 +190,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
@@ -219,15 +200,14 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempDef.position.Set(float32(-180.f), float32(0));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, 5, 400, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Ground");
+		ECS::SetUpIdentifier(entity, bitHolder, "Left Wall");
 	}
-
+	//Right Wall
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -235,11 +215,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -0.f, 100.f));
 
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
@@ -247,16 +225,16 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempDef.position.Set(float32(180.f), float32(0));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, 5, 400, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Ground");
+		ECS::SetUpIdentifier(entity, bitHolder, "Right Wall");
 	}
+#pragma endregion
 
-
+#pragma region MAP LAYOUT
 	//PLATFORMS
 	{
 		auto entity = ECS::CreateEntity();
@@ -289,8 +267,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Platform");
+		ECS::SetUpIdentifier(entity, bitHolder, "Hori 1");
 	}
+
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -322,8 +301,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Platform");
+		ECS::SetUpIdentifier(entity, bitHolder, "Vert 1");
 	}
+
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -355,7 +335,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Platform");
+		ECS::SetUpIdentifier(entity, bitHolder, "Hori 2");
 	}
 	{
 		auto entity = ECS::CreateEntity();
@@ -390,7 +370,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Platform");
+		ECS::SetUpIdentifier(entity, bitHolder, "Angled 1");
 	}
 	{
 		auto entity = ECS::CreateEntity();
@@ -423,8 +403,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Platform");
+		ECS::SetUpIdentifier(entity, bitHolder, "Hori 3");
 	}
+#pragma endregion
 
 	//Button
 	/*{
@@ -453,60 +434,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		m_button = entity;
 	}
-
-
-	//PLATFORMS
-	{
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
-
-		std::string fileName = "Platform.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 7.5);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -92.f, 100.f));
-
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		float shrinkX = tempSpr.GetWidth() / 100.f;
-		float shrinkY = tempSpr.GetWidth() / 100.f;
-
-		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, 0.f), CollisionIDs::Environment(), CollisionIDs::Environment() | CollisionIDs::Player(), 3, true);
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Platform");
-
-		m_movingPlat = entity;
-	}
-	//Platform 2
-	{
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
-
-		std::string fileName = "Platform.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 100, 15);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		float shrinkX = tempSpr.GetWidth() / 100.f;
-		float shrinkY = tempSpr.GetWidth() / 100.f;
-
-		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), true);
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Platform");
-	}
+	
 	//Fruit Bowl
 	{
 		auto entity = ECS::CreateEntity();
@@ -531,82 +459,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
-	}
-
-	//Test Walls
-	{
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
-
-		std::string fileName = "Wall.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 420, 5);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		float shrinkX = tempSpr.GetWidth() / 400.f;
-		float shrinkY = tempSpr.GetWidth() / 400.f;
-
-		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), true);
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Wall");
-	}
-
-	{
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
-
-		std::string fileName = "Wall.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 420, 5);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		float shrinkX = tempSpr.GetWidth() / 400.f;
-		float shrinkY = tempSpr.GetWidth() / 400.f;
-		
-		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), true);
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Wall");
-	}
-
-	{
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
-
-		std::string fileName = "Wall.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 5, 420);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		float shrinkX = tempSpr.GetWidth() / 400.f;
-		float shrinkY = tempSpr.GetWidth() / 400.f;
-		
-		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), true);
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Wall");
 	}*/
 }
 
@@ -618,11 +470,6 @@ int GoGoGame::GetBackground()
 int GoGoGame::GetButton()
 {
 	return m_button;
-}
-
-int GoGoGame::GetPlat()
-{
-	return m_movingPlat;
 }
 
 int GoGoGame::GetCam()

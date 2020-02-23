@@ -65,11 +65,6 @@ void Transform::SetScale(float x, float y, float z)
 	m_scale = vec3(x, y, z);
 }
 
-void Transform::SetJump(bool jump)
-{
-	m_jump = jump;
-}
-
 vec3 Transform::GetPosition() const
 {
 	//Get the local position
@@ -119,11 +114,6 @@ mat4 Transform::GetLocalToWorldMatrix()
 {
 	//Gets the model matrix
 	return m_localToWorldMatrix;
-}
-
-bool Transform::GetJump()
-{
-	return m_jump;
 }
 
 Degrees Transform::ToDegrees(Radians angle)

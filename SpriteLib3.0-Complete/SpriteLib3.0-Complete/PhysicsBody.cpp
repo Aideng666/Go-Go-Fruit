@@ -40,54 +40,8 @@ void PhysicsBody::SetPosition(b2Vec2 bodyPos)
 	m_position = bodyPos;
 }
 
-vec3 PhysicsBody::m_gravityAcceleration = vec3(0.f, -185.f, 0.f);//-35 | -175
+vec3 PhysicsBody::m_gravityAcceleration = vec3(0.f, -185.f, 0.f);
 bool PhysicsBody::m_drawBodies = false;
-
-//OLD CONSTRUCTORS
-/*PhysicsBody::PhysicsBody(vec2 botLeft, vec2 topRight, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, bool isDynamic)
-{
-	m_bodyType = BodyType::BOX;
-
-	m_bottomLeft = botLeft;
-	m_topLeft = vec2(botLeft.x, topRight.y);
-	m_topRight = topRight;
-	m_bottomRight = vec2(topRight.x, botLeft.y);
-
-	m_width = m_bottomRight.x - m_bottomLeft.x;
-	m_height = m_topLeft.y - m_bottomLeft.y;
-
-	m_centerOffset = centerOffset;
-
-	m_bodyID = objectSpecifier;
-
-	m_collideID = collidesWith;
-
-	m_dynamic = isDynamic;
-
-	InitBody();
-}
-
-PhysicsBody::PhysicsBody(float width, float height, vec2 centerOffset, unsigned int objectSpecifier, unsigned int collidesWith, int type, bool isDynamic)
-{
-	m_bodyType = BodyType::BOX;
-
-	m_width = width;
-	m_height = height;
-
-	m_centerOffset = centerOffset;
-	m_bottomLeft = vec2(centerOffset.x - (width / 2.f), centerOffset.y - (height / 2.f));
-	m_bottomRight = vec2(centerOffset.x + (width / 2.f), centerOffset.y - (height / 2.f));
-	m_topLeft = vec2(centerOffset.x - (width / 2.f), centerOffset.y + (height / 2.f));
-	m_topRight = vec2(centerOffset.x + (width / 2.f), centerOffset.y + (height / 2.f));
-
-	m_collideID = collidesWith;
-	m_bodyID = objectSpecifier;
-
-	m_dynamic = isDynamic;
-	m_type = type;
-
-	InitBody();
-}*/
 
 PhysicsBody::PhysicsBody(b2Body* body, float width, float height, vec2 centerOffset, bool isDynamic)
 {
@@ -155,56 +109,6 @@ void PhysicsBody::DrawBody()
 	glBindVertexArray(GL_NONE);
 }
 
-//OLD UPDATE
-/*void PhysicsBody::Update(Transform * trans, float dt)
-{
-	vec3 transPosition = trans->GetPosition();
-	
-	if (m_velocity.GetMagnitude() > 0.f)
-	{
-		if (m_applyGravity)
-		{
-			m_frictionForce = vec3(-m_velocity.x, 0.f, 0.f) * m_friction;
-		}
-		else
-		{
-			m_frictionForce = -m_velocity * m_friction;
-		}
-	}
-
-	m_netForce = m_appliedForce + m_frictionForce;
-	m_acceleration = (m_netForce / m_mass);
-
-	if (m_applyGravity)
-	{
-		if (m_dynamic)
-		{
-			m_acceleration = m_acceleration + (m_gravityAcceleration * m_mass);
-		}
-	}
-
-	m_frictionForce = vec3(0.f, 0.f, 0.f);
-	m_appliedForce = vec3(0.f, 0.f, 0.f);
-
-	float tempX = m_velocity.x;
-	float tempY = m_velocity.y;
-
-	m_velocity = m_velocity + (m_acceleration * dt);
-
-	if (abs(m_velocity.x) > abs(m_maxVelo))
-	{
-		m_velocity.x = tempX;
-	}
-	if (abs(m_velocity.y) > abs(m_maxVelo))
-	{
-		m_velocity.y = tempY;
-	}
-
-	transPosition = transPosition + (m_velocity * dt);
-
-	trans->SetPosition(transPosition);
-}*/
-
 void PhysicsBody::Update(Transform* trans)
 {
 	m_position = m_body->GetPosition();
@@ -220,18 +124,11 @@ void PhysicsBody::ApplyForce(vec3 force)
 		true);
 }
 
-//OLD APPLYFORCE
-/*void PhysicsBody::ApplyForce(vec3 force)
-{
-	m_appliedForce = m_appliedForce + force;
-}*/
-
 void PhysicsBody::AddCollideID(unsigned int collideID)
 {
 	//Bitwise OR an ID into the physics body types that this one collides with
 	m_collideID |= collideID;
 }
-
 
 vec3 PhysicsBody::GetForce() const
 {
@@ -486,47 +383,3 @@ void PhysicsBody::SetDynamic(bool isDynamic)
 	//Is this body moving?
 	m_dynamic = isDynamic;
 }
-
-bool PhysicsBody::GetPressed()
-{
-	return isPressed;
-}
-
-void PhysicsBody::SetPressed(bool isPressed)
-{
-	this->isPressed = isPressed;
-}
-
-bool PhysicsBody::GetCanMove()
-{
-	return this->canMove;
-}
-
-void PhysicsBody::SetCanMove(bool canMove)
-{
-	this->canMove = canMove;
-}
-
-bool PhysicsBody::GetCanMoveL()
-{
-	return this->canMoveL;
-}
-
-void PhysicsBody::SetCanMoveL(bool canMove)
-{
-	this->canMoveL = canMove;
-}
-
-bool PhysicsBody::GetCanMoveR()
-{
-	return this->canMoveR;
-}
-
-void PhysicsBody::SetCanMoveR(bool canMove)
-{
-	this->canMoveR = canMove;
-}
-
-
-
-

@@ -161,21 +161,10 @@ public:
 	//Does the object not move?
 	void SetDynamic(bool isDynamic);
 
-	bool GetPressed();
-	void SetPressed(bool isPressed);
-
-	bool GetCanMove();
-	void SetCanMove(bool canMove);
-	bool GetCanMoveL();
-	void SetCanMoveL(bool canMove);
-	bool GetCanMoveR();
-	void SetCanMoveR(bool canMove);
-
 	b2Body* GetBody() const;
 	b2Vec2 GetPosition() const;
 	void SetBody(b2Body* body);
 	void SetPosition(b2Vec2 bodyPos);
-
 
 private:
 
@@ -235,11 +224,6 @@ private:
 	GLuint m_vao = GL_NONE;
 	GLuint m_vboPos = GL_NONE;
 
-	bool isPressed = false;
-	bool canMove = true;
-	bool canMoveL = true;
-	bool canMoveR = true;
-
 	b2Body* m_body = nullptr;
 	b2Vec2 m_position = b2Vec2(0.f, 0.f);
 };
@@ -247,7 +231,6 @@ private:
 //Sends body TO json file
 inline void to_json(nlohmann::json& j, const PhysicsBody& phys)
 {
-
 	//Position
 	j["BodyPosition"] = { phys.GetPosition().x, phys.GetPosition().y };
 	//Stores body type
@@ -285,7 +268,6 @@ inline void to_json(nlohmann::json& j, const PhysicsBody& phys)
 //Reads body in FROM json file
 inline void from_json(const nlohmann::json& j, PhysicsBody& phys)
 {
-
 	phys.SetPosition(b2Vec2(j["BodyPosition"][0], j["bodyPosition"][1]));
 	//Sets body type
 	phys.SetBodyType(j["BodyType"]);

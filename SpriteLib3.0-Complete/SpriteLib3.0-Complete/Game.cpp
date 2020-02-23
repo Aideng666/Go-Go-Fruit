@@ -107,38 +107,6 @@ void Game::Update()
 
 	//Updates the active scene
 	m_activeScene->Update();
-
-	/*if (m_activeScene == m_scenes[2])
-	{
-		GoGoGame* scene = (GoGoGame*)m_activeScene;
-		auto button = scene->GetButton();
-		auto platform = scene->GetPlat();
-
-		if (ECS::GetComponent<PhysicsBody>(button).GetPressed())
-		{
-	
-			if (ECS::GetComponent<Transform>(platform).GetPosition().y <= -92.f && ECS::GetComponent<Transform>(platform).GetPosition().y <= 10.f)
-			{
-				SetUp(true);
-			}
-			if (ECS::GetComponent<Transform>(platform).GetPosition().y >= 10.f && ECS::GetComponent<Transform>(platform).GetPosition().y >= -92.f)
-			{
-				SetUp(false);
-			}
-
-			if (GetUp())
-			{
-				m_register->get<Transform>(platform).SetPositionY(ECS::GetComponent<Transform>(platform).GetPosition().y + (40 * Timer::deltaTime));
-			}
-			if (!GetUp())
-			{
-				m_register->get<Transform>(platform).SetPositionY(ECS::GetComponent<Transform>(platform).GetPosition().y - (40 * Timer::deltaTime));
-			}
-		}
-		
-
-	}*/
-
 }
 
 void Game::GUI()
@@ -246,159 +214,161 @@ void Game::GamepadTrigger(XInputController * con)
 
 void Game::KeyboardHold()
 {
-	if (m_activeScene == m_scenes[2])
-	{		
-		GoGoGame* scene = (GoGoGame*)m_activeScene;
-		auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
-		auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
+#pragma region MOVEMENT SYSTEM
+//MOVEMENT
+if (m_activeScene == m_scenes[2])
+{		
+	GoGoGame* scene = (GoGoGame*)m_activeScene;
+	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
+	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
 
-		b2Vec2 blueVel = blueBody->GetLinearVelocity();
-		b2Vec2 waterVel = waterBody->GetLinearVelocity();
+	b2Vec2 blueVel = blueBody->GetLinearVelocity();
+	b2Vec2 waterVel = waterBody->GetLinearVelocity();
 
-		float blueSpeed = 0.f, waterSpeed = 0.f;
+	float blueSpeed = 0.f, waterSpeed = 0.f;
 
-		if (Input::GetKey(Key::A))
-		{
-			blueSpeed = -8.f;
-		}
-		if (Input::GetKey(Key::D))
-		{
-			blueSpeed = 8.f;
-		}
-		if (Input::GetKey(Key::LeftArrow))
-		{
-			waterSpeed = -8.f;
-		}
-		if (Input::GetKey(Key::RightArrow))
-		{
-			waterSpeed = 8.f;
-		}
+	if (Input::GetKey(Key::A))
+	{
+		blueSpeed = -8.f;
+	}
+	if (Input::GetKey(Key::D))
+	{
+		blueSpeed = 8.f;
+	}
+	if (Input::GetKey(Key::LeftArrow))
+	{
+		waterSpeed = -8.f;
+	}
+	if (Input::GetKey(Key::RightArrow))
+	{
+		waterSpeed = 8.f;
+	}
 
+	float blueChange = blueSpeed - blueVel.x;
+	float waterChange = waterSpeed - waterVel.x;
+	float blueForce = (blueBody->GetMass() * blueChange);
+	float waterForce = (waterBody->GetMass() * waterChange);
 
-		float blueChange = blueSpeed - blueVel.x;
-		float waterChange = waterSpeed - waterVel.x;
-		float blueForce = (blueBody->GetMass() * blueChange);
-		float waterForce = (waterBody->GetMass() * waterChange);
-
-		blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
-		waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
-
-		//ZOOMING
-		auto cam = scene->GetCam();
-
-		if (Input::GetKey(Key::Z))
-		{
-			ECS::GetComponent<Camera>(cam).Zoom(2.f);
-		}
-		if (Input::GetKey(Key::X))
-		{
-			ECS::GetComponent<Camera>(cam).Zoom(-2.f);
-		}
-
-		
+	blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
+	waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
+}	
+#pragma endregion
+	
+	//ZOOMING
+	GoGoGame* scene = (GoGoGame*)m_activeScene;
+	auto cam = scene->GetCam();
+	
+	if (Input::GetKey(Key::Z))
+	{
+		ECS::GetComponent<Camera>(cam).Zoom(2.f);
+	}
+	if (Input::GetKey(Key::X))
+	{
+		ECS::GetComponent<Camera>(cam).Zoom(-2.f);
 	}
 }
 
 void Game::KeyboardDown()
 {
-
-
-
-
+	//Exit fullscreen
 	if (Input::GetKeyDown(Key::Escape))
 	{
 		exit(1);
 	}
 
-	//Space on play goes to game
-	if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
+#pragma region SCREEN MANIPULATION
+//Space on play goes to game
+if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[2]->GetScene();
+	m_activeScene = m_scenes[2];
+}
+//Up arrow goes to exit
+if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
+}
+//Down arrow on menu goes to exit
+else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[0])
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
+}
+//Up arrow on exit goes to menu
+else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[0]->GetScene();
+	m_activeScene = m_scenes[0];
+}
+//Down arrow on exit goes to menu
+else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[0]->GetScene();
+	m_activeScene = m_scenes[0];
+}
+//Exits the game
+if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
+{
+	exit(1);
+}
+#pragma endregion
+
+#pragma region JUMPING CODE
+//Jumping
+if (m_activeScene == m_scenes[2])
+{
+	GoGoGame* scene = (GoGoGame*)m_activeScene;
+	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
+	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
+
+	if (listener.GetBJump() || listener.GetBGrounded())
 	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[2]->GetScene();
-		m_activeScene = m_scenes[2];
-	}
-	//Up arrow goes to exit
-	if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[1]->GetScene();
-		m_activeScene = m_scenes[1];
-	}
-
-	//Down arrow on menu goes to exit
-	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[0])
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[1]->GetScene();
-		m_activeScene = m_scenes[1];
-	}
-	//Up arrow on exit goes to menu
-	else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[0]->GetScene();
-		m_activeScene = m_scenes[0];
-	}
-	//Down arrow on exit goes to menu
-	else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[0]->GetScene();
-		m_activeScene = m_scenes[0];
-	}
-	//Exits the game
-	if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
-	{
-		exit(1);
-	}
-
-	//Jumping
-	if (m_activeScene == m_scenes[2])
-	{
-		GoGoGame* scene = (GoGoGame*)m_activeScene;
-		auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
-		auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
-
-		if (listener.GetBJump() || listener.GetBGrounded())
+		if (Input::GetKeyDown(Key::W))
 		{
-			if (Input::GetKeyDown(Key::W))
-			{
-				float impulse = blueBody->GetMass() * 30;
-				blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
-				listener.SetBGrounded(false);
-			}
-		}
-
-		if (listener.GetWJump() || listener.GetWGrounded())
-		{
-			if (Input::GetKeyDown(Key::UpArrow))
-			{
-				float impulse = waterBody->GetMass() * 18;//18
-				waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
-				listener.SetWGrounded(false);
-			}
+			float impulse = blueBody->GetMass() * 30;
+			blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
+			listener.SetBGrounded(false);
 		}
 	}
+
+	if (listener.GetWJump() || listener.GetWGrounded())
+	{
+		if (Input::GetKeyDown(Key::UpArrow))
+		{
+			float impulse = waterBody->GetMass() * 18;
+			waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
+			listener.SetWGrounded(false);
+		}
+	}
+}
+#pragma endregion
+	
 }
 
 void Game::KeyboardUp()
@@ -472,14 +442,4 @@ void Game::MouseWheel(SDL_MouseWheelEvent evnt)
 	}
 	//Resets the enabled flag
 	m_wheel = false;
-}
-
-bool Game::GetUp()
-{
-	return this->goingUp;
-}
-
-void Game::SetUp(bool up)
-{
-	this->goingUp = up;
 }

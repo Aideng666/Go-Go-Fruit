@@ -27,34 +27,38 @@ void ContactListener::BeginContact(b2Contact* contact)
     if (fixtureA->GetUserData() == NULL || fixtureB->GetUserData() == NULL)
         return;
 
-
-    if (identifierA & EntityIdentifier::BlueberryBit())
+#pragma region Blueberry Collision
+if (identifierA & EntityIdentifier::BlueberryBit())
+{
+    if (identifierB & EntityIdentifier::GroundBit())
     {
-       if (identifierB & EntityIdentifier::GroundBit())
-       {
-           bJump = true;
-           bGrounded = true;
-       }
-
-       if (identifierB & EntityIdentifier::WatermelonBit())
-       {
-           bJump = true;
-       }
+        bJump = true;
+        bGrounded = true;
     }
 
-    if (identifierA & EntityIdentifier::WatermelonBit())
+    if (identifierB & EntityIdentifier::WatermelonBit())
     {
-        if (identifierB & EntityIdentifier::GroundBit())
-        {
-           wJump = true;
-           wGrounded = true;
-        }
-
-        if (identifierB & EntityIdentifier::BlueberryBit())
-        {
-            wJump = true;
-        }
+        bJump = true;
     }
+}
+#pragma endregion
+
+#pragma region Watermelon Collision
+if (identifierA & EntityIdentifier::WatermelonBit())
+{
+    if (identifierB & EntityIdentifier::GroundBit())
+    {
+        wJump = true;
+        wGrounded = true;
+    }
+
+    if (identifierB & EntityIdentifier::BlueberryBit())
+    {
+        wJump = true;
+    }
+}
+#pragma endregion
+
 }
 
 void ContactListener::EndContact(b2Contact* contact)
@@ -77,68 +81,62 @@ void ContactListener::EndContact(b2Contact* contact)
     if (fixtureA->GetUserData() == NULL || fixtureB->GetUserData() == NULL)
         return;
 
-
-    if (identifierA & EntityIdentifier::BlueberryBit())
+#pragma region Blueberry Fallout
+if (identifierA & EntityIdentifier::BlueberryBit())
+{
+    if (identifierB & EntityIdentifier::GroundBit())
     {
-
-        if (identifierB & EntityIdentifier::GroundBit())
-        {
-            cout << "Blue hit Ground\n";
-            bJump = false;
-        }
-
-        if (identifierB & EntityIdentifier::WatermelonBit())
-        {
-            cout << "Blue hit Water\n";
-            bJump = false;
-        }
-
+        cout << "Blue hit Ground\n";
+        bJump = false;
     }
 
-    if (identifierA & EntityIdentifier::WatermelonBit())
+    if (identifierB & EntityIdentifier::WatermelonBit())
     {
-
-        if (identifierB & EntityIdentifier::GroundBit())
-        {
-            cout << "Water hit Ground\n";
-            wJump = false;
-        }
-
-        if (identifierB & EntityIdentifier::BlueberryBit())
-        {
-            cout << "Water hit Blue\n";
-            wJump = false;
-        }
-
+        cout << "Blue hit Water\n";
+        bJump = false;
     }
 }
-
-bool ContactListener::GetBJump()
+#pragma endregion
+    
+#pragma region Watermelon Fallout
+if (identifierA & EntityIdentifier::WatermelonBit())
 {
+    if (identifierB & EntityIdentifier::GroundBit())
+    {
+        cout << "Water hit Ground\n";
+        wJump = false;
+    }
+
+    if (identifierB & EntityIdentifier::BlueberryBit())
+    {
+        cout << "Water hit Blue\n";
+        wJump = false;
+    }
+}
+#pragma endregion
+
+}
+
+bool ContactListener::GetBJump() {
     return bJump;
 }
 
-bool ContactListener::GetWJump()
-{
+bool ContactListener::GetWJump() {
     return wJump;
 }
 
-bool ContactListener::GetWGrounded()
-{
+bool ContactListener::GetWGrounded() {
     return wGrounded;
 }
 
-bool ContactListener::GetBGrounded()
-{
+bool ContactListener::GetBGrounded() {
     return bGrounded;
 }
 
-void ContactListener::SetBGrounded(bool grounded)
-{
+void ContactListener::SetBGrounded(bool grounded) {
     bGrounded = grounded;
 }
 
-void ContactListener::SetWGrounded(bool grounded)
-{
+void ContactListener::SetWGrounded(bool grounded) {
     wGrounded = grounded;
 }
