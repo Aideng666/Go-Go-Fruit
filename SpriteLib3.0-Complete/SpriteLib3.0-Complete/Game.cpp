@@ -107,6 +107,31 @@ void Game::Update()
 
 	//Updates the active scene
 	m_activeScene->Update();
+
+
+	if (m_activeScene == m_scenes[2])
+	{
+		GoGoGame* scene = (GoGoGame*)m_activeScene;
+		auto elevator = scene->GetElevator();
+		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
+		auto trans = ECS::GetComponent<Transform>(elevator);
+
+
+		//If the blue button is being pressed, the elevator moves up to the higher platforms
+		//If the button is not being pressed the elevator moves back down towards the bottom
+		if (listener.GetPressed() && trans.GetPosition().y < -20.5f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, 2));
+		}
+		else if (!(listener.GetPressed()) && trans.GetPosition().y > -85.f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, -2));
+		}
+		else
+		{
+			body->SetLinearVelocity(b2Vec2(0, 0));
+		}
+	}
 }
 
 void Game::GUI()

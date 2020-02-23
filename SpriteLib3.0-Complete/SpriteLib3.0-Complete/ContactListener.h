@@ -13,6 +13,7 @@ public:
 	bool GetWJump();
 	bool GetWGrounded();
 	bool GetBGrounded();
+	bool GetPressed();
 	void SetBGrounded(bool grounded);
 	void SetWGrounded(bool grounded);
 
@@ -23,5 +24,6 @@ private:
 	bool wJump;
 	bool bGrounded;
 	bool wGrounded;
+	bool buttonPressed;
 };
 

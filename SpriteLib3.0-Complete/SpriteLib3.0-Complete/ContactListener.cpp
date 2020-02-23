@@ -40,6 +40,12 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = true;
     }
+
+    if (identifierB & EntityIdentifier::BlueButtonBit())
+    {
+        bJump = true;
+        buttonPressed = true;
+    }
 }
 #pragma endregion
 
@@ -53,6 +59,11 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     }
 
     if (identifierB & EntityIdentifier::BlueberryBit())
+    {
+        wJump = true;
+    }
+
+    if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         wJump = true;
     }
@@ -86,14 +97,19 @@ if (identifierA & EntityIdentifier::BlueberryBit())
 {
     if (identifierB & EntityIdentifier::GroundBit())
     {
-        cout << "Blue hit Ground\n";
         bJump = false;
     }
 
     if (identifierB & EntityIdentifier::WatermelonBit())
     {
-        cout << "Blue hit Water\n";
         bJump = false;
+    }
+
+    //Check if the blue button was pressed by the blueberry
+    if (identifierB & EntityIdentifier::BlueButtonBit())
+    {
+        bJump = false;
+        buttonPressed = false;
     }
 }
 #pragma endregion
@@ -103,13 +119,16 @@ if (identifierA & EntityIdentifier::WatermelonBit())
 {
     if (identifierB & EntityIdentifier::GroundBit())
     {
-        cout << "Water hit Ground\n";
         wJump = false;
     }
 
     if (identifierB & EntityIdentifier::BlueberryBit())
     {
-        cout << "Water hit Blue\n";
+        wJump = false;
+    }
+
+    if (identifierB & EntityIdentifier::BlueButtonBit())
+    {
         wJump = false;
     }
 }
@@ -131,6 +150,11 @@ bool ContactListener::GetWGrounded() {
 
 bool ContactListener::GetBGrounded() {
     return bGrounded;
+}
+
+bool ContactListener::GetPressed()
+{
+    return buttonPressed;
 }
 
 void ContactListener::SetBGrounded(bool grounded) {

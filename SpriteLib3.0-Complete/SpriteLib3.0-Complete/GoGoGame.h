@@ -11,9 +11,11 @@ public:
 	int GetBackground();
 	int GetButton();
 	int GetCam();
+	int GetElevator();
 
 private:
 	int m_background;
 	int m_button;
 	int m_cam;
+	int m_elevator;
 };

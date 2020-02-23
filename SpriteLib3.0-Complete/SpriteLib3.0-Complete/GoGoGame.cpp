@@ -256,7 +256,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
-		tempDef.type = b2_staticBody;
+		tempDef.type = b2_kinematicBody;
 		tempDef.position.Set(float32(-50.f), float32(-85));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
@@ -267,7 +267,9 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Hori 1");
+		ECS::SetUpIdentifier(entity, bitHolder, "Elevator");
+
+		m_elevator = entity;
 	}
 
 	{
@@ -313,7 +315,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "Wall.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 60, 5);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 200, 5);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -325,7 +327,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(15.f), float32(-21));
+		tempDef.position.Set(float32(85.f), float32(-20.5));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -337,7 +339,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Hori 2");
 	}
-	{
+	/*{
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
@@ -404,11 +406,11 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Hori 3");
-	}
+	}*/
 #pragma endregion
 
 	//Button
-	/*{
+	{
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
@@ -426,10 +428,21 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		float shrinkX = tempSpr.GetWidth() / 400.f;
 		float shrinkY = tempSpr.GetWidth() / 400.f;
 
-		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, 0.f), CollisionIDs::Environment(), CollisionIDs::Player(), 4, true);
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(85.f), float32(-16));
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)entity);
+
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 8), float(tempSpr.GetHeight()),
+			vec2(0.f, 0.f), false);
+		
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Button");
 
 		m_button = entity;
@@ -445,7 +458,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "FruitBowl.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 30);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 55.3846153848, 40);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -454,12 +467,22 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		float shrinkX = tempSpr.GetWidth() / 100.f;
 		float shrinkY = tempSpr.GetWidth() / 100.f;
 
-		tempPhsBody = PhysicsBody(float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, 0.f), CollisionIDs::Player(), CollisionIDs::Enemy() | CollisionIDs::Environment(), true);
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(140.f), float32(0));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)entity);
+
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 16), float(tempSpr.GetHeight() / 4),
+			vec2(0.f, -15.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
-	}*/
+	}
 }
 
 int GoGoGame::GetBackground()
@@ -475,4 +498,9 @@ int GoGoGame::GetButton()
 int GoGoGame::GetCam()
 {
 	return m_cam;
+}
+
+int GoGoGame::GetElevator()
+{
+	return m_elevator;
 }
