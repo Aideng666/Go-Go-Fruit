@@ -50,6 +50,39 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Sky Background");
 	}
 
+	//{
+	//	auto entity = ECS::CreateEntity();
+
+	//	ECS::AttachComponent<Sprite>(entity);
+	//	ECS::AttachComponent<Transform>(entity);
+
+	//	std::string fileName = "Level1.png";
+
+	//	//CONSTANT 1.678321678
+	//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 357, 212.7125);
+	//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 6.f, 100.f));
+
+	//	unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+	//	ECS::SetUpIdentifier(entity, bitHolder, "Level 1");
+	//}
+
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "ResizedLevel1.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 357, 212.7125);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 6.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Level 1");
+	}
+
+
+
 #pragma region PLAYER ENTITIES
 	//Blueberry
 	{
@@ -135,7 +168,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 #pragma endregion
 
 	//Ground
-	{
+	/*{
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
@@ -167,7 +200,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Ground");
-	}
+	}*/
 
 #pragma region BARRIERS
 	//BARRIERS
