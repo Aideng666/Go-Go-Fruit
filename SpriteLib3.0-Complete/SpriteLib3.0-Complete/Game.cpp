@@ -278,7 +278,7 @@ if (m_activeScene == m_scenes[2])
 	waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
 }	
 #pragma endregion
-	
+
 	//ZOOMING
 	GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto cam = scene->GetCam();

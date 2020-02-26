@@ -44,44 +44,27 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "Sky.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360, 360);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -80.f, 50.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -80.f, 80.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Sky Background");
 	}
 
-	//{
-	//	auto entity = ECS::CreateEntity();
-
-	//	ECS::AttachComponent<Sprite>(entity);
-	//	ECS::AttachComponent<Transform>(entity);
-
-	//	std::string fileName = "Level1.png";
-
-	//	//CONSTANT 1.678321678
-	//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 357, 212.7125);
-	//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 6.f, 100.f));
-
-	//	unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-	//	ECS::SetUpIdentifier(entity, bitHolder, "Level 1");
-	//}
-
+	//Ground Layout
 	{
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 
-		std::string fileName = "ResizedLevel1.png";
+		std::string fileName = "Level1.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 357, 212.7125);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 6.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 6.f, 90.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 1");
 	}
-
-
 
 #pragma region PLAYER ENTITIES
 	//Blueberry
@@ -167,40 +150,56 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 	}
 #pragma endregion
 
-	//Ground
-	/*{
-		auto entity = ECS::CreateEntity();
+	//Ground Boxes
+	{
+		auto box1 = ECS::CreateEntity();
+		
+		ECS::AttachComponent<Transform>(box1);
+		ECS::AttachComponent<PhysicsBody>(box1);
 
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
+		ECS::GetComponent<Transform>(box1).SetPosition(vec3(0.f, 0.f, 100.f));
 
-		std::string fileName = "GoGo Ground.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 512, 16);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		float shrinkX = tempSpr.GetWidth() / 512.f;
-		float shrinkY = tempSpr.GetWidth() / 512.f;
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box1);
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(0.f), float32(-98));
+		tempDef.position.Set(float32(0.f), float32(-95));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-		tempBody->SetUserData((void*)entity);
+		tempBody->SetUserData((void*)box1);
 
-		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY), 
-			vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 360, 12, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Ground");
-	}*/
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		ECS::SetUpIdentifier(box1, bitHolder, "Lower Ground Box");	
+	}
+
+	{
+		auto box2 = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(box2);
+		ECS::AttachComponent<PhysicsBody>(box2);
+
+		ECS::GetComponent<Transform>(box2).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box2);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(60.f), float32(-75.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)box2);
+
+		tempPhsBody = PhysicsBody(tempBody, 240, 20, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		ECS::SetUpIdentifier(box2, bitHolder, "Middle Ground Box");
+	}
 
 #pragma region BARRIERS
 	//BARRIERS
@@ -208,7 +207,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 	{
 		auto entity = ECS::CreateEntity();
 
-		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
@@ -226,14 +224,13 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 400, 5, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top Wall");
 	}
 	//Left Wall
 	{
 		auto entity = ECS::CreateEntity();
 
-		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
@@ -251,14 +248,13 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 5, 400, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Left Wall");
 	}
 	//Right Wall
 	{
 		auto entity = ECS::CreateEntity();
 
-		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
@@ -276,7 +272,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 5, 400, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Right Wall");
 	}
 #pragma endregion
