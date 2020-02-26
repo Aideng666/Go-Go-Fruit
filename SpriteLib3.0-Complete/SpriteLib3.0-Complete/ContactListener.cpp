@@ -39,6 +39,7 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     if (identifierB & EntityIdentifier::WatermelonBit())
     {
         bJump = true;
+        wJump = true;
     }
 
     if (identifierB & EntityIdentifier::BlueButtonBit())
@@ -103,6 +104,7 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     if (identifierB & EntityIdentifier::WatermelonBit())
     {
         bJump = false;
+        wJump = false;
     }
 
     //Check if the blue button was pressed by the blueberry

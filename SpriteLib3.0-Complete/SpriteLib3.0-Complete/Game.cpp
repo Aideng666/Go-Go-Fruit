@@ -109,29 +109,29 @@ void Game::Update()
 	m_activeScene->Update();
 
 
-	//if (m_activeScene == m_scenes[2])
-	//{
-	//	GoGoGame* scene = (GoGoGame*)m_activeScene;
-	//	auto elevator = scene->GetElevator();
-	//	auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
-	//	auto trans = ECS::GetComponent<Transform>(elevator);
+	if (m_activeScene == m_scenes[2])
+	{
+		GoGoGame* scene = (GoGoGame*)m_activeScene;
+		auto elevator = scene->GetElevator();
+		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
+		auto trans = ECS::GetComponent<Transform>(elevator);
 
 
-	//	//If the blue button is being pressed, the elevator moves up to the higher platforms
-	//	//If the button is not being pressed the elevator moves back down towards the bottom
-	//	if (listener.GetPressed() && trans.GetPosition().y < -20.5f)
-	//	{
-	//		body->SetLinearVelocity(b2Vec2(0, 2));
-	//	}
-	//	else if (!(listener.GetPressed()) && trans.GetPosition().y > -85.f)
-	//	{
-	//		body->SetLinearVelocity(b2Vec2(0, -2));
-	//	}
-	//	else
-	//	{
-	//		body->SetLinearVelocity(b2Vec2(0, 0));
-	//	}
-	//}
+		//If the blue button is being pressed, the elevator moves up to the higher platforms
+		//If the button is not being pressed the elevator moves back down towards the bottom
+		if (listener.GetPressed() && trans.GetPosition().y < 4.4f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, 2));
+		}
+		else if (!(listener.GetPressed()) && trans.GetPosition().y > -62.f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, -2));
+		}
+		else
+		{
+			body->SetLinearVelocity(b2Vec2(0, 0));
+		}
+	}
 }
 
 void Game::GUI()
@@ -376,7 +376,7 @@ if (m_activeScene == m_scenes[2])
 	{
 		if (Input::GetKeyDown(Key::W))
 		{
-			float impulse = blueBody->GetMass() * 30;
+			float impulse = blueBody->GetMass() * 31;
 			blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
 			listener.SetBGrounded(false);
 		}
@@ -386,7 +386,7 @@ if (m_activeScene == m_scenes[2])
 	{
 		if (Input::GetKeyDown(Key::UpArrow))
 		{
-			float impulse = waterBody->GetMass() * 18;
+			float impulse = waterBody->GetMass() * 22;
 			waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
 			listener.SetWGrounded(false);
 		}
