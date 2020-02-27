@@ -33,6 +33,7 @@ void Game::InitGame()
 	std::string menuName = "Menu";
 	std::string exitName = "Exit";
 	std::string gameName = "Level 1";
+	std::string level2   = "Level 2";
 
 	m_name = menuName;
 	m_clearColor = vec4(0.f, 0.f, 0.f, 1.f);
@@ -47,11 +48,12 @@ void Game::InitGame()
 	m_scenes.push_back(new GoGoMenu(menuName));
 	m_scenes.push_back(new GoGoExit(exitName));
 	m_scenes.push_back(new GoGoGame(gameName));
+	m_scenes.push_back(new LevelTwo(level2));
 
 	//Sets active scene reference to our scene
-	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[0]->GetScene();
-	m_activeScene = m_scenes[0];
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
 	PhysicsSystem::Init();
 
 	for (int i = 0; i < m_scenes.size(); ++i)

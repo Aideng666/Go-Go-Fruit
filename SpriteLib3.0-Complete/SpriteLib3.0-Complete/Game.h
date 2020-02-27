@@ -5,6 +5,7 @@
 #include "GoGoGame.h"
 #include "GoGoMenu.h"
 #include "GoGoExit.h"
+#include "LevelTwo.h"
 
 //Our main class for running our game
 class Game
