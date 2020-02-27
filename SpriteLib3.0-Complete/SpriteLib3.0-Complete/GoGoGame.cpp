@@ -1,6 +1,8 @@
 #include "GoGoGame.h"
 #include <iostream>
 
+//LEVEL 1
+
 GoGoGame::GoGoGame(std::string name)
 	: Scene(name)
 {
@@ -34,6 +36,8 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		m_cam = entity;
 	}
 
+#pragma region Aesthetics + Environment
+	//Aesthetics
 	//Sky Background
 	{
 		auto entity = ECS::CreateEntity();
@@ -66,6 +70,72 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 1");
 	}
 
+	//Flowers
+	{
+		std::string fileName = "Flowers.png";
+
+		auto entity = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 10);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(46.f, 11.f, 70.f));
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Flower 1");
+
+		auto entity2 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity2);
+		ECS::AttachComponent<Transform>(entity2);
+		ECS::GetComponent<Sprite>(entity2).LoadSprite(fileName, 20, 10);
+		ECS::GetComponent<Transform>(entity2).SetPosition(vec3(-15.f, -60.f, 70.f));
+		unsigned int bitHolder2 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity2, bitHolder2, "Flower 2");
+
+		auto entity3 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity3);
+		ECS::AttachComponent<Transform>(entity3);
+		ECS::GetComponent<Sprite>(entity3).LoadSprite(fileName, 20, 10);
+		ECS::GetComponent<Transform>(entity3).SetPosition(vec3(-47.f, -60.f, 70.f));
+		unsigned int bitHolder3 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity3, bitHolder3, "Flower 3");
+
+		auto entity4 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity4);
+		ECS::AttachComponent<Transform>(entity4);
+		ECS::GetComponent<Sprite>(entity4).LoadSprite(fileName, 20, 10);
+		ECS::GetComponent<Transform>(entity4).SetPosition(vec3(-70.f, -84.f, 70.f));
+		unsigned int bitHolder4 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity4, bitHolder4, "Flower 4");
+
+		auto entity5 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity5);
+		ECS::AttachComponent<Transform>(entity5);
+		ECS::GetComponent<Sprite>(entity5).LoadSprite(fileName, 20, 10);
+		ECS::GetComponent<Transform>(entity5).SetPosition(vec3(-113.f, -84.f, 70.f));
+		unsigned int bitHolder5 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity5, bitHolder5, "Flower 5");
+
+		auto entity6 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity6);
+		ECS::AttachComponent<Transform>(entity6);
+		ECS::GetComponent<Sprite>(entity6).LoadSprite(fileName, 20, 10);
+		ECS::GetComponent<Transform>(entity6).SetPosition(vec3(-155.f, -84.f, 70.f));
+		unsigned int bitHolder6 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity6, bitHolder6, "Flower 6");
+	}
+
+	//Grass
+	{
+		std::string fileName = "Grass.png";
+
+		auto entity = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+	}
+
+#pragma endregion
+
+	
 #pragma region PLAYER ENTITIES
 	//Blueberry
 	{
