@@ -466,7 +466,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(85.f), float32(9.f));
+		tempDef.position.Set(float32(75.f), float32(9.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
