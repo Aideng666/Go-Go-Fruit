@@ -41,6 +41,8 @@ public:
 	static unsigned int GroundBit();
 	static unsigned int BlueButtonBit();
 	static unsigned int ElevatorBit();
+	static unsigned int JelloBit();
+	static unsigned int BlueButton2Bit();
 
 	//Setters
 	//Sets main player entity
@@ -98,6 +100,8 @@ private:
 	static unsigned int m_groundBit;
 	static unsigned int m_buttonBit;
 	static unsigned int m_elevatorBit;
+	static unsigned int m_jelloBit;
+	static unsigned int m_blueButton2Bit;
 };
 
 #ifndef __ENTITYIDENTIFIERJSON_H__

@@ -134,6 +134,46 @@ void Game::Update()
 			body->SetLinearVelocity(b2Vec2(0, 0));
 		}
 	}
+
+	if (m_activeScene == m_scenes[3])
+	{
+		LevelTwo* scene = (LevelTwo*)m_activeScene;
+		auto elevator = scene->GetElevator();
+		auto elevator2 = scene->GetElevator2();
+		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
+		auto trans = ECS::GetComponent<Transform>(elevator);
+		auto body2 = ECS::GetComponent<PhysicsBody>(elevator2).GetBody();
+		auto trans2 = ECS::GetComponent<Transform>(elevator2);
+
+
+		//If the blue button is being pressed, the elevator moves up to the higher platforms
+		//If the button is not being pressed the elevator moves back down towards the bottom
+		if (listener.GetPressed() && trans.GetPosition().y < -14.5f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, 2));
+		}
+		else if (!(listener.GetPressed()) && trans.GetPosition().y > -85.f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, -2));
+		}
+		else
+		{
+			body->SetLinearVelocity(b2Vec2(0, 0));
+		}
+
+		if (listener.Get2Pressed() && trans2.GetPosition().y < 65.f)
+		{
+			body2->SetLinearVelocity(b2Vec2(0, 2));
+		}
+		else if (!(listener.Get2Pressed()) && trans2.GetPosition().y > -9.5f)
+		{
+			body2->SetLinearVelocity(b2Vec2(0, -2));
+		}
+		else
+		{
+			body2->SetLinearVelocity(b2Vec2(0, 0));
+		}
+	}
 }
 
 void Game::GUI()
@@ -243,7 +283,7 @@ void Game::KeyboardHold()
 {
 #pragma region MOVEMENT SYSTEM
 //MOVEMENT
-if (m_activeScene == m_scenes[2])
+if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 {		
 	GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
@@ -281,18 +321,18 @@ if (m_activeScene == m_scenes[2])
 }	
 #pragma endregion
 
-	//ZOOMING
-	GoGoGame* scene = (GoGoGame*)m_activeScene;
-	auto cam = scene->GetCam();
-	
-	if (Input::GetKey(Key::Z))
-	{
-		ECS::GetComponent<Camera>(cam).Zoom(2.f);
-	}
-	if (Input::GetKey(Key::X))
-	{
-		ECS::GetComponent<Camera>(cam).Zoom(-2.f);
-	}
+	////ZOOMING
+	//GoGoGame* scene = (GoGoGame*)m_activeScene;
+	//auto cam = scene->GetCam();
+	//
+	//if (Input::GetKey(Key::Z))
+	//{
+	//	ECS::GetComponent<Camera>(cam).Zoom(2.f);
+	//}
+	//if (Input::GetKey(Key::X))
+	//{
+	//	ECS::GetComponent<Camera>(cam).Zoom(-2.f);
+	//}
 }
 
 void Game::KeyboardDown()
@@ -368,7 +408,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 
 #pragma region JUMPING CODE
 //Jumping
-if (m_activeScene == m_scenes[2])
+if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 {
 	GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
@@ -378,7 +418,7 @@ if (m_activeScene == m_scenes[2])
 	{
 		if (Input::GetKeyDown(Key::W))
 		{
-			float impulse = blueBody->GetMass() * 31;
+			float impulse = blueBody->GetMass() * 32.5;
 			blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
 			listener.SetBGrounded(false);
 		}

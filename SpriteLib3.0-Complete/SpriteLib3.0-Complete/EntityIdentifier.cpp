@@ -16,6 +16,8 @@ unsigned int EntityIdentifier::m_blueberryBit       = 0x2;
 unsigned int EntityIdentifier::m_watermelonBit      = 0x20;
 unsigned int EntityIdentifier::m_buttonBit          = 0x200;
 unsigned int EntityIdentifier::m_elevatorBit        = 0x2000;
+unsigned int EntityIdentifier::m_jelloBit           = 0x20000;
+unsigned int EntityIdentifier::m_blueButton2Bit     = 0x200000;
 
 //(having just camera means the bit = 1)
 //(having sprite, animation and transform)
@@ -153,6 +155,16 @@ unsigned int EntityIdentifier::BlueButtonBit()
 unsigned int EntityIdentifier::ElevatorBit()
 {
 	return m_elevatorBit;
+}
+
+unsigned int EntityIdentifier::JelloBit()
+{
+	return m_jelloBit;
+}
+
+unsigned int EntityIdentifier::BlueButton2Bit()
+{
+	return m_blueButton2Bit;
 }
 
 void EntityIdentifier::MainPlayer(unsigned int entity)

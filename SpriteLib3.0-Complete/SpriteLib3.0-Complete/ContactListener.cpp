@@ -47,6 +47,17 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bJump = true;
         buttonPressed = true;
     }
+
+    if (identifierB & EntityIdentifier::BlueButton2Bit())
+    {
+        bJump = true;
+        button2Pressed = true;
+    }
+
+    if (identifierB & EntityIdentifier::JelloBit())
+    {
+       
+    }
 }
 #pragma endregion
 
@@ -67,6 +78,16 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         wJump = true;
+    }
+
+    if (identifierB & EntityIdentifier::BlueButton2Bit())
+    {
+        wJump = true;
+    }
+
+    if (identifierB & EntityIdentifier::JelloBit())
+    {
+
     }
 }
 #pragma endregion
@@ -113,6 +134,14 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bJump = false;
         buttonPressed = false;
     }
+
+    if (identifierB & EntityIdentifier::BlueButton2Bit())
+    {
+        bJump = false;
+        button2Pressed = false;
+    }
+
+
 }
 #pragma endregion
     
@@ -133,6 +162,12 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = false;
     }
+
+    if (identifierB & EntityIdentifier::BlueButton2Bit())
+    {
+        wJump = false;
+    }
+
 }
 #pragma endregion
 
@@ -157,6 +192,11 @@ bool ContactListener::GetBGrounded() {
 bool ContactListener::GetPressed()
 {
     return buttonPressed;
+}
+
+bool ContactListener::Get2Pressed()
+{
+    return button2Pressed;
 }
 
 void ContactListener::SetBGrounded(bool grounded) {

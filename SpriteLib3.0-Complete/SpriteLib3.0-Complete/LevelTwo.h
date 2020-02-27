@@ -10,10 +10,18 @@ public:
 	void InitScene(float windowWidth, float windowHeight);
 
 	int GetCam();
+	int GetButton();
+	int GetButton2();
+	int GetElevator();
+	int GetElevator2();
 
 private:
 
 	int m_cam;
+	int m_button;
+	int m_button2;
+	int m_elevator;
+	int m_elevator2;
 
 };
 
