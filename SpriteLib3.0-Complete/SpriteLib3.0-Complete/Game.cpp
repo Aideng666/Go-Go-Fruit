@@ -118,7 +118,7 @@ void Game::Update()
 		vec2 position2 = m_register->get<Transform>(entity2).GetPosition();
 		int bgWidth = m_register->get<Sprite>(entity).GetWidth();
 		
-		float bgSpeed = 50.f;
+		float bgSpeed = 30.f;
 
 		if (position.x + bgWidth <= 0)
 		{
@@ -143,7 +143,7 @@ void Game::Update()
 
 		int bgWidth = m_register->get<Sprite>(entity).GetWidth();
 
-		float bgSpeed = 50.f;
+		float bgSpeed = 30.f;
 
 		if (position.x + bgWidth <= 0)
 		{
