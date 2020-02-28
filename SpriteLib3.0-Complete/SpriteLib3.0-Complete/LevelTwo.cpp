@@ -6,7 +6,6 @@ LevelTwo::LevelTwo(std::string name)
 {
 	m_gravity = b2Vec2(float32(0.f), float32(-9.f));
 	m_physicsWorld->SetGravity(m_gravity);
-
 }
 
 void LevelTwo::InitScene(float windowWidth, float windowHeight)
@@ -34,6 +33,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		m_cam = entity;
 	}
 
+#pragma region Aesthetics + Environment
 	//Background Level Image
 	{
 		auto entity = ECS::CreateEntity();
@@ -49,22 +49,30 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 2");
 	}
-
 	//Sky Background
 	{
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-
 		std::string fileName = "Sky.png";
 
+		auto entity = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360, 360);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -80.f, 10.f));
-
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Sky Background");
+
+		auto entity2 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity2);
+		ECS::AttachComponent<Transform>(entity2);
+		ECS::GetComponent<Sprite>(entity2).LoadSprite(fileName, 360, 360);
+		ECS::GetComponent<Transform>(entity2).SetPosition(vec3(360.f, -80.f, 10.f));
+		unsigned int bitHolder2 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity2, bitHolder2, "Sky Background 2");
+
+		m_background = entity;
+		m_background2 = entity2;
 	}
+#pragma endregion
 
 #pragma region PLAYER ENTITIES
 	//Blueberry
@@ -150,7 +158,8 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 	}
 #pragma endregion
 
-	//Bodies for map layout
+#pragma region Physics Bodies
+	//Ground Bodies
 	{
 		auto box1 = ECS::CreateEntity();
 
@@ -295,7 +304,9 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(box1, bitHolder, "Left Box");
 	}
+#pragma endregion
 
+#pragma region Map Layout
 	//ELEVATORS
 	{
 		auto entity = ECS::CreateEntity();
@@ -443,8 +454,10 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		m_button2 = entity;
 	}
-}
 
+#pragma endregion
+
+}
 
 //GETTERS
 int LevelTwo::GetCam()
@@ -466,4 +479,12 @@ int LevelTwo::GetElevator()
 int LevelTwo::GetElevator2()
 {
 	return m_elevator2;
+}
+int LevelTwo::GetBackground()
+{
+	return m_background;
+}
+int LevelTwo::GetBackground2()
+{
+	return m_background2;
 }

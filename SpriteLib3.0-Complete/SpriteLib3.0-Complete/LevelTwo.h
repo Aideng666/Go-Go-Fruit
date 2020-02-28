@@ -14,6 +14,8 @@ public:
 	int GetButton2();
 	int GetElevator();
 	int GetElevator2();
+	int GetBackground();
+	int GetBackground2();
 
 private:
 
@@ -22,6 +24,6 @@ private:
 	int m_button2;
 	int m_elevator;
 	int m_elevator2;
-
+	int m_background;
+	int m_background2;
 };
-

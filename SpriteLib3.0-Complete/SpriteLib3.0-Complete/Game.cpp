@@ -5,7 +5,6 @@
 
 ContactListener listener;
 
-
 Game::~Game()
 {
 	//If window isn't equal to nullptr
@@ -51,16 +50,15 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelTwo(level2));
 
 	//Sets active scene reference to our scene
-	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[3]->GetScene();
-	m_activeScene = m_scenes[3];
+	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[0]->GetScene();
+	m_activeScene = m_scenes[0];
 	PhysicsSystem::Init();
 
 	for (int i = 0; i < m_scenes.size(); ++i)
 	{
 		m_scenes[i]->GetPhysicsWorld().SetContactListener(&listener);
 	}
-
 }
 
 bool Game::Run()
@@ -110,14 +108,64 @@ void Game::Update()
 	//Updates the active scene
 	m_activeScene->Update();
 
+#pragma region Parallax Background
+	if (m_activeScene == m_scenes[2])
+	{
+		GoGoGame* scene = (GoGoGame*)m_activeScene;
+		auto entity = scene->GetBackground();
+		auto entity2 = scene->GetBackground2();
+		vec2 position = m_register->get<Transform>(entity).GetPosition();
+		vec2 position2 = m_register->get<Transform>(entity2).GetPosition();
+		int bgWidth = m_register->get<Sprite>(entity).GetWidth();
+		
+		float bgSpeed = 50.f;
 
+		if (position.x + bgWidth <= 0)
+		{
+			position.x = position2.x + bgWidth;
+		}
+		if (position2.x + bgWidth <= 0)
+		{
+			position2.x = position.x + bgWidth;
+		}
+
+		m_register->get<Transform>(entity).SetPositionX(position.x - (bgSpeed * Timer::deltaTime));
+		m_register->get<Transform>(entity2).SetPositionX(position2.x - (bgSpeed * Timer::deltaTime));
+	}
+
+	if (m_activeScene == m_scenes[3])
+	{
+		LevelTwo* scene = (LevelTwo*)m_activeScene;
+		auto entity = scene->GetBackground();
+		auto entity2 = scene->GetBackground2();
+		vec2 position = m_register->get<Transform>(entity).GetPosition();
+		vec2 position2 = m_register->get<Transform>(entity2).GetPosition();
+
+		int bgWidth = m_register->get<Sprite>(entity).GetWidth();
+
+		float bgSpeed = 50.f;
+
+		if (position.x + bgWidth <= 0)
+		{
+			position.x = position2.x + bgWidth;
+		}
+		if (position2.x + bgWidth <= 0)
+		{
+			position2.x = position.x + bgWidth;
+		}
+
+		m_register->get<Transform>(entity).SetPositionX(position.x - (bgSpeed * Timer::deltaTime));
+		m_register->get<Transform>(entity2).SetPositionX(position2.x - (bgSpeed * Timer::deltaTime));
+	}
+#pragma endregion
+	
+#pragma region Activation of Buttons
 	if (m_activeScene == m_scenes[2])
 	{
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto elevator = scene->GetElevator();
 		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
 		auto trans = ECS::GetComponent<Transform>(elevator);
-
 
 		//If the blue button is being pressed, the elevator moves up to the higher platforms
 		//If the button is not being pressed the elevator moves back down towards the bottom
@@ -134,7 +182,6 @@ void Game::Update()
 			body->SetLinearVelocity(b2Vec2(0, 0));
 		}
 	}
-
 	if (m_activeScene == m_scenes[3])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
@@ -144,7 +191,6 @@ void Game::Update()
 		auto trans = ECS::GetComponent<Transform>(elevator);
 		auto body2 = ECS::GetComponent<PhysicsBody>(elevator2).GetBody();
 		auto trans2 = ECS::GetComponent<Transform>(elevator2);
-
 
 		//If the blue button is being pressed, the elevator moves up to the higher platforms
 		//If the button is not being pressed the elevator moves back down towards the bottom
@@ -173,7 +219,9 @@ void Game::Update()
 		{
 			body2->SetLinearVelocity(b2Vec2(0, 0));
 		}
+
 	}
+#pragma endregion
 }
 
 void Game::GUI()
@@ -244,40 +292,42 @@ void Game::GamepadInput()
 	}
 }
 
-void Game::GamepadStroke(XInputController * con)
+#pragma region Gamepad Functions
+void Game::GamepadStroke(XInputController* con)
 {
 	//Active scene now captures this input and can use it
 	//Look at base Scene class for more info.
 	m_activeScene->GamepadStroke(con);
 }
 
-void Game::GamepadUp(XInputController * con)
+void Game::GamepadUp(XInputController* con)
 {
 	//Active scene now captures this input and can use it
 	//Look at base Scene class for more info.
 	m_activeScene->GamepadUp(con);
 }
 
-void Game::GamepadDown(XInputController * con)
+void Game::GamepadDown(XInputController* con)
 {
 	//Active scene now captures this input and can use it
 	//Look at base Scene class for more info.
 	m_activeScene->GamepadDown(con);
 }
 
-void Game::GamepadStick(XInputController * con)
+void Game::GamepadStick(XInputController* con)
 {
 	//Active scene now captures this input and can use it
 	//Look at base Scene class for more info.
 	m_activeScene->GamepadStick(con);
 }
 
-void Game::GamepadTrigger(XInputController * con)
+void Game::GamepadTrigger(XInputController* con)
 {
 	//Active scene now captures this input and can use it
 	//Look at base Scene class for more info.
 	m_activeScene->GamepadTrigger(con);
 }
+#pragma endregion
 
 void Game::KeyboardHold()
 {
@@ -321,7 +371,7 @@ if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 }	
 #pragma endregion
 
-	////ZOOMING
+	//ZOOMING
 	//GoGoGame* scene = (GoGoGame*)m_activeScene;
 	//auto cam = scene->GetCam();
 	//
@@ -418,7 +468,7 @@ if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 	{
 		if (Input::GetKeyDown(Key::W))
 		{
-			float impulse = blueBody->GetMass() * 32.5;
+			float impulse = blueBody->GetMass() * 30;
 			blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
 			listener.SetBGrounded(false);
 		}
@@ -435,7 +485,31 @@ if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 	}
 }
 #pragma endregion
-	
+
+#pragma region DEV TOOLS
+//Hotkeys
+if (Input::GetKeyDown(Key::NumPad1))
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[2]->GetScene();
+	m_activeScene = m_scenes[2];
+}
+if (Input::GetKeyDown(Key::NumPad2))
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
+}
+#pragma endregion
+
 }
 
 void Game::KeyboardUp()
