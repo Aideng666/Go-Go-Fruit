@@ -335,30 +335,28 @@ void Game::KeyboardHold()
 //MOVEMENT
 if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 {		
-	GoGoGame* scene = (GoGoGame*)m_activeScene;
+	//GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
 	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
-
 	b2Vec2 blueVel = blueBody->GetLinearVelocity();
 	b2Vec2 waterVel = waterBody->GetLinearVelocity();
-
 	float blueSpeed = 0.f, waterSpeed = 0.f;
 
 	if (Input::GetKey(Key::A))
 	{
-		blueSpeed = -8.f;
+		blueSpeed = -10.f;
 	}
 	if (Input::GetKey(Key::D))
 	{
-		blueSpeed = 8.f;
+		blueSpeed = 10.f;
 	}
 	if (Input::GetKey(Key::LeftArrow))
 	{
-		waterSpeed = -8.f;
+		waterSpeed = -10.f;
 	}
 	if (Input::GetKey(Key::RightArrow))
 	{
-		waterSpeed = 8.f;
+		waterSpeed = 10.f;
 	}
 
 	float blueChange = blueSpeed - blueVel.x;
@@ -463,12 +461,14 @@ if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 	GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
 	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
+	const float blueJumpForce = 30.f;
+	const float waterJumpForce = 22.f;
 
 	if (listener.GetBJump() || listener.GetBGrounded())
 	{
 		if (Input::GetKeyDown(Key::W))
 		{
-			float impulse = blueBody->GetMass() * 30;
+			float impulse = blueBody->GetMass() * blueJumpForce;
 			blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
 			listener.SetBGrounded(false);
 		}
@@ -478,7 +478,7 @@ if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 	{
 		if (Input::GetKeyDown(Key::UpArrow))
 		{
-			float impulse = waterBody->GetMass() * 22;
+			float impulse = waterBody->GetMass() * waterJumpForce;
 			waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
 			listener.SetWGrounded(false);
 		}

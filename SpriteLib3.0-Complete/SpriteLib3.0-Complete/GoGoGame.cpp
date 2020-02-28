@@ -278,7 +278,32 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(60.f), float32(-75.f));
+		tempDef.position.Set(float32(-59.f), float32(-80.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)box2);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 30, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(box2, bitHolder, "Lower Facing Box");
+	}
+
+	{
+		auto box2 = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(box2);
+		ECS::AttachComponent<PhysicsBody>(box2);
+
+		ECS::GetComponent<Transform>(box2).SetPosition(vec3(0.f, 0.f, 50.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box2);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(62.f), float32(-75.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -291,28 +316,52 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 	}
 
 	{
-		auto box3 = ECS::CreateEntity();
+		auto box2 = ECS::CreateEntity();
 
-		ECS::AttachComponent<Transform>(box3);
-		ECS::AttachComponent<PhysicsBody>(box3);
+		ECS::AttachComponent<Transform>(box2);
+		ECS::AttachComponent<PhysicsBody>(box2);
 
-		ECS::GetComponent<Transform>(box3).SetPosition(vec3(0.f, 0.f, 50.f));
+		ECS::GetComponent<Transform>(box2).SetPosition(vec3(0.f, 0.f, 50.f));
 
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box3);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box2);
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(111.f), float32(-33.6f));
+		tempDef.position.Set(float32(36.f), float32(-33.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-		tempBody->SetUserData((void*)box3);
+		tempBody->SetUserData((void*)box2);
 
-		tempPhsBody = PhysicsBody(tempBody, 150, 80, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 1, 79, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(box2, bitHolder, "Middle Facing Box");
+	}
+
+	{
+		auto box4 = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(box4);
+		ECS::AttachComponent<PhysicsBody>(box4);
+		ECS::GetComponent<Transform>(box4).SetPosition(vec3(0.f, 0.f, 50.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box4);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(111.f), float32(6.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)box4);
+
+		tempPhsBody = PhysicsBody(tempBody, 150, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(box3, bitHolder, "Top Ground Box");
+		ECS::SetUpIdentifier(box4, bitHolder, "Top Ground Box");
 	}
 #pragma endregion
 
@@ -491,7 +540,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(140.f), float32(33));
+		tempDef.position.Set(float32(140.f), float32(33.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
