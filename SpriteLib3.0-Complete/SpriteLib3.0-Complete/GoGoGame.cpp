@@ -189,7 +189,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, 0.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
-		tempPhsBody.SetMaxVelo(150.f);
+		tempPhsBody.SetMaxVelo(60.f);
 		tempPhsBody.SetGravity(true);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueberryBit();
@@ -230,7 +230,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, -2.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
-		tempPhsBody.SetMaxVelo(85.f);
+		tempPhsBody.SetMaxVelo(60.f);
 		tempPhsBody.SetGravity(true);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::WatermelonBit();

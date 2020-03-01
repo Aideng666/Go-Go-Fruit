@@ -109,7 +109,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, 0.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
-		tempPhsBody.SetMaxVelo(150.f);
+		tempPhsBody.SetMaxVelo(60.f);
 		tempPhsBody.SetGravity(true);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueberryBit();
@@ -150,7 +150,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, -2.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
-		tempPhsBody.SetMaxVelo(85.f);
+		tempPhsBody.SetMaxVelo(60.f);
 		tempPhsBody.SetGravity(true);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::WatermelonBit();
@@ -197,13 +197,13 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(134.f), float32(-57));
+		tempDef.position.Set(float32(135.f), float32(-12.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempBody->SetUserData((void*)box1);
 
-		tempPhsBody = PhysicsBody(tempBody, 100, 90, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 100, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(box1, bitHolder, "Middle Ground Box");
@@ -221,16 +221,16 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(168.f), float32(-12));
+		tempDef.position.Set(float32(84.f), float32(-52.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempBody->SetUserData((void*)box1);
 
-		tempPhsBody = PhysicsBody(tempBody, 25, 150, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 1, 80, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(box1, bitHolder, "Right Ground Box");
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(box1, bitHolder, "Middle Facing Box");
 	}
 	{
 		auto box1 = ECS::CreateEntity();
@@ -245,13 +245,85 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(133.5f), float32(51));
+		tempDef.position.Set(float32(155.f), float32(13.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempBody->SetUserData((void*)box1);
 
-		tempPhsBody = PhysicsBody(tempBody, 100, 25, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 1, 50, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(box1, bitHolder, "Right Facing Box");
+	}
+	{
+		auto box1 = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(box1);
+		ECS::AttachComponent<PhysicsBody>(box1);
+
+		ECS::GetComponent<Transform>(box1).SetPosition(vec3(0.f, 0.f, 50.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box1);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(133.5f), float32(38.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)box1);
+
+		tempPhsBody = PhysicsBody(tempBody, 100, 1, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		ECS::SetUpIdentifier(box1, bitHolder, "Top Bottom Right Box");
+	}
+	{
+		auto box1 = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(box1);
+		ECS::AttachComponent<PhysicsBody>(box1);
+
+		ECS::GetComponent<Transform>(box1).SetPosition(vec3(0.f, 0.f, 50.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box1);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(83.5f), float32(50.5f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)box1);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 26, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		ECS::SetUpIdentifier(box1, bitHolder, "Top Right Facing Box");
+	}
+	{
+		auto box1 = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(box1);
+		ECS::AttachComponent<PhysicsBody>(box1);
+
+		ECS::GetComponent<Transform>(box1).SetPosition(vec3(0.f, 0.f, 50.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box1);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(131.f), float32(63.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)box1);
+
+		tempPhsBody = PhysicsBody(tempBody, 93, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(box1, bitHolder, "Top Right Box");
@@ -269,15 +341,15 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-144.f), float32(38));
+		tempDef.position.Set(float32(-143.f), float32(38.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempBody->SetUserData((void*)box1);
 
-		tempPhsBody = PhysicsBody(tempBody, 25, 150, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 23, 150, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(box1, bitHolder, "Top Left Box");
 	}
 	{
@@ -301,8 +373,8 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 70, 25, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(box1, bitHolder, "Left Box");
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(box1, bitHolder, "Top Bottom Left Box");
 	}
 #pragma endregion
 
@@ -487,4 +559,4 @@ int LevelTwo::GetBackground()
 int LevelTwo::GetBackground2()
 {
 	return m_background2;
-}
+}	  

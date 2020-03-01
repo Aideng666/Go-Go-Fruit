@@ -50,9 +50,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelTwo(level2));
 
 	//Sets active scene reference to our scene
-	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[0]->GetScene();
-	m_activeScene = m_scenes[0];
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
 	PhysicsSystem::Init();
 
 	for (int i = 0; i < m_scenes.size(); ++i)
@@ -331,42 +331,79 @@ void Game::GamepadTrigger(XInputController* con)
 
 void Game::KeyboardHold()
 {
+
 #pragma region MOVEMENT SYSTEM
 //MOVEMENT
-if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
-{		
-	//GoGoGame* scene = (GoGoGame*)m_activeScene;
-	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
-	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
-	b2Vec2 blueVel = blueBody->GetLinearVelocity();
-	b2Vec2 waterVel = waterBody->GetLinearVelocity();
-	float blueSpeed = 0.f, waterSpeed = 0.f;
+	for (int i = 2; i < m_scenes.size(); ++i)
+	{
+		if (m_activeScene == m_scenes[i])
+		{
+			auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
+			auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
+			b2Vec2 blueVel = blueBody->GetLinearVelocity();
+			b2Vec2 waterVel = waterBody->GetLinearVelocity();
+			float blueSpeed = 0.f, waterSpeed = 0.f;
 
-	if (Input::GetKey(Key::A))
-	{
-		blueSpeed = -10.f;
-	}
-	if (Input::GetKey(Key::D))
-	{
-		blueSpeed = 10.f;
-	}
-	if (Input::GetKey(Key::LeftArrow))
-	{
-		waterSpeed = -10.f;
-	}
-	if (Input::GetKey(Key::RightArrow))
-	{
-		waterSpeed = 10.f;
+			if (Input::GetKey(Key::A))
+			{
+				blueSpeed = -10.f;
+			}
+			if (Input::GetKey(Key::D))
+			{
+				blueSpeed = 10.f;
+			}
+			if (Input::GetKey(Key::LeftArrow))
+			{
+				waterSpeed = -10.f;
+			}
+			if (Input::GetKey(Key::RightArrow))
+			{
+				waterSpeed = 10.f;
+			}
+
+			float blueChange = blueSpeed - blueVel.x;
+			float waterChange = waterSpeed - waterVel.x;
+			float blueForce = (blueBody->GetMass() * blueChange);
+			float waterForce = (waterBody->GetMass() * waterChange);
+
+			blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
+			waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
+		}
 	}
 
-	float blueChange = blueSpeed - blueVel.x;
-	float waterChange = waterSpeed - waterVel.x;
-	float blueForce = (blueBody->GetMass() * blueChange);
-	float waterForce = (waterBody->GetMass() * waterChange);
-
-	blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
-	waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
-}	
+//if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
+//{		
+//	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
+//	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
+//	b2Vec2 blueVel = blueBody->GetLinearVelocity();
+//	b2Vec2 waterVel = waterBody->GetLinearVelocity();
+//	float blueSpeed = 0.f, waterSpeed = 0.f;
+//
+//	if (Input::GetKey(Key::A))
+//	{
+//		blueSpeed = -10.f;
+//	}
+//	if (Input::GetKey(Key::D))
+//	{
+//		blueSpeed = 10.f;
+//	}
+//	if (Input::GetKey(Key::LeftArrow))
+//	{
+//		waterSpeed = -10.f;
+//	}
+//	if (Input::GetKey(Key::RightArrow))
+//	{
+//		waterSpeed = 10.f;
+//	}
+//
+//	float blueChange = blueSpeed - blueVel.x;
+//	float waterChange = waterSpeed - waterVel.x;
+//	float blueForce = (blueBody->GetMass() * blueChange);
+//	float waterForce = (waterBody->GetMass() * waterChange);
+//
+//	blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
+//	waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
+//}	
 #pragma endregion
 
 	//ZOOMING
