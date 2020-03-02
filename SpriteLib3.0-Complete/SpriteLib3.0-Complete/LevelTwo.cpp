@@ -99,7 +99,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-125.f), float32(-70.f));
+		tempDef.position.Set(float32(-118.f), float32(-93.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
@@ -140,7 +140,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-150.f), float32(0.f));
+		tempDef.position.Set(float32(-150.f), float32(-92.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
@@ -424,7 +424,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "BluePlat.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 47, 5);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 45, 5);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 98.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -436,7 +436,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(-107.f), float32(-9.5f));
+		tempDef.position.Set(float32(-107.5f), float32(-9.5f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 

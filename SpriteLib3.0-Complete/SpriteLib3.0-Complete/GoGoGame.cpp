@@ -179,7 +179,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-125.f), float32(0.f));
+		tempDef.position.Set(float32(-120.f), float32(-95.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
@@ -220,7 +220,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-150.f), float32(0.f));
+		tempDef.position.Set(float32(-150.f), float32(-92.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
@@ -253,7 +253,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(0.f), float32(-95));
+		tempDef.position.Set(float32(0.f), float32(-95.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
