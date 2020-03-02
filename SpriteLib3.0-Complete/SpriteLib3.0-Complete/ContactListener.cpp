@@ -9,7 +9,7 @@ using namespace std;
 
 void ContactListener::BeginContact(b2Contact* contact)
 {
-    //Identifies the fist player
+    //Identifies the first player
     auto fixtureA = contact->GetFixtureA();
     auto bodyA = fixtureA->GetBody();
     unsigned int entityA = (unsigned int)bodyA->GetUserData();
@@ -56,7 +56,8 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
     {
-       
+        float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2;
+        bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
 }
 #pragma endregion
@@ -87,7 +88,8 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
     {
-
+        float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2;
+        bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
 }
 #pragma endregion
@@ -138,6 +140,7 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bJump = false;
         button2Pressed = false;
     }
+
 }
 #pragma endregion
     

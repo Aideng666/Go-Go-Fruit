@@ -277,7 +277,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 100, 1, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(box1, bitHolder, "Top Bottom Right Box");
 	}
 	{
@@ -301,7 +301,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 1, 26, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(box1, bitHolder, "Top Right Facing Box");
 	}
 	{
@@ -349,7 +349,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 23, 150, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(box1, bitHolder, "Top Left Box");
 	}
 	{
@@ -529,6 +529,78 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 #pragma endregion
 
+	//JELLO
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		std::string fileName = "Jello.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 70, 40);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, -95.f, 98.f));
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = tempSpr.GetWidth() / 400.f;
+		float shrinkY = tempSpr.GetWidth() / 400.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_kinematicBody;
+		tempDef.position.Set(float32(0.f), float32(-74.f));
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)entity);
+
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth()), float(tempSpr.GetHeight() - 34),
+			vec2(0.f, -16.f), false);
+
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::JelloBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Jello");
+
+	}
+
+	//Fruit Bowl
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		std::string fileName = "FruitBowl.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50.7692307694, 36.6666666667);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = tempSpr.GetWidth() / 100.f;
+		float shrinkY = tempSpr.GetWidth() / 100.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(155.f), float32(81.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)entity);
+
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 15), float(tempSpr.GetHeight() / 4),
+			vec2(0.f, -15.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
+	}
 }
 
 //GETTERS
