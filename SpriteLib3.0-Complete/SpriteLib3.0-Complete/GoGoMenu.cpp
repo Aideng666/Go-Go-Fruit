@@ -1,4 +1,7 @@
 #include "GoGoMenu.h"
+#include "Utilities.h"
+#include "Timer.h"
+#include "EffectManager.h"
 
 GoGoMenu::GoGoMenu(std::string name)
 	: Scene(name)
@@ -7,6 +10,14 @@ GoGoMenu::GoGoMenu(std::string name)
 
 void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 {
+	//Effect stuffs
+	EffectManager::CreateEffect(EffectType::Vignette, BackEnd::GetWindowWidth(), BackEnd::GetWindowHeight());
+	VignetteEffect* effect = (VignetteEffect*)EffectManager::GetEffect(EffectManager::GetVignetteHandle());
+
+	effect->SetOpacity(1.f);
+	effect->SetInnerRadius(0.f);
+	effect->SetOuterRadius(0.870f);
+
 	m_sceneReg = new entt::registry;
 
 	ECS::AttachRegister(m_sceneReg);
@@ -26,19 +37,41 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Main Menu Camera");
 	}
 
-	//Menu Image
+	////Menu Image
+	//{
+	//	auto entity = ECS::CreateEntity();
+
+	//	ECS::AttachComponent<Sprite>(entity);
+	//	ECS::AttachComponent<Transform>(entity);
+
+	//	std::string fileName = "PlayScreen.png";
+
+	//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 384, 200);
+	//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 50.f));
+
+	//	unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+	//	ECS::SetUpIdentifier(entity, bitHolder, "Go Go Fruit Menu");
+	//}
+}
+
+void GoGoMenu::Update()
+{
+	RainbowBackground();
+}
+
+void GoGoMenu::RainbowBackground()
+{
+	m_clearColor = Util::Lerp<vec4>(m_clearColor1, m_clearColor2, m_lerpVal);
+
+	if (m_lerpVal >= 1.f)
 	{
-		auto entity = ECS::CreateEntity();
+		vec4 temp = m_clearColor2;
 
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
+		m_clearColor2 = m_clearColor1;
+		m_clearColor1 = temp;
 
-		std::string fileName = "PlayScreen.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 384, 200);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 50.f));
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Go Go Fruit Menu");
+		m_lerpVal = 0.f;
 	}
+
+	m_lerpVal += Timer::deltaTime / m_repeatTime;
 }
