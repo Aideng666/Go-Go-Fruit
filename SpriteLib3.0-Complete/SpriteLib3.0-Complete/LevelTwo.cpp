@@ -558,7 +558,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth()), float(tempSpr.GetHeight() - 34),
-			vec2(0.f, -16.f), false);
+			vec2(0.f, -49.f), false);
 
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::JelloBit();
