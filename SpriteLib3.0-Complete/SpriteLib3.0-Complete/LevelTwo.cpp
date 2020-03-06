@@ -598,7 +598,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 15), float(tempSpr.GetHeight() / 4),
 			vec2(0.f, -15.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
 	}
 }

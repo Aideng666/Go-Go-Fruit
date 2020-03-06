@@ -565,7 +565,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 22), float(tempSpr.GetHeight() / 4),
 			vec2(0.f, -22.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
 	}
 #pragma endregion

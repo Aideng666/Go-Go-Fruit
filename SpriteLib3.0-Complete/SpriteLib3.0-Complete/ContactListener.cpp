@@ -27,6 +27,7 @@ void ContactListener::BeginContact(b2Contact* contact)
     if (fixtureA->GetUserData() == NULL || fixtureB->GetUserData() == NULL)
         return;
 
+
 #pragma region Blueberry Collision
 if (identifierA & EntityIdentifier::BlueberryBit())
 {
@@ -42,22 +43,24 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bJump = true;
         wJump = true;
     }
+    //Fruit Bowl
+    if (identifierB & EntityIdentifier::FruitBowlBit())
+    {
+        bJump = true;
+        bBowl = true;
+    }
     //Collides with blue buttons
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         bJump = true;
         buttonPressed = true;
-        auto& animController = ECS::GetComponent<AnimationController>(entityB);
-        animController.SetActiveAnim(0);
-        animController.GetAnimation(0).Reset();
+        
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         bJump = true;
         button2Pressed = true;
-        auto& animController = ECS::GetComponent<AnimationController>(entityB);
-        animController.SetActiveAnim(0);
-        animController.GetAnimation(0).Reset();
+       
     }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
@@ -82,20 +85,22 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = true;
     }
+    //Fruit Bowl
+    if (identifierB & EntityIdentifier::FruitBowlBit())
+    {
+        wJump = true;
+        wBowl = true;
+    }
     //Collides with blue buttons
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         wJump = true;
-        auto& animController = ECS::GetComponent<AnimationController>(entityB);
-        animController.SetActiveAnim(0);
-        animController.GetAnimation(0).Reset();
+        
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         wJump = true;
-        auto& animController = ECS::GetComponent<AnimationController>(entityB);
-        animController.SetActiveAnim(0);
-        animController.GetAnimation(0).Reset();
+        
     }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
@@ -105,6 +110,12 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     }
 }
 #pragma endregion
+
+    if (bBowl && wBowl)
+    {
+        sndPlaySound("Win.wav", SND_FILENAME | SND_ASYNC);
+    }
+
 }
 
 void ContactListener::EndContact(b2Contact* contact)
@@ -135,6 +146,12 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = false;
     }
+    //Fruit Bowl
+    if (identifierB & EntityIdentifier::FruitBowlBit())
+    {
+        bJump = false;
+        bBowl = false;
+    }
     //End of collision with watermelon
     if (identifierB & EntityIdentifier::WatermelonBit())
     {
@@ -146,17 +163,13 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = false;
         buttonPressed = false;
-        auto& animController = ECS::GetComponent<AnimationController>(entityB);
-        animController.SetActiveAnim(1);
-        animController.GetAnimation(1).Reset();
+        
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         bJump = false;
         button2Pressed = false;
-        auto& animController = ECS::GetComponent<AnimationController>(entityB);
-        animController.SetActiveAnim(1);
-        animController.GetAnimation(1).Reset();
+        
     }
 
 }
@@ -175,20 +188,22 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = false;
     }
+    //Fruit Bowl
+    if (identifierB & EntityIdentifier::FruitBowlBit())
+    {
+        wJump = false;
+        wBowl = false;
+    }
     //End of collision with blue buttons
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         wJump = false;
-        auto& animController = ECS::GetComponent<AnimationController>(entityB);
-        animController.SetActiveAnim(1);
-        animController.GetAnimation(1).Reset();
+        
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         wJump = false;
-        auto& animController = ECS::GetComponent<AnimationController>(entityB);
-        animController.SetActiveAnim(1);
-        animController.GetAnimation(1).Reset();
+        
     }
 }
 #pragma endregion
@@ -214,6 +229,14 @@ bool ContactListener::GetPressed()
 bool ContactListener::Get2Pressed()
 {
     return button2Pressed;
+}
+bool ContactListener::GetBBowl()
+{
+    return bBowl;
+}
+bool ContactListener::GetWBowl()
+{
+    return wBowl;
 }
 void ContactListener::SetBGrounded(bool grounded) {
     bGrounded = grounded;

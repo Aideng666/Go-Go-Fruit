@@ -15,6 +15,8 @@ public:
 	bool GetBGrounded();
 	bool GetPressed();
 	bool Get2Pressed();
+	bool GetBBowl();
+	bool GetWBowl();
 	void SetBGrounded(bool grounded);
 	void SetWGrounded(bool grounded);
 
@@ -27,5 +29,7 @@ private:
 	bool wGrounded;
 	bool buttonPressed;
 	bool button2Pressed;
+	bool bBowl;
+	bool wBowl;
 };
 
