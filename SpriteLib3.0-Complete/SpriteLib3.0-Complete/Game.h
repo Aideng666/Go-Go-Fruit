@@ -68,6 +68,7 @@ public:
 	void MouseClick(SDL_MouseButtonEvent evnt);
 	void MouseWheel(SDL_MouseWheelEvent evnt);
 
+
 private:
 	//The window
 	Window *m_window = nullptr;
@@ -94,6 +95,10 @@ private:
 	bool m_wheel = false;
 
 	XInputManager input;
+
+	float timer = 0.f;
+	bool change;
+
 };
 
 

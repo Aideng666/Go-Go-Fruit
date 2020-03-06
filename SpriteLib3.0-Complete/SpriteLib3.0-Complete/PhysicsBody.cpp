@@ -40,6 +40,16 @@ void PhysicsBody::SetPosition(b2Vec2 bodyPos)
 	m_position = bodyPos;
 }
 
+bool PhysicsBody::GetFade()
+{
+	return m_fade;
+}
+
+void PhysicsBody::SetFade(bool fade)
+{
+	m_fade = fade;
+}
+
 vec3 PhysicsBody::m_gravityAcceleration = vec3(0.f, -185.f, 0.f);
 bool PhysicsBody::m_drawBodies = false;
 

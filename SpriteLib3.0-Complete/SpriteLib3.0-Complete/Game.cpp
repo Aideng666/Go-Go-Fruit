@@ -2,6 +2,7 @@
 #include "ContactListener.h"
 
 #include <random>
+#include "Utilities.h"
 
 ContactListener listener;
 
@@ -54,7 +55,7 @@ void Game::InitGame()
 	m_register = m_scenes[0]->GetScene();
 	m_activeScene = m_scenes[0];
 	PhysicsSystem::Init();
-
+	
 	for (int i = 0; i < m_scenes.size(); ++i)
 	{
 		m_scenes[i]->GetPhysicsWorld().SetContactListener(&listener);
@@ -107,6 +108,28 @@ void Game::Update()
 
 	//Updates the active scene
 	m_activeScene->Update();
+
+
+	if (change)
+	{
+		timer += Timer::deltaTime;
+
+
+
+		if (timer >= 1.f)
+		{
+			SceneEditor::ResetEditor();
+
+			m_activeScene->Unload();
+
+			m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+			m_register = m_scenes[2]->GetScene();
+			m_activeScene = m_scenes[2];
+			timer = 0.f;
+			change = false;
+		}
+	}
+
 
 #pragma region Parallax Background
 	if (m_activeScene == m_scenes[2])
@@ -222,6 +245,7 @@ void Game::Update()
 
 	}
 #pragma endregion
+
 }
 
 void Game::GUI()
@@ -371,39 +395,7 @@ void Game::KeyboardHold()
 		}
 	}
 
-//if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
-//{		
-//	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
-//	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
-//	b2Vec2 blueVel = blueBody->GetLinearVelocity();
-//	b2Vec2 waterVel = waterBody->GetLinearVelocity();
-//	float blueSpeed = 0.f, waterSpeed = 0.f;
-//
-//	if (Input::GetKey(Key::A))
-//	{
-//		blueSpeed = -10.f;
-//	}
-//	if (Input::GetKey(Key::D))
-//	{
-//		blueSpeed = 10.f;
-//	}
-//	if (Input::GetKey(Key::LeftArrow))
-//	{
-//		waterSpeed = -10.f;
-//	}
-//	if (Input::GetKey(Key::RightArrow))
-//	{
-//		waterSpeed = 10.f;
-//	}
-//
-//	float blueChange = blueSpeed - blueVel.x;
-//	float waterChange = waterSpeed - waterVel.x;
-//	float blueForce = (blueBody->GetMass() * blueChange);
-//	float waterForce = (waterBody->GetMass() * waterChange);
-//
-//	blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
-//	waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
-//}	
+
 #pragma endregion
 
 	//ZOOMING
@@ -432,13 +424,26 @@ void Game::KeyboardDown()
 //Space on play goes to game
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 {
-	SceneEditor::ResetEditor();
+	GoGoMenu* scene = (GoGoMenu*)m_activeScene;
 
-	m_activeScene->Unload();
+	scene->SetFade(true);
 
-	m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[2]->GetScene();
-	m_activeScene = m_scenes[2];
+	change = true;
+
+	ECS::DestroyEntity(scene->GetMenu());
+	/*timer += Timer::deltaTime;
+
+	if (timer >= 2.f)
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[2]->GetScene();
+		m_activeScene = m_scenes[2];
+		timer = 0.f;
+	}*/
 }
 //Up arrow goes to exit
 if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
@@ -621,3 +626,4 @@ void Game::MouseWheel(SDL_MouseWheelEvent evnt)
 	//Resets the enabled flag
 	m_wheel = false;
 }
+

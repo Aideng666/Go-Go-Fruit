@@ -254,6 +254,7 @@ void AnimationController::SetVAO(GLuint vao)
 	m_spritePlaneVAO = vao;
 }
 
+
 void AnimationController::SetActiveAnim(int anim)
 {
 	//Sets the active animation to anim

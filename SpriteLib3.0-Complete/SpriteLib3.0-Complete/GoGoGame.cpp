@@ -483,13 +483,28 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 	{
 		auto entity = ECS::CreateEntity();
 
+		auto press = File::LoadJSON("BlueButton.json");
+
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 
 		std::string fileName = "BlueButton.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 5);
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(press["ButtonPressFinal"]);
+		animController.GetAnimation(0).SetRepeating(false);
+		animController.AddAnimation(press["ButtonReleaseFinal"]);
+		animController.GetAnimation(1).SetRepeating(false);
+
+		//animController.SetActiveAnim(0);
+		
+		auto& anim = animController.GetAnimation(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 5, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, -95.f, 98.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -512,7 +527,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 			vec2(0.f, 0.f), false);
 		
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Button");
 
 		m_button = entity;

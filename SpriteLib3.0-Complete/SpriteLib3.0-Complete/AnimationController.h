@@ -145,6 +145,7 @@ public:
 	void SetActiveAnim(int anim);
 	//Sets the VAO that the UV VBO is connected to
 	void SetVAO(GLuint vao);
+
 private:
 	//Active animation
 	int m_activeAnimation = 0;
@@ -159,6 +160,7 @@ private:
 	GLuint m_spritePlaneUVVBO = GL_NONE;
 	//VAO
 	GLuint m_spritePlaneVAO = GL_NONE;
+
 };
 
 #ifndef __ANIMATIONCONTROLLERJSON_H__

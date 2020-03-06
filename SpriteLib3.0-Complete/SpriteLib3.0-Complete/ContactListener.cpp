@@ -47,11 +47,17 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = true;
         buttonPressed = true;
+        auto& animController = ECS::GetComponent<AnimationController>(entityB);
+        animController.SetActiveAnim(0);
+        animController.GetAnimation(0).Reset();
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         bJump = true;
         button2Pressed = true;
+        auto& animController = ECS::GetComponent<AnimationController>(entityB);
+        animController.SetActiveAnim(0);
+        animController.GetAnimation(0).Reset();
     }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
@@ -80,10 +86,16 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         wJump = true;
+        auto& animController = ECS::GetComponent<AnimationController>(entityB);
+        animController.SetActiveAnim(0);
+        animController.GetAnimation(0).Reset();
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         wJump = true;
+        auto& animController = ECS::GetComponent<AnimationController>(entityB);
+        animController.SetActiveAnim(0);
+        animController.GetAnimation(0).Reset();
     }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
@@ -134,11 +146,17 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = false;
         buttonPressed = false;
+        auto& animController = ECS::GetComponent<AnimationController>(entityB);
+        animController.SetActiveAnim(1);
+        animController.GetAnimation(1).Reset();
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         bJump = false;
         button2Pressed = false;
+        auto& animController = ECS::GetComponent<AnimationController>(entityB);
+        animController.SetActiveAnim(1);
+        animController.GetAnimation(1).Reset();
     }
 
 }
@@ -161,10 +179,16 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         wJump = false;
+        auto& animController = ECS::GetComponent<AnimationController>(entityB);
+        animController.SetActiveAnim(1);
+        animController.GetAnimation(1).Reset();
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         wJump = false;
+        auto& animController = ECS::GetComponent<AnimationController>(entityB);
+        animController.SetActiveAnim(1);
+        animController.GetAnimation(1).Reset();
     }
 }
 #pragma endregion

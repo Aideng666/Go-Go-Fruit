@@ -29,8 +29,9 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 	}
 
 	//Menu Image
-	/*{
+	{
 		auto entity = ECS::CreateEntity();
+
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
@@ -38,20 +39,36 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "PlayScreen.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 384, 200);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 10.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -99.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Go Go Fruit Menu");
-	}*/
+
+		m_menu = entity;
+	}
+
 }
+
+
 
 void GoGoMenu::Update()
 {
-	RainbowBackground();
+	if (fade)
+	{
+		FadeBackground();
+		timer += Timer::deltaTime;
+		if (timer >= (m_repeatTime * 2))
+		{
+			fade = false;
+			timer = 0.f;
+		}
+	}
 }
 
-void GoGoMenu::RainbowBackground()
+
+void GoGoMenu::FadeBackground()
 {
+
 	m_clearColor = Util::Lerp<vec4>(m_clearColor1, m_clearColor2, m_lerpVal);
 
 	if (m_lerpVal >= 1.f)
@@ -66,3 +83,17 @@ void GoGoMenu::RainbowBackground()
 
 	m_lerpVal += Timer::deltaTime / m_repeatTime;
 }
+
+bool GoGoMenu::GetFade()
+{
+	return this->fade;
+}
+int GoGoMenu::GetMenu()
+{
+	return m_menu;
+}
+void GoGoMenu::SetFade(bool fade)
+{
+	this->fade = fade;
+}
+

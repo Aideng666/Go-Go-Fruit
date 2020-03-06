@@ -69,7 +69,7 @@ public:
 
 protected:
 
-	vec4 m_clearColor = vec4(255.f, 255.f, 255.f, 1.f);
+	vec4 m_clearColor = vec4(1.f, 1.f, 1.f, 1.f);
 	b2World* m_physicsWorld = nullptr;
 	b2Vec2 m_gravity = b2Vec2(float32(0.f), float32(0.f));
 

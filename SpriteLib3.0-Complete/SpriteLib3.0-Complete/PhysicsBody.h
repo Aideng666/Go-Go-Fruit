@@ -166,6 +166,9 @@ public:
 	void SetBody(b2Body* body);
 	void SetPosition(b2Vec2 bodyPos);
 
+	bool GetFade();
+	void SetFade(bool fade);
+
 private:
 
 	//The applied force
@@ -226,6 +229,8 @@ private:
 
 	b2Body* m_body = nullptr;
 	b2Vec2 m_position = b2Vec2(0.f, 0.f);
+
+	bool m_fade;
 };
 
 //Sends body TO json file
