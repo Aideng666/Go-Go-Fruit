@@ -516,6 +516,35 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		m_button = entity;
 	}
+
+	{
+		auto blueButton = File::LoadJSON("BlueButton.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "BlueButtonSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(blueButton["ButtonPressFinal"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(blueButton["ButtonReleaseFinal"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Button Anim");
+
+	}
 	
 	//Fruit Bowl
 	{
