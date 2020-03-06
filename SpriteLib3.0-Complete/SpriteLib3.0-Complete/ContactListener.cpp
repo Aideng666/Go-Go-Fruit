@@ -54,19 +54,11 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = true;
         buttonPressed = true;
-<<<<<<< Updated upstream
-        
-=======
->>>>>>> Stashed changes
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         bJump = true;
         button2Pressed = true;
-<<<<<<< Updated upstream
-       
-=======
->>>>>>> Stashed changes
     }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
@@ -101,18 +93,10 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         wJump = true;
-<<<<<<< Updated upstream
-        
-=======
->>>>>>> Stashed changes
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         wJump = true;
-<<<<<<< Updated upstream
-        
-=======
->>>>>>> Stashed changes
     }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
@@ -175,19 +159,11 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = false;
         buttonPressed = false;
-<<<<<<< Updated upstream
-        
-=======
->>>>>>> Stashed changes
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         bJump = false;
         button2Pressed = false;
-<<<<<<< Updated upstream
-        
-=======
->>>>>>> Stashed changes
     }
 
 }
@@ -216,18 +192,10 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         wJump = false;
-<<<<<<< Updated upstream
-        
-=======
->>>>>>> Stashed changes
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         wJump = false;
-<<<<<<< Updated upstream
-        
-=======
->>>>>>> Stashed changes
     }
 }
 #pragma endregion

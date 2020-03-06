@@ -539,7 +539,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "Jello.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 70, 40);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 70, 80);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, -95.f, 98.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -551,7 +551,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(0.f), float32(-74.f));
+		tempDef.position.Set(float32(0.f), float32(-62.f));
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempBody->SetUserData((void*)entity);
