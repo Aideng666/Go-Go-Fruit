@@ -444,16 +444,29 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 #pragma region MAP LAYOUT
 	//PLATFORMS
 	{
+		auto bluePlatform = File::LoadJSON("BluePlatform.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "BluePlat.png";
+		std::string fileName = "BluePlatformSS.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 44.1333333334, 5);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 98.f));
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(bluePlatform["PowerOff"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(bluePlatform["PowerOn"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 44.1333333334, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 98.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -473,24 +486,37 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
 			vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Elevator");
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::GroundBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Platform Anim");
 
 		m_elevator = entity;
 	}
 
 	//Button
 	{
+		auto blueButton = File::LoadJSON("BlueButton.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "BlueButton.png";
+		std::string fileName = "BlueButtonSS.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 5);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, -95.f, 98.f));
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(blueButton["ButtonPressFinal"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(blueButton["ButtonReleaseFinal"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -508,42 +534,12 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 8), float(tempSpr.GetHeight()),
-			vec2(0.f, 0.f), false);	
+			vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit();
-		
-		ECS::SetUpIdentifier(entity, bitHolder, "Button");
-
-		m_button = entity;
-	}
-
-	{
-		auto blueButton = File::LoadJSON("BlueButton.json");
-
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<AnimationController>(entity);
-
-		std::string fileName = "BlueButtonSS.png";
-
-		auto& animController = ECS::GetComponent<AnimationController>(entity);
-		animController.InitUVs(fileName);
-
-		animController.AddAnimation(blueButton["ButtonPressFinal"]);
-		animController.GetAnimation(0);
-		animController.AddAnimation(blueButton["ButtonReleaseFinal"]);
-		animController.GetAnimation(1);
-
-		animController.SetActiveAnim(1);
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::BlueButtonBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Button Anim");
 
+		m_button = entity;
 	}
 	
 	//Fruit Bowl
@@ -603,4 +599,14 @@ int GoGoGame::GetCam()
 int GoGoGame::GetElevator()
 {
 	return m_elevator;
+}
+
+bool GoGoGame::GetButtonOn()
+{
+	return turnOn;
+}
+
+void GoGoGame::SetButtonOn(bool newturnOn)
+{
+	turnOn = newturnOn;
 }

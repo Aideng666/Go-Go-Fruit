@@ -187,7 +187,9 @@ void Game::Update()
 	{
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto elevator = scene->GetElevator();
+		auto button = scene->GetButton();
 		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
+		auto turnOn = scene->GetButtonOn();
 		auto trans = ECS::GetComponent<Transform>(elevator);
 	
 		//If the blue button is being pressed, the elevator moves up to the higher platforms
@@ -204,6 +206,30 @@ void Game::Update()
 		{
 			body->SetLinearVelocity(b2Vec2(0, 0));
 		}
+
+		//First level button anim
+		if (listener.GetPressed())
+		{
+			//turnOn = true;
+		}
+		if (!(listener.GetPressed()))
+		{
+			//turnOn = false;
+		}
+
+		if (listener.GetPressed() && !turnOn)
+		{
+			auto& animController = ECS::GetComponent<AnimationController>(button);
+			animController.SetActiveAnim(1);
+			animController.GetAnimation(1).Reset();
+
+			auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
+			animPlat.SetActiveAnim(0);
+			animPlat.GetAnimation(0).Reset();
+
+			turnOn = true;
+		}	
+	
 	}
 	if (m_activeScene == m_scenes[3])
 	{

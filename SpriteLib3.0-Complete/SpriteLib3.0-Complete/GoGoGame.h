@@ -14,10 +14,15 @@ public:
 	int GetCam();
 	int GetElevator();
 
+	bool GetButtonOn();
+	void SetButtonOn(bool newturnOn);
+
 private:
 	int m_background;
 	int m_background2;
 	int m_button;
 	int m_cam;
 	int m_elevator;
+
+	bool turnOn = false;
 };
