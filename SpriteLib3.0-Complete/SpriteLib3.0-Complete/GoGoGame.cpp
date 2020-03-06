@@ -34,6 +34,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::SetIsMainCamera(entity, true);
 
 		m_cam = entity;
+
 	}
 
 #pragma region Aesthetics + Environment

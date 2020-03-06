@@ -17,8 +17,10 @@ public:
 	bool Get2Pressed();
 	bool GetBBowl();
 	bool GetWBowl();
+	bool GetShake();
 	void SetBGrounded(bool grounded);
 	void SetWGrounded(bool grounded);
+	void SetShake(bool shake);
 
 private:
 
@@ -30,5 +32,6 @@ private:
 	bool button2Pressed;
 	bool bBowl;
 	bool wBowl;
+	bool shake;
 };
 

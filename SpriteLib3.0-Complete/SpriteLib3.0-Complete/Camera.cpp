@@ -113,6 +113,23 @@ void Camera::Zoom(float zoom)
 	Orthographic(m_aspectRatio, m_orthoPos.x, m_orthoPos.y, m_orthoPos.z, m_orthoPos.w, m_near, m_far);
 }
 
+void Camera::Shake(float shake)
+{
+
+	vec4 tempOrthoPos = m_orthoPos;
+	m_orthoPos = vec4(m_orthoPos.x + (shake), m_orthoPos.y + (shake), m_orthoPos.z + (shake), m_orthoPos.w + (shake));
+
+	//Updates Left, Right
+	m_orthoPos.x = m_localPosition.x + m_orthoPos.x;
+	m_orthoPos.y = m_localPosition.x + m_orthoPos.y;
+
+	//Updates Top, Bottom
+	m_orthoPos.z = m_localPosition.y + m_orthoPos.z;
+	m_orthoPos.w = m_localPosition.y + m_orthoPos.w;
+
+	Orthographic(m_aspectRatio, m_orthoPos.x, m_orthoPos.y, m_orthoPos.z, m_orthoPos.w, m_near, m_far);
+}
+
 float Camera::GetAspect() const
 {
 	return m_aspectRatio;

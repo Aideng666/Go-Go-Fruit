@@ -68,6 +68,8 @@ public:
 	void MouseClick(SDL_MouseButtonEvent evnt);
 	void MouseWheel(SDL_MouseWheelEvent evnt);
 
+	Scene* GetActiveScene();
+
 
 private:
 	//The window
@@ -97,6 +99,7 @@ private:
 	XInputManager input;
 
 	float timer = 0.f;
+	float timer2 = 0.f;
 	bool change;
 
 };

@@ -77,6 +77,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = true;
         wGrounded = true;
+        shake = true;
     }
     //Collides with blueberry
     if (identifierB & EntityIdentifier::BlueberryBit())
@@ -230,9 +231,18 @@ bool ContactListener::GetWBowl()
 {
     return wBowl;
 }
+bool ContactListener::GetShake()
+{
+    return shake;
+}
 void ContactListener::SetBGrounded(bool grounded) {
     bGrounded = grounded;
 }
 void ContactListener::SetWGrounded(bool grounded) {
     wGrounded = grounded;
+}
+
+void ContactListener::SetShake(bool shake)
+{
+    this->shake = shake;
 }

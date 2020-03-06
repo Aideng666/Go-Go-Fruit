@@ -109,12 +109,10 @@ void Game::Update()
 	//Updates the active scene
 	m_activeScene->Update();
 
-
+	//Fades the Menu out into Lvl 1
 	if (change)
 	{
 		timer += Timer::deltaTime;
-
-
 
 		if (timer >= 1.f)
 		{
@@ -127,6 +125,28 @@ void Game::Update()
 			m_activeScene = m_scenes[2];
 			timer = 0.f;
 			change = false;
+		}
+	}
+
+	if (listener.GetShake())
+	{
+		GoGoGame* scene = (GoGoGame*)m_activeScene;
+		auto cam = scene->GetCam();
+
+		vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
+		timer2 += Timer::deltaTime;
+
+		ECS::GetComponent<Camera>(cam).Shake(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.5f)) - 0.25f);
+
+		if (timer2 >= 0.1f)
+		{
+			timer2 = 0.f;
+			listener.SetShake(false);
+			/*ECS::GetComponent<Camera>(cam).SetOrthoPos(tempOrtho);
+			ECS::GetComponent<Camera>(cam).Orthographic(ECS::GetComponent<Camera>(cam).GetAspect(),
+				ECS::GetComponent<Camera>(cam).GetOrthoPos().x, ECS::GetComponent<Camera>(cam).GetOrthoPos().y,
+				ECS::GetComponent<Camera>(cam).GetOrthoPos().z, ECS::GetComponent<Camera>(cam).GetOrthoPos().w,
+				ECS::GetComponent<Camera>(cam).GetNear(), ECS::GetComponent<Camera>(cam).GetFar());*/
 		}
 	}
 
@@ -423,19 +443,44 @@ void Game::KeyboardHold()
 
 
 #pragma endregion
+	//Zooming
+	/*//ZOOMING
+	
+	if (Input::GetKey(Key::Z))
+	{
+		ECS::GetComponent<Camera>(camera).Zoom(2.f);
+	}
+	if (Input::GetKey(Key::X))
+	{
+		ECS::GetComponent<Camera>(camera).Zoom(-2.f);
+	}*/
 
-	//ZOOMING
-	//GoGoGame* scene = (GoGoGame*)m_activeScene;
-	//auto cam = scene->GetCam();
-	//
-	//if (Input::GetKey(Key::Z))
-	//{
-	//	ECS::GetComponent<Camera>(cam).Zoom(2.f);
-	//}
-	//if (Input::GetKey(Key::X))
-	//{
-	//	ECS::GetComponent<Camera>(cam).Zoom(-2.f);
-	//}
+
+	GoGoGame* scene = (GoGoGame*)m_activeScene;
+	auto camera = scene->GetCam();
+
+	if (Input::GetKey(Key::K))
+	{
+
+		float number = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1.f)) - 0.5f;
+		std::cout << number << std::endl;
+
+		ECS::GetComponent<Camera>(camera).Shake(number);
+
+		/*vec2 viewpointCenter = (vec2(BackEnd::GetWindowWidth() / 2, BackEnd::GetWindowHeight() / 2));
+		float radius = 30.f;
+		float angle = rand() % 360;
+		vec2 offset = (vec2(sin(angle) * radius, cos(angle) * radius));*/
+		/*ECS::GetComponent<Camera>(camera).SetOrthoSize(vec4(ECS::GetComponent<Camera>(camera).GetOrthoSize().x + 10, ECS::GetComponent<Camera>(camera).GetOrthoSize().y - 10, ECS::GetComponent<Camera>(camera).GetOrthoSize().z + 10, ECS::GetComponent<Camera>(camera).GetOrthoSize().w - 10));
+
+			//Updates Left, Right, Top , and Bottom
+		ECS::GetComponent<Camera>(camera).SetOrthoPos(vec4(ECS::GetComponent<Camera>(camera).GetOrthoPos().x + ECS::GetComponent<Camera>(camera).m_localPosition.x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y, ECS::GetComponent<Camera>(camera).GetOrthoPos().z, ECS::GetComponent<Camera>(camera).GetOrthoPos().w));
+		ECS::GetComponent<Camera>(camera).SetOrthoPos(vec4(ECS::GetComponent<Camera>(camera).GetOrthoPos().x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y + ECS::GetComponent<Camera>(camera).m_localPosition.x, ECS::GetComponent<Camera>(camera).GetOrthoPos().z, ECS::GetComponent<Camera>(camera).GetOrthoPos().w));
+		ECS::GetComponent<Camera>(camera).SetOrthoPos(vec4(ECS::GetComponent<Camera>(camera).GetOrthoPos().x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y, ECS::GetComponent<Camera>(camera).GetOrthoPos().z + ECS::GetComponent<Camera>(camera).m_localPosition.y, ECS::GetComponent<Camera>(camera).GetOrthoPos().w));
+		ECS::GetComponent<Camera>(camera).SetOrthoPos(vec4(ECS::GetComponent<Camera>(camera).GetOrthoPos().x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y, ECS::GetComponent<Camera>(camera).GetOrthoPos().z, ECS::GetComponent<Camera>(camera).GetOrthoPos().w + ECS::GetComponent<Camera>(camera).m_localPosition.y));
+
+		ECS::GetComponent<Camera>(camera).Orthographic(ECS::GetComponent<Camera>(camera).GetAspect(), ECS::GetComponent<Camera>(camera).GetOrthoPos().x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y, ECS::GetComponent<Camera>(camera).GetOrthoPos().z, ECS::GetComponent<Camera>(camera).GetOrthoPos().w, ECS::GetComponent<Camera>(camera).GetNear(), ECS::GetComponent<Camera>(camera).GetFar());*/
+	}
 }
 
 void Game::KeyboardDown()
@@ -521,6 +566,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 	exit(1);
 }
 #pragma endregion
+
 
 #pragma region JUMPING CODE
 //Jumping
@@ -651,5 +697,10 @@ void Game::MouseWheel(SDL_MouseWheelEvent evnt)
 	}
 	//Resets the enabled flag
 	m_wheel = false;
+}
+
+Scene* Game::GetActiveScene()
+{
+	return m_activeScene;
 }
 

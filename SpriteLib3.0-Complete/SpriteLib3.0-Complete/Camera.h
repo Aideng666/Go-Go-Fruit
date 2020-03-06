@@ -55,6 +55,7 @@ public:
 
 	//Zooms the camera based on an float value
 	void Zoom(float zoom);
+	void Shake(float shake);
 	
 	//Getters
 	float GetAspect() const;
