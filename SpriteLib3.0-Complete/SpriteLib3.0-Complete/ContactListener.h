@@ -20,7 +20,6 @@ public:
 	void SetBGrounded(bool grounded);
 	void SetWGrounded(bool grounded);
 
-
 private:
 
 	bool bJump;

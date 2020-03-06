@@ -189,7 +189,7 @@ void Game::Update()
 		auto elevator = scene->GetElevator();
 		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
 		auto trans = ECS::GetComponent<Transform>(elevator);
-
+	
 		//If the blue button is being pressed, the elevator moves up to the higher platforms
 		//If the button is not being pressed the elevator moves back down towards the bottom
 		if (listener.GetPressed() && trans.GetPosition().y < 4.4f)
