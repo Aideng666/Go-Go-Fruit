@@ -381,16 +381,29 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 #pragma region Map Layout
 	//ELEVATORS
 	{
+		auto bluePlatform = File::LoadJSON("BluePlatform.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "BluePlat.png";
+		std::string fileName = "BluePlatformSS.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 44.1333333334, 5);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 98.f));
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(bluePlatform["PowerOff"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(bluePlatform["PowerOn"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 44.1333333334, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 98.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -410,22 +423,36 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
 			vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Elevator");
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::GroundBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Elevator 1");
 
 		m_elevator = entity;
 	}
+
 	{
+		auto bluePlatform = File::LoadJSON("BluePlatform.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "BluePlat.png";
+		std::string fileName = "BluePlatformSS.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 45, 5);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 98.f));
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(bluePlatform["PowerOff"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(bluePlatform["PowerOn"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 44.1333333334, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 98.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -445,24 +472,71 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
 			vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Elevator 2");
 
 		m_elevator2 = entity;
 	}
 
+	//{
+	//	auto entity = ECS::CreateEntity();
+
+	//	ECS::AttachComponent<Sprite>(entity);
+	//	ECS::AttachComponent<Transform>(entity);
+	//	ECS::AttachComponent<PhysicsBody>(entity);
+
+	//	std::string fileName = "BluePlat.png";
+
+	//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 45, 5);
+	//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -100.f, 98.f));
+
+	//	auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+	//	auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+	//	float shrinkX = tempSpr.GetWidth() / 400.f;
+	//	float shrinkY = tempSpr.GetWidth() / 400.f;
+
+	//	b2Body* tempBody;
+	//	b2BodyDef tempDef;
+	//	tempDef.type = b2_kinematicBody;
+	//	tempDef.position.Set(float32(-107.5f), float32(-9.5f));
+
+	//	tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+	//	tempBody->SetUserData((void*)entity);
+
+	//	tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
+	//		vec2(0.f, 0.f), false);
+
+	//	unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+	//	ECS::SetUpIdentifier(entity, bitHolder, "Elevator 2");
+
+	//	m_elevator2 = entity;
+	//}
 	//BUTTONS
 	{
+		auto blueButton = File::LoadJSON("BlueButton.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "BlueButton.png";
+		std::string fileName = "BlueButtonSS.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 5);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, -95.f, 98.f));
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(blueButton["ButtonPressFinal"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(blueButton["ButtonReleaseFinal"]);
+		animController.GetAnimation(1);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -476,30 +550,39 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		tempDef.position.Set(float32(137.f), float32(-9.5f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
 		tempBody->SetUserData((void*)entity);
-
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 8), float(tempSpr.GetHeight()),
 			vec2(0.f, 0.f), false);
 
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Button");
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::BlueButtonBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Bottom Button Anim");
 
 		m_button = entity;
-	} 
+	}
 	{
+		auto blueButton = File::LoadJSON("BlueButton.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "BlueButton.png";
+		std::string fileName = "BlueButtonSS.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 5);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, -95.f, 98.f));
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(blueButton["ButtonPressFinal"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(blueButton["ButtonReleaseFinal"]);
+		animController.GetAnimation(1);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -513,16 +596,13 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		tempDef.position.Set(float32(116.f), float32(66.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
 		tempBody->SetUserData((void*)entity);
-
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 8), float(tempSpr.GetHeight()),
 			vec2(0.f, 0.f), false);
 
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::BlueButton2Bit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Button");
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::BlueButton2Bit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Top Button Anim");
 
 		m_button2 = entity;
 	}
@@ -537,7 +617,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "Jello.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 70, 80);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 70, 88);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, -95.f, 98.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -549,20 +629,17 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(0.f), float32(-62.f));
+		tempDef.position.Set(float32(0.f), float32(-56.f));
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth()), float(tempSpr.GetHeight() - 34),
-			vec2(0.f, -49.f), false);
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth()), float(tempSpr.GetHeight() - 50),
+			vec2(0.f, -47.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::JelloBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Jello");
 	}
-#pragma endregion
-
-
 	//Fruit Bowl
 	{
 		auto entity = ECS::CreateEntity();
@@ -598,6 +675,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
 	}
+#pragma endregion
 }
 
 //GETTERS
@@ -628,4 +706,12 @@ int LevelTwo::GetBackground()
 int LevelTwo::GetBackground2()
 {
 	return m_background2;
-}	  
+}
+bool LevelTwo::GetButtonOn1()
+{
+	return turnOn1;
+}
+bool LevelTwo::GetButtonOn2()
+{
+	return turnOn2;
+}

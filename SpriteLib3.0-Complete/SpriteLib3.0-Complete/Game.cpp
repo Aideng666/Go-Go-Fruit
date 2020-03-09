@@ -293,6 +293,8 @@ void Game::Update()
 		auto trans = ECS::GetComponent<Transform>(elevator);
 		auto body2 = ECS::GetComponent<PhysicsBody>(elevator2).GetBody();
 		auto trans2 = ECS::GetComponent<Transform>(elevator2);
+		auto button1 = scene->GetButton();
+		auto button2 = scene->GetButton2();
 
 		//If the blue button is being pressed, the elevator moves up to the higher platforms
 		//If the button is not being pressed the elevator moves back down towards the bottom
@@ -322,9 +324,80 @@ void Game::Update()
 			body2->SetLinearVelocity(b2Vec2(0, 0));
 		}
 
+		auto turnOn1 = scene->GetButtonOn1();
+		auto turnOn2 = scene->GetButtonOn2();
+
+		if (listener.GetPressed())
+		{
+			turnOn1 = true;
+
+			if (turnOn1)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(button1);
+				animController.SetActiveAnim(1);
+				animController.GetAnimation(1).Reset();
+				animController.SetActiveAnim(0);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
+				animPlat.SetActiveAnim(0);
+				animPlat.GetAnimation(0).Reset();
+				animPlat.SetActiveAnim(1);
+			}
+		}
+		if (!(listener.GetPressed()))
+		{
+			turnOn1 = false;
+
+			if (!turnOn1)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(button1);
+				animController.SetActiveAnim(0);
+				animController.GetAnimation(0).Reset();
+				animController.SetActiveAnim(1);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
+				animPlat.SetActiveAnim(1);
+				animPlat.GetAnimation(1).Reset();
+				animPlat.SetActiveAnim(0);
+			}
+
+			if (listener.Get2Pressed())
+			{
+				turnOn2 = true;
+
+				if (turnOn2)
+				{
+					auto& animController = ECS::GetComponent<AnimationController>(button2);
+					animController.SetActiveAnim(1);
+					animController.GetAnimation(1).Reset();
+					animController.SetActiveAnim(0);
+
+					auto& animPlat = ECS::GetComponent<AnimationController>(elevator2);
+					animPlat.SetActiveAnim(0);
+					animPlat.GetAnimation(0).Reset();
+					animPlat.SetActiveAnim(1);
+				}
+			}
+			if (!(listener.Get2Pressed()))
+			{
+				turnOn2 = false;
+
+				if (!turnOn2)
+				{
+					auto& animController = ECS::GetComponent<AnimationController>(button2);
+					animController.SetActiveAnim(0);
+					animController.GetAnimation(0).Reset();
+					animController.SetActiveAnim(1);
+
+					auto& animPlat = ECS::GetComponent<AnimationController>(elevator2);
+					animPlat.SetActiveAnim(1);
+					animPlat.GetAnimation(1).Reset();
+					animPlat.SetActiveAnim(0);
+				}
+			}
+		}
 	}
 #pragma endregion
-
 }
 
 void Game::GUI()
@@ -449,11 +522,11 @@ void Game::KeyboardHold()
 
 			if (Input::GetKey(Key::A))
 			{
-				blueSpeed = -10.f;
+				blueSpeed = -12.f;
 			}
 			if (Input::GetKey(Key::D))
 			{
-				blueSpeed = 10.f;
+				blueSpeed = 12.f;
 			}
 			if (Input::GetKey(Key::LeftArrow))
 			{

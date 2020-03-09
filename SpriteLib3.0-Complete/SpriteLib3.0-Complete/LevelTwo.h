@@ -17,6 +17,9 @@ public:
 	int GetBackground();
 	int GetBackground2();
 
+	bool GetButtonOn1();
+	bool GetButtonOn2();
+
 private:
 
 	int m_cam;
@@ -26,4 +29,7 @@ private:
 	int m_elevator2;
 	int m_background;
 	int m_background2;
+
+	bool turnOn1 = false;
+	bool turnOn2 = false;
 };

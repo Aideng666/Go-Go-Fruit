@@ -67,9 +67,13 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
     {
+<<<<<<< Updated upstream
         bJump = false;
         bBowl = false;
         float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2;
+=======
+        float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2.0845f;
+>>>>>>> Stashed changes
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
 }

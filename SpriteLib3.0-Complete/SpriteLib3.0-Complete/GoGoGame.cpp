@@ -492,7 +492,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		m_elevator = entity;
 	}
-
 	//Button
 	{
 		auto blueButton = File::LoadJSON("BlueButton.json");
@@ -513,7 +512,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		animController.GetAnimation(0);
 		animController.AddAnimation(blueButton["ButtonReleaseFinal"]);
 		animController.GetAnimation(1);
-
 		animController.SetActiveAnim(1);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
@@ -531,7 +529,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempDef.position.Set(float32(75.f), float32(9.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 8), float(tempSpr.GetHeight()),
