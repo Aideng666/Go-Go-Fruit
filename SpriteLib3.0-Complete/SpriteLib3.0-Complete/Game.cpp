@@ -128,27 +128,27 @@ void Game::Update()
 		}
 	}
 
-	if (listener.GetShake())
-	{
-		GoGoGame* scene = (GoGoGame*)m_activeScene;
-		auto cam = scene->GetCam();
-
-		vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
-		timer2 += Timer::deltaTime;
-
-		ECS::GetComponent<Camera>(cam).Shake(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.5f)) - 0.25f);
-
-		if (timer2 >= 0.1f)
-		{
-			timer2 = 0.f;
-			listener.SetShake(false);
-			/*ECS::GetComponent<Camera>(cam).SetOrthoPos(tempOrtho);
-			ECS::GetComponent<Camera>(cam).Orthographic(ECS::GetComponent<Camera>(cam).GetAspect(),
-				ECS::GetComponent<Camera>(cam).GetOrthoPos().x, ECS::GetComponent<Camera>(cam).GetOrthoPos().y,
-				ECS::GetComponent<Camera>(cam).GetOrthoPos().z, ECS::GetComponent<Camera>(cam).GetOrthoPos().w,
-				ECS::GetComponent<Camera>(cam).GetNear(), ECS::GetComponent<Camera>(cam).GetFar());*/
-		}
-	}
+	//if (listener.GetShake())
+	//{
+	//	GoGoGame* scene = (GoGoGame*)m_activeScene;
+	//	auto cam = scene->GetCam();
+	//
+	//	vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
+	//	timer2 += Timer::deltaTime;
+	//
+	//	ECS::GetComponent<Camera>(cam).Shake(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.5f)) - 0.25f);
+	//
+	//	if (timer2 >= 0.1f)
+	//	{
+	//		timer2 = 0.f;
+	//		listener.SetShake(false);
+	//		/*ECS::GetComponent<Camera>(cam).SetOrthoPos(tempOrtho);
+	//		ECS::GetComponent<Camera>(cam).Orthographic(ECS::GetComponent<Camera>(cam).GetAspect(),
+	//			ECS::GetComponent<Camera>(cam).GetOrthoPos().x, ECS::GetComponent<Camera>(cam).GetOrthoPos().y,
+	//			ECS::GetComponent<Camera>(cam).GetOrthoPos().z, ECS::GetComponent<Camera>(cam).GetOrthoPos().w,
+	//			ECS::GetComponent<Camera>(cam).GetNear(), ECS::GetComponent<Camera>(cam).GetFar());*/
+	//	}
+	//}
 
 
 #pragma region Parallax Background
@@ -209,7 +209,6 @@ void Game::Update()
 		auto elevator = scene->GetElevator();
 		auto button = scene->GetButton();
 		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
-		auto turnOn = scene->GetButtonOn();
 		auto trans = ECS::GetComponent<Transform>(elevator);
 	
 		//If the blue button is being pressed, the elevator moves up to the higher platforms
@@ -227,29 +226,45 @@ void Game::Update()
 			body->SetLinearVelocity(b2Vec2(0, 0));
 		}
 
-		//First level button anim
+		auto turnOn = scene->GetButtonOn();
+
+		//Animates the blue button and corresponding platform if presssed 
 		if (listener.GetPressed())
-		{
-			//turnOn = true;
-		}
+		{	
+			turnOn = true;
+
+			if (turnOn)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(button);
+				animController.SetActiveAnim(1);
+				animController.GetAnimation(1).Reset();
+				animController.SetActiveAnim(0);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
+				animPlat.SetActiveAnim(0);
+				animPlat.GetAnimation(0).Reset();
+				animPlat.SetActiveAnim(1);
+			}
+
+		}	
+		//Animates the blue button and corresponding platform if not pressed
 		if (!(listener.GetPressed()))
 		{
-			//turnOn = false;
+			turnOn = false;
+			
+			if (!turnOn)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(button);
+				animController.SetActiveAnim(0);
+				animController.GetAnimation(0).Reset();
+				animController.SetActiveAnim(1);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
+				animPlat.SetActiveAnim(0);
+				animPlat.GetAnimation(1).Reset();
+				animPlat.SetActiveAnim(0);
+			}	
 		}
-
-		if (listener.GetPressed() && !turnOn)
-		{
-			auto& animController = ECS::GetComponent<AnimationController>(button);
-			animController.SetActiveAnim(1);
-			animController.GetAnimation(1).Reset();
-
-			auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
-			animPlat.SetActiveAnim(0);
-			animPlat.GetAnimation(0).Reset();
-
-			turnOn = true;
-		}	
-	
 	}
 	if (m_activeScene == m_scenes[3])
 	{

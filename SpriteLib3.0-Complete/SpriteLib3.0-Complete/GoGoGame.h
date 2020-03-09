@@ -15,7 +15,6 @@ public:
 	int GetElevator();
 
 	bool GetButtonOn();
-	void SetButtonOn(bool newturnOn);
 
 private:
 	int m_background;

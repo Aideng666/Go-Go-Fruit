@@ -606,8 +606,3 @@ bool GoGoGame::GetButtonOn()
 {
 	return turnOn;
 }
-
-void GoGoGame::SetButtonOn(bool newturnOn)
-{
-	turnOn = newturnOn;
-}

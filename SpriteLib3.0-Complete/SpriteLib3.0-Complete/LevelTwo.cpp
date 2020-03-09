@@ -527,8 +527,6 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		m_button2 = entity;
 	}
 
-#pragma endregion
-
 	//JELLO
 	{
 		auto entity = ECS::CreateEntity();
@@ -556,15 +554,14 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		tempBody->SetUserData((void*)entity);
 
-
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth()), float(tempSpr.GetHeight() - 34),
 			vec2(0.f, -49.f), false);
 
-
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::JelloBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Jello");
-
 	}
+#pragma endregion
+
 
 	//Fruit Bowl
 	{
