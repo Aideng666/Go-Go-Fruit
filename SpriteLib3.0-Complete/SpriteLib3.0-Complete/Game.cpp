@@ -517,23 +517,14 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 	change = true;
 
 	ECS::DestroyEntity(scene->GetMenu());
-	/*timer += Timer::deltaTime;
 
-	if (timer >= 2.f)
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[2]->GetScene();
-		m_activeScene = m_scenes[2];
-		timer = 0.f;
-	}*/
+	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 }
 //Up arrow goes to exit
 if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
 {
+	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
+
 	SceneEditor::ResetEditor();
 
 	m_activeScene->Unload();
@@ -545,6 +536,8 @@ if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
 //Down arrow on menu goes to exit
 else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[0])
 {
+	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
+
 	SceneEditor::ResetEditor();
 
 	m_activeScene->Unload();
@@ -556,6 +549,8 @@ else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[0])
 //Up arrow on exit goes to menu
 else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
 {
+	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
+
 	SceneEditor::ResetEditor();
 
 	m_activeScene->Unload();
@@ -567,6 +562,8 @@ else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
 //Down arrow on exit goes to menu
 else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
 {
+	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
+
 	SceneEditor::ResetEditor();
 
 	m_activeScene->Unload();
@@ -578,6 +575,7 @@ else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
 //Exits the game
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 {
+	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 	exit(1);
 }
 #pragma endregion

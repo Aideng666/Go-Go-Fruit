@@ -35,11 +35,13 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     if (identifierB & EntityIdentifier::GroundBit())
     {
         bJump = true;
+        bBowl = false;
         bGrounded = true;
     }
     //Collides with watermelon
     if (identifierB & EntityIdentifier::WatermelonBit())
     {
+        bBowl = false;
         bJump = true;
         wJump = true;
     }
@@ -53,16 +55,20 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         bJump = true;
+        bBowl = false;
         buttonPressed = true;
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         bJump = true;
+        bBowl = false;
         button2Pressed = true;
     }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
     {
+        bJump = false;
+        bBowl = false;
         float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2;
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
@@ -78,30 +84,37 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         wJump = true;
         wGrounded = true;
         shake = true;
+        wBowl = false;
     }
     //Collides with blueberry
     if (identifierB & EntityIdentifier::BlueberryBit())
     {
         wJump = true;
+        wBowl = false;
     }
     //Fruit Bowl
     if (identifierB & EntityIdentifier::FruitBowlBit())
     {
         wJump = true;
         wBowl = true;
+
     }
     //Collides with blue buttons
     if (identifierB & EntityIdentifier::BlueButtonBit())
     {
         wJump = true;
+        wBowl = false;
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         wJump = true;
+        wBowl = false;
     }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
     {
+        wJump = false;
+        wBowl = false;
         float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2;
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
@@ -110,7 +123,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
 
     if (bBowl && wBowl)
     {
-        sndPlaySound("Win.wav", SND_FILENAME | SND_ASYNC);
+        sndPlaySound("YouWin.wav", SND_FILENAME | SND_ASYNC);
     }
 
 }
