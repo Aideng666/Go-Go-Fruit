@@ -128,27 +128,45 @@ void Game::Update()
 		}
 	}
 
-	//if (listener.GetShake())
-	//{
-	//	GoGoGame* scene = (GoGoGame*)m_activeScene;
-	//	auto cam = scene->GetCam();
-	//
-	//	vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
-	//	timer2 += Timer::deltaTime;
-	//
-	//	ECS::GetComponent<Camera>(cam).Shake(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.5f)) - 0.25f);
-	//
-	//	if (timer2 >= 0.1f)
-	//	{
-	//		timer2 = 0.f;
-	//		listener.SetShake(false);
-	//		/*ECS::GetComponent<Camera>(cam).SetOrthoPos(tempOrtho);
-	//		ECS::GetComponent<Camera>(cam).Orthographic(ECS::GetComponent<Camera>(cam).GetAspect(),
-	//			ECS::GetComponent<Camera>(cam).GetOrthoPos().x, ECS::GetComponent<Camera>(cam).GetOrthoPos().y,
-	//			ECS::GetComponent<Camera>(cam).GetOrthoPos().z, ECS::GetComponent<Camera>(cam).GetOrthoPos().w,
-	//			ECS::GetComponent<Camera>(cam).GetNear(), ECS::GetComponent<Camera>(cam).GetFar());*/
-	//	}
-	//}
+	if (m_activeScene == m_scenes[2])
+	{
+		if (listener.GetShake())
+		{
+			GoGoGame* scene = (GoGoGame*)m_activeScene;
+			auto cam = scene->GetCam();
+
+			vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
+			timer2 += Timer::deltaTime;
+
+			ECS::GetComponent<Camera>(cam).Shake(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.5f)) - 0.25f);
+
+			if (timer2 >= 0.1f)
+			{
+				timer2 = 0.f;
+				listener.SetShake(false);
+			}
+		}
+	}
+
+	if (m_activeScene == m_scenes[3])
+	{
+		if (listener.GetShake())
+		{
+			LevelTwo* scene = (LevelTwo*)m_activeScene;
+			auto cam = scene->GetCam();
+
+			vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
+			timer2 += Timer::deltaTime;
+
+			ECS::GetComponent<Camera>(cam).Shake(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.5f)) - 0.25f);
+
+			if (timer2 >= 0.1f)
+			{
+				timer2 = 0.f;
+				listener.SetShake(false);
+			}
+		}
+	}
 
 
 #pragma region Parallax Background
@@ -510,6 +528,8 @@ void Game::KeyboardDown()
 //Space on play goes to game
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 {
+	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
+
 	GoGoMenu* scene = (GoGoMenu*)m_activeScene;
 
 	scene->SetFade(true);
@@ -518,7 +538,6 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 
 	ECS::DestroyEntity(scene->GetMenu());
 
-	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 }
 //Up arrow goes to exit
 if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
