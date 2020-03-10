@@ -83,7 +83,11 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = true;
         wGrounded = true;
+        if (bodyA->GetLinearVelocity().y < -1.f)
+        {
+            std::cout << "HI";
         shake = true;
+        }
         wBowl = false;
     }
     //Collides with blueberry

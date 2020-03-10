@@ -130,15 +130,40 @@ void Game::Update()
 
 	if (m_activeScene == m_scenes[2])
 	{
-		if (listener.GetShake())
-		{
 			GoGoGame* scene = (GoGoGame*)m_activeScene;
 			auto cam = scene->GetCam();
+			auto body = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
 
+			//Temp ortho
+			/*if (!orth)
+			{ 
 			vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
+			orth = true;
+			}*/
+
+
+			if (changeRand)
+			{
+			num = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1.f)) - 0.5f;
+			changeRand = false;
+			}
+		if (listener.GetShake()) 
+		{
 			timer2 += Timer::deltaTime;
 
-			ECS::GetComponent<Camera>(cam).Shake(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.5f)) - 0.25f);
+			std::cout << num << std::endl;
+
+			if (!reset)
+			{
+			ECS::GetComponent<Camera>(cam).Shake(num);
+			reset = true;
+			}
+			else
+			{
+			ECS::GetComponent<Camera>(cam).Shake(-num);
+			reset = false;
+			changeRand = true;
+			}
 
 			if (timer2 >= 0.1f)
 			{
@@ -150,15 +175,37 @@ void Game::Update()
 
 	if (m_activeScene == m_scenes[3])
 	{
+		LevelTwo* scene = (LevelTwo*)m_activeScene;
+		auto cam = scene->GetCam();
+
+		if (!orth)
+		{
+			vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
+			orth = true;
+		}
+
+		if (changeRand)
+		{
+			num = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.5f)) - 0.25f;
+			changeRand = false;
+		}
 		if (listener.GetShake())
 		{
-			LevelTwo* scene = (LevelTwo*)m_activeScene;
-			auto cam = scene->GetCam();
-
-			vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
 			timer2 += Timer::deltaTime;
 
-			ECS::GetComponent<Camera>(cam).Shake(static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.5f)) - 0.25f);
+			std::cout << num << std::endl;
+
+			if (!reset)
+			{
+				ECS::GetComponent<Camera>(cam).Shake(num);
+				reset = true;
+			}
+			else
+			{
+				ECS::GetComponent<Camera>(cam).Shake(-num);
+				reset = false;
+				changeRand = true;
+			}
 
 			if (timer2 >= 0.1f)
 			{
@@ -561,32 +608,6 @@ void Game::KeyboardHold()
 		ECS::GetComponent<Camera>(camera).Zoom(-2.f);
 	}*/
 
-
-	GoGoGame* scene = (GoGoGame*)m_activeScene;
-	auto camera = scene->GetCam();
-
-	if (Input::GetKey(Key::K))
-	{
-
-		float number = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1.f)) - 0.5f;
-		std::cout << number << std::endl;
-
-		ECS::GetComponent<Camera>(camera).Shake(number);
-
-		/*vec2 viewpointCenter = (vec2(BackEnd::GetWindowWidth() / 2, BackEnd::GetWindowHeight() / 2));
-		float radius = 30.f;
-		float angle = rand() % 360;
-		vec2 offset = (vec2(sin(angle) * radius, cos(angle) * radius));*/
-		/*ECS::GetComponent<Camera>(camera).SetOrthoSize(vec4(ECS::GetComponent<Camera>(camera).GetOrthoSize().x + 10, ECS::GetComponent<Camera>(camera).GetOrthoSize().y - 10, ECS::GetComponent<Camera>(camera).GetOrthoSize().z + 10, ECS::GetComponent<Camera>(camera).GetOrthoSize().w - 10));
-
-			//Updates Left, Right, Top , and Bottom
-		ECS::GetComponent<Camera>(camera).SetOrthoPos(vec4(ECS::GetComponent<Camera>(camera).GetOrthoPos().x + ECS::GetComponent<Camera>(camera).m_localPosition.x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y, ECS::GetComponent<Camera>(camera).GetOrthoPos().z, ECS::GetComponent<Camera>(camera).GetOrthoPos().w));
-		ECS::GetComponent<Camera>(camera).SetOrthoPos(vec4(ECS::GetComponent<Camera>(camera).GetOrthoPos().x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y + ECS::GetComponent<Camera>(camera).m_localPosition.x, ECS::GetComponent<Camera>(camera).GetOrthoPos().z, ECS::GetComponent<Camera>(camera).GetOrthoPos().w));
-		ECS::GetComponent<Camera>(camera).SetOrthoPos(vec4(ECS::GetComponent<Camera>(camera).GetOrthoPos().x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y, ECS::GetComponent<Camera>(camera).GetOrthoPos().z + ECS::GetComponent<Camera>(camera).m_localPosition.y, ECS::GetComponent<Camera>(camera).GetOrthoPos().w));
-		ECS::GetComponent<Camera>(camera).SetOrthoPos(vec4(ECS::GetComponent<Camera>(camera).GetOrthoPos().x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y, ECS::GetComponent<Camera>(camera).GetOrthoPos().z, ECS::GetComponent<Camera>(camera).GetOrthoPos().w + ECS::GetComponent<Camera>(camera).m_localPosition.y));
-
-		ECS::GetComponent<Camera>(camera).Orthographic(ECS::GetComponent<Camera>(camera).GetAspect(), ECS::GetComponent<Camera>(camera).GetOrthoPos().x, ECS::GetComponent<Camera>(camera).GetOrthoPos().y, ECS::GetComponent<Camera>(camera).GetOrthoPos().z, ECS::GetComponent<Camera>(camera).GetOrthoPos().w, ECS::GetComponent<Camera>(camera).GetNear(), ECS::GetComponent<Camera>(camera).GetFar());*/
-	}
 }
 
 void Game::KeyboardDown()

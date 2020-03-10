@@ -86,6 +86,8 @@ private:
 	//Scenes
 	Scene* m_activeScene = nullptr;
 	std::vector<Scene*> m_scenes;
+
+
 	
 	//Imgui stuff
 	bool m_guiActive = false;
@@ -100,7 +102,12 @@ private:
 
 	float timer = 0.f;
 	float timer2 = 0.f;
+	float timer3 = 0.f;
+	float num = 0.f; 
+	bool reset;
 	bool change;
+	bool orth;
+	bool changeRand = true;
 
 };
 
