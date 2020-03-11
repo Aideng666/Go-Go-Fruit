@@ -36,9 +36,9 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 
-		std::string fileName = "PlayScreen.png";
+		std::string fileName = "Select2.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 384, 200);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 400.f, 224.7863247863248f); //1.779467680608365
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -99.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
@@ -47,6 +47,20 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 		m_menu = entity;
 	}
 
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "RedSpike.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 30.f, 321.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -50.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Red Spike");
+	}
 }
 
 
