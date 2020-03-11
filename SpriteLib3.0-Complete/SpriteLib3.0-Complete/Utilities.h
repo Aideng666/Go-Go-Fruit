@@ -17,7 +17,6 @@ namespace Util
 	template<typename T>
 	T Lerp(T v0, T v1, float t);
 
-
 	template<typename T>
 	T Lerp(T v0, T v1, float t)
 	{

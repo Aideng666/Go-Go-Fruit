@@ -27,7 +27,6 @@ void ContactListener::BeginContact(b2Contact* contact)
     if (fixtureA->GetUserData() == NULL || fixtureB->GetUserData() == NULL)
         return;
 
-
 #pragma region Blueberry Collision
 if (identifierA & EntityIdentifier::BlueberryBit())
 {
@@ -101,7 +100,6 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = true;
         wBowl = true;
-
     }
     //Collides with blue buttons
     if (identifierB & EntityIdentifier::BlueButtonBit())
@@ -119,7 +117,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = false;
         wBowl = false;
-        float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2;
+        float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2.0845f;
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
 }
@@ -183,7 +181,6 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bJump = false;
         button2Pressed = false;
     }
-
 }
 #pragma endregion
     

@@ -33,9 +33,9 @@ void GoGoExit::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 
-		std::string fileName = "Select1.png";
+		std::string fileName = "Select2.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 400, 224.7863247863248);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 400.f, 224.929709465792f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 50.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
