@@ -501,7 +501,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<AnimationController>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
 
 		std::string fileName = "BlueButtonSS.png";
 
@@ -515,29 +514,84 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(1);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(75.f, 9.f, 100.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 400.f;
-		float shrinkY = tempSpr.GetWidth() / 400.f;
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Button Anim");
+
+		m_button = entity;
+	}
+	//Button Hitboxes
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(75.f), float32(9.f));
+		tempDef.position.Set(float32(66.f), float32(9));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 8), float(tempSpr.GetHeight()),
-			vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 1, 5, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::BlueButtonBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Button Anim");
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Left Side of Button");
+	}
+	{
+		auto entity = ECS::CreateEntity();
 
-		m_button = entity;
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(84.f), float32(9));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 5, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Right Side of Button");
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(75.f), float32(11.5));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 18, 1, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Top of Button");
 	}
 	
 	//Fruit Bowl
