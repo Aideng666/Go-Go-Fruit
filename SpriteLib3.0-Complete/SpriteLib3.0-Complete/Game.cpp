@@ -193,8 +193,6 @@ void Game::Update()
 		{
 			timer2 += Timer::deltaTime;
 
-			std::cout << num << std::endl;
-
 			if (!reset)
 			{
 				ECS::GetComponent<Camera>(cam).Shake(num);
@@ -236,9 +234,9 @@ void Game::Update()
 		{
 			position2.y = position.y + spikeWidth;
 		}
-
+		
 		m_register->get<Transform>(entity).SetPositionY(position.y - (spikeSpeed * Timer::deltaTime));
-		m_register->get<Transform>(entity2).SetPositionY(position2.y - (spikeSpeed * Timer::deltaTime));
+		m_register->get<Transform>(entity2).SetPositionY(position2.y - (spikeSpeed * Timer::deltaTime));			
 	}
 	if (m_activeScene == m_scenes[1])
 	{
@@ -677,7 +675,6 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 	change = true;
 
 	ECS::DestroyEntity(scene->GetMenu());
-
 }
 //Up arrow goes to exit
 if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])

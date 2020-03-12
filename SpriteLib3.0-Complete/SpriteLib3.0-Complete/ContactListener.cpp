@@ -29,7 +29,7 @@ void ContactListener::BeginContact(b2Contact* contact)
     if (fixtureA->GetUserData() == NULL || fixtureB->GetUserData() == NULL)
         return;
 
-    float jumpForce = 2.0845f;
+    const float jumpForce = 2.0845f;
 
 #pragma region Blueberry Collision
 if (identifierA & EntityIdentifier::BlueberryBit())

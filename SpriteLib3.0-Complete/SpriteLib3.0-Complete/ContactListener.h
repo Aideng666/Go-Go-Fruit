@@ -34,4 +34,3 @@ private:
 	bool wBowl;
 	bool shake;
 };
-

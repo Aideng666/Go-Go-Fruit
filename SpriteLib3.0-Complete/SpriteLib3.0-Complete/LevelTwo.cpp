@@ -47,7 +47,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 6.f, 20.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Level 2");
+		ECS::SetUpIdentifier(entity, bitHolder, "Level 3");
 	}
 	//Sky Background
 	{

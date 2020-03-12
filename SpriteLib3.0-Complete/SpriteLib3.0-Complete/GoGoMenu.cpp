@@ -96,10 +96,8 @@ void GoGoMenu::Update()
 	}
 }
 
-
 void GoGoMenu::FadeBackground()
 {
-
 	m_clearColor = Util::Lerp<vec4>(m_clearColor1, m_clearColor2, m_lerpVal);
 
 	if (m_lerpVal >= 1.f)
