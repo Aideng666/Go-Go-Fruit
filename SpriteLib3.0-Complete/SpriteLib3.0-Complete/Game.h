@@ -108,6 +108,7 @@ private:
 	bool change;
 	bool orth;
 	bool changeRand = true;
+	bool spikeDestroyed;
 
 };
 

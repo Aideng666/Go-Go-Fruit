@@ -134,13 +134,6 @@ void Game::Update()
 			auto cam = scene->GetCam();
 			auto body = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
 
-			//Temp ortho
-			/*if (!orth)
-			{ 
-			vec4 tempOrtho = ECS::GetComponent<Camera>(cam).GetOrthoPos();
-			orth = true;
-			}*/
-
 
 			if (changeRand)
 			{
@@ -215,7 +208,7 @@ void Game::Update()
 
 #pragma region Parallax Background
 
-	if (m_activeScene == m_scenes[0])
+	if (m_activeScene == m_scenes[0] && !spikeDestroyed)
 	{
 		GoGoMenu* scene = (GoGoMenu*)m_activeScene;
 		auto entity = scene->GetSpike1();
@@ -675,6 +668,9 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 	change = true;
 
 	ECS::DestroyEntity(scene->GetMenu());
+	spikeDestroyed = true;
+	ECS::DestroyEntity(scene->GetSpike1());
+	ECS::DestroyEntity(scene->GetSpike2());
 }
 //Up arrow goes to exit
 if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
