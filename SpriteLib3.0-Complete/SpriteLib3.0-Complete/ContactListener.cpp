@@ -8,6 +8,7 @@
 using namespace std;
 
 float impulse;
+const float jumpForce = 2.0845f;
 
 void ContactListener::BeginContact(b2Contact* contact)
 {
@@ -28,8 +29,6 @@ void ContactListener::BeginContact(b2Contact* contact)
         return;
     if (fixtureA->GetUserData() == NULL || fixtureB->GetUserData() == NULL)
         return;
-
-    const float jumpForce = 2.0845f;
 
 #pragma region Blueberry Collision
 if (identifierA & EntityIdentifier::BlueberryBit())

@@ -1,6 +1,12 @@
 #include "LevelTwo.h"
 #include <iostream>
 
+//TO WHOM IT MAY CONCERN
+//Offset lower platform to (0,7)
+//Move jello to (14, 56)
+//Move left boxes up 10 on the y -> Will result in having to shift the top platform as well
+//Change jumpForce back to 2
+
 LevelTwo::LevelTwo(std::string name)
 	: Scene(name)
 {
@@ -414,7 +420,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(-61.5f), float32(-85));
+		tempDef.position.Set(float32(-61.5f), float32(-85.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
