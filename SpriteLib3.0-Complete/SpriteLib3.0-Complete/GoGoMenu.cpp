@@ -32,13 +32,12 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 	{
 		auto entity = ECS::CreateEntity();
 
-
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 
 		std::string fileName = "Select1.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 200.f, 112.f); 
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360.f, 202.f); 
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -99.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
@@ -47,6 +46,7 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 		m_menu = entity;
 	}
 
+	//Spikes 1
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -55,14 +55,32 @@ void GoGoMenu::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "MovingSpikes.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 200.f, 222.f);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360.f, 400.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -98.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Moving Spikes");
+		ECS::SetUpIdentifier(entity, bitHolder, "Moving Spikes 1");
+
+		m_spike1 = entity;
+	}
+	//Spikes 2
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "MovingSpikes.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360.f, 400.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 400.f, -98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Moving Spikes 2");
+
+		m_spike2 = entity;
 	}
 }
-
 
 void GoGoMenu::Update()
 {
@@ -110,3 +128,12 @@ void GoGoMenu::SetFade(bool fade)
 	this->fade = fade;
 }
 
+int GoGoMenu::GetSpike1()
+{
+	return m_spike1;
+}
+
+int GoGoMenu::GetSpike2()
+{
+	return m_spike2;
+}

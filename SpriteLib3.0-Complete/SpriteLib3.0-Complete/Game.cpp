@@ -215,8 +215,54 @@ void Game::Update()
 		}
 	}
 
-
 #pragma region Parallax Background
+
+	if (m_activeScene == m_scenes[0])
+	{
+		GoGoMenu* scene = (GoGoMenu*)m_activeScene;
+		auto entity = scene->GetSpike1();
+		auto entity2 = scene->GetSpike2();
+		vec2 position = m_register->get<Transform>(entity).GetPosition();
+		vec2 position2 = m_register->get<Transform>(entity2).GetPosition();
+		int spikeWidth = m_register->get<Sprite>(entity).GetWidth();
+
+		float spikeSpeed = 20.f;
+
+		if (position.y + spikeWidth <= 0)
+		{
+			position.y = position2.y + spikeWidth;
+		}
+		if (position2.y + spikeWidth <= 0)
+		{
+			position2.y = position.y + spikeWidth;
+		}
+
+		m_register->get<Transform>(entity).SetPositionY(position.y - (spikeSpeed * Timer::deltaTime));
+		m_register->get<Transform>(entity2).SetPositionY(position2.y - (spikeSpeed * Timer::deltaTime));
+	}
+	if (m_activeScene == m_scenes[1])
+	{
+		GoGoExit* scene = (GoGoExit*)m_activeScene;
+		auto entity = scene->GetSpike1();
+		auto entity2 = scene->GetSpike2();
+		vec2 position = m_register->get<Transform>(entity).GetPosition();
+		vec2 position2 = m_register->get<Transform>(entity2).GetPosition();
+		int spikeWidth = m_register->get<Sprite>(entity).GetWidth();
+
+		float spikeSpeed = 20.f;
+
+		if (position.y + spikeWidth <= 0)
+		{
+			position.y = position2.y + spikeWidth;
+		}
+		if (position2.y + spikeWidth <= 0)
+		{
+			position2.y = position.y + spikeWidth;
+		}
+
+		m_register->get<Transform>(entity).SetPositionY(position.y - (spikeSpeed * Timer::deltaTime));
+		m_register->get<Transform>(entity2).SetPositionY(position2.y - (spikeSpeed * Timer::deltaTime));
+	}
 	if (m_activeScene == m_scenes[2])
 	{
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
@@ -693,12 +739,10 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 }
 #pragma endregion
 
-
 #pragma region JUMPING CODE
 //Jumping
 if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 {
-	GoGoGame* scene = (GoGoGame*)m_activeScene;
 	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
 	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
 	const float blueJumpForce = 30.f;
@@ -722,7 +766,7 @@ if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3])
 			waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
 			listener.SetWGrounded(false);
 		}
-	}
+	}	
 }
 #pragma endregion
 

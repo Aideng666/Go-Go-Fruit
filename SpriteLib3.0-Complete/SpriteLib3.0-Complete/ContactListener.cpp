@@ -7,6 +7,8 @@
 
 using namespace std;
 
+float impulse;
+
 void ContactListener::BeginContact(b2Contact* contact)
 {
     //Identifies the first player
@@ -26,6 +28,8 @@ void ContactListener::BeginContact(b2Contact* contact)
         return;
     if (fixtureA->GetUserData() == NULL || fixtureB->GetUserData() == NULL)
         return;
+
+    float jumpForce = 2.0845f;
 
 #pragma region Blueberry Collision
 if (identifierA & EntityIdentifier::BlueberryBit())
@@ -68,7 +72,7 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = false;
         bBowl = false;
-        float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2.0845f;
+        impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * jumpForce;   
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
 }
@@ -84,8 +88,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         wGrounded = true;
         if (bodyA->GetLinearVelocity().y < -1.f)
         {
-            std::cout << "HI";
-        shake = true;
+            shake = true;
         }
         wBowl = false;
     }
@@ -117,7 +120,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = false;
         wBowl = false;
-        float impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * 2.0845f;
+        impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * jumpForce;
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
 }
@@ -127,7 +130,6 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         sndPlaySound("YouWin.wav", SND_FILENAME | SND_ASYNC);
     }
-
 }
 
 void ContactListener::EndContact(b2Contact* contact)

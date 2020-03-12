@@ -35,10 +35,55 @@ void GoGoExit::InitScene(float windowWidth, float windowHeight)
 
 		std::string fileName = "Select2.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 400.f, 224.929709465792f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 50.f));
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360.f, 202.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -99.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Go Go Fruit Exit");
 	}
+
+	//Spikes 1
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "MovingSpikes.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360.f, 400.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Moving Spikes 1");
+
+		m_spike1 = entity;
+	}
+	//Spikes 2
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "MovingSpikes.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360.f, 400.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 400.f, -98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Moving Spikes 2");
+
+		m_spike2 = entity;
+	}
+}
+
+int GoGoExit::GetSpike1()
+{
+	return m_spike1;
+}
+
+int GoGoExit::GetSpike2()
+{
+	return m_spike2;
 }

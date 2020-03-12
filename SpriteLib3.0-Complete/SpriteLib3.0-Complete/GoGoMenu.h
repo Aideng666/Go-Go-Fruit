@@ -16,6 +16,9 @@ public:
 	int GetMenu();
 	void SetFade(bool fade);
 
+	int GetSpike1();
+	int GetSpike2();
+
 protected:
 
 	float m_repeatTime = 1.f;
@@ -25,7 +28,10 @@ protected:
 	bool fade;
 	float timer = 0.f;
 
-	vec4 m_clearColor2 = vec4(0.f, 0.f, 0.f, 1.f);//vec4(0.153f, 0.992f, 0.961f, 1.f);
+	vec4 m_clearColor2 = vec4(0.f, 0.f, 0.f, 1.f);
 	vec4 m_clearColor1 = vec4(0.7058823529f, 0.9803921569f, 1.f, 1.f);
-	
+
+private:
+	int m_spike1;
+	int m_spike2;
 };
