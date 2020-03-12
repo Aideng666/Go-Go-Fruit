@@ -355,7 +355,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 23, 150, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(box1, bitHolder, "Top Left Box");
 	}
 	{
