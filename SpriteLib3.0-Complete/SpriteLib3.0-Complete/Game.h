@@ -2,10 +2,11 @@
 #define __GAME_H__
 
 #include "BackEnd.h"
-#include "GoGoGame.h"
 #include "GoGoMenu.h"
 #include "GoGoExit.h"
+#include "GoGoGame.h"
 #include "LevelTwo.h"
+#include "LevelThree.h"
 
 //Our main class for running our game
 class Game

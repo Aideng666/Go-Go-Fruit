@@ -59,12 +59,14 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bJump = true;
         bBowl = false;
         buttonPressed = true;
+        bGrounded = true;
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
     {
         bJump = true;
         bBowl = false;
         button2Pressed = true;
+        bGrounded = true;
     }
     if (identifierB & EntityIdentifier::ElevatorBit())
     {
