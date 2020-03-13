@@ -8,7 +8,7 @@
 using namespace std;
 
 float impulse;
-const float jumpForce = 2.0845f;
+const float jumpForce = 2.f;
 
 void ContactListener::BeginContact(b2Contact* contact)
 {
@@ -66,6 +66,12 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bBowl = false;
         button2Pressed = true;
     }
+    if (identifierB & EntityIdentifier::ElevatorBit())
+    {
+        bJump = true;
+        bBowl = false;
+        bGrounded = true;
+    }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
     {
@@ -114,6 +120,16 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         wJump = true;
         wBowl = false;
     }
+    if (identifierB & EntityIdentifier::ElevatorBit())
+    {
+        wJump = true;
+        wBowl = false;
+        wGrounded = true;
+        if (bodyA->GetLinearVelocity().y < -1.f)
+        {
+            shake = true;
+        }
+    }
     //Collides with jello
     if (identifierB & EntityIdentifier::JelloBit())
     {
@@ -158,6 +174,7 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     if (identifierB & EntityIdentifier::GroundBit())
     {
         bJump = false;
+        bGrounded = false;
     }
     //Fruit Bowl
     if (identifierB & EntityIdentifier::FruitBowlBit())
@@ -182,6 +199,15 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bJump = false;
         button2Pressed = false;
     }
+    if (identifierB & EntityIdentifier::JelloBit())
+    {
+        bJump = false;
+        bGrounded = false;
+    }
+    if (identifierB & EntityIdentifier::ElevatorBit())
+    {
+        bJump = false;
+    }
 }
 #pragma endregion
     
@@ -192,11 +218,13 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     if (identifierB & EntityIdentifier::GroundBit())
     {
         wJump = false;
+        wGrounded = false;
     }
     //End of collision with blueberry
     if (identifierB & EntityIdentifier::BlueberryBit())
     {
         wJump = false;
+        wGrounded = true;
     }
     //Fruit Bowl
     if (identifierB & EntityIdentifier::FruitBowlBit())
@@ -210,6 +238,15 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         wJump = false;
     }
     if (identifierB & EntityIdentifier::BlueButton2Bit())
+    {
+        wJump = false;
+    }
+    if (identifierB & EntityIdentifier::JelloBit())
+    {
+        wJump = false;
+        wGrounded = false;
+    }
+    if (identifierB & EntityIdentifier::ElevatorBit())
     {
         wJump = false;
     }

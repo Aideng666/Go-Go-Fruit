@@ -51,9 +51,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelTwo(level2));
 
 	//Sets active scene reference to our scene
-	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[0]->GetScene();
-	m_activeScene = m_scenes[0];
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
 	PhysicsSystem::Init();
 	
 	for (int i = 0; i < m_scenes.size(); ++i)
@@ -143,8 +143,6 @@ void Game::Update()
 		if (listener.GetShake()) 
 		{
 			timer2 += Timer::deltaTime;
-
-			std::cout << num << std::endl;
 
 			if (!reset)
 			{
@@ -382,11 +380,11 @@ void Game::Update()
 
 		//If the blue button is being pressed, the elevator moves up to the higher platforms
 		//If the button is not being pressed the elevator moves back down towards the bottom
-		if (listener.GetPressed() && trans.GetPosition().y < -14.5f)
+		if (listener.GetPressed() && trans.GetPosition().y < -3.f)
 		{
 			body->SetLinearVelocity(b2Vec2(0, 2));
 		}
-		else if (!(listener.GetPressed()) && trans.GetPosition().y > -85.f)
+		else if (!(listener.GetPressed()) && trans.GetPosition().y > -75.f)
 		{
 			body->SetLinearVelocity(b2Vec2(0, -2));
 		}
@@ -399,7 +397,7 @@ void Game::Update()
 		{
 			body2->SetLinearVelocity(b2Vec2(0, 2));
 		}
-		else if (!(listener.Get2Pressed()) && trans2.GetPosition().y > -9.5f)
+		else if (!(listener.Get2Pressed()) && trans2.GetPosition().y > 1.f)
 		{
 			body2->SetLinearVelocity(b2Vec2(0, -2));
 		}

@@ -215,7 +215,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 40.3463203464f + 10;
+		float shrinkX = tempSpr.GetWidth() / 40.3463203464f + 20;
 		float shrinkY = tempSpr.GetWidth() / 26.6666666667f + 5;
 
 		b2Body* tempBody;
@@ -487,7 +487,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
 			vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::ElevatorBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Platform Anim");
 
 		m_elevator = entity;
