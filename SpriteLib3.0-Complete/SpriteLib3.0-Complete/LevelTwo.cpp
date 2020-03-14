@@ -98,7 +98,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-75.f), float32(-93.f));
+		tempDef.position.Set(float32(-65.f), float32(-93.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
@@ -139,7 +139,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-110.f), float32(-92.f));
+		tempDef.position.Set(float32(-100.f), float32(-92.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
@@ -247,16 +247,41 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-119.f), float32(6.f));
+		tempDef.position.Set(float32(-130.5f), float32(6.5f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempBody->SetUserData((void*)box);
 
-		tempPhsBody = PhysicsBody(tempBody, 24, 94, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 1, 95, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(box, bitHolder, "Left Facing Box");
+		ECS::SetUpIdentifier(box, bitHolder, "Top Left Facing Box");
+	}
+
+	{
+		auto box = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(box);
+		ECS::AttachComponent<PhysicsBody>(box);
+
+		ECS::GetComponent<Transform>(box).SetPosition(vec3(0.f, 0.f, 50.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(box);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-107.5f), float32(17.5f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)box);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 73, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(box, bitHolder, "Top Left Facing Box 2");
 	}
 
 	{
@@ -278,7 +303,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		tempBody->SetUserData((void*)box);
 
-		tempPhsBody = PhysicsBody(tempBody, 24, 1, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 21, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(box, bitHolder, "Top Top Left Ground Box");
@@ -347,18 +372,207 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-84.f), float32(-40.5f));
+		tempDef.position.Set(float32(-95.f), float32(-40.5f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
 		tempBody->SetUserData((void*)box);
 
-		tempPhsBody = PhysicsBody(tempBody, 46, 1, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 69, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(box, bitHolder, "Top Left Bottom Facing Box");
 	}
 #pragma endregion
+
+#pragma region Map Layout
+	//ELEVATORS
+	{
+		auto bluePlatform = File::LoadJSON("BluePlatform.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		std::string fileName = "BluePlatformSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(bluePlatform["PowerOff"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(bluePlatform["PowerOn"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 48, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 98.f));
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = tempSpr.GetWidth() / 400.f;
+		float shrinkY = tempSpr.GetWidth() / 400.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_kinematicBody;
+		tempDef.position.Set(float32(-153.f), float32(-86.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
+			vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::ElevatorBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Blue Elevator");
+	}
+
+	//BUTTONS
+	{
+		auto blueButton = File::LoadJSON("BlueButton.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "BlueButtonSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(blueButton["ButtonPressFinal"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(blueButton["ButtonReleaseFinal"]);
+		animController.GetAnimation(1);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-94.f, -15.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Blue Button Anim");
+	}
+
+	//Button Bodies
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-102.5f), float32(-15.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 5, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Left Side of Blue Button");
+	}
+
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-85.f), float32(-15.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 5, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Right Side of Blue Button");
+	}
+
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-93.5f), float32(-13.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 18, 1, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Top of Blue Button");
+	}
+
+	
+
+	//Fruit Bowl
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		std::string fileName = "FruitBowl.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 76.1538461541, 55);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = tempSpr.GetWidth() / 100.f;
+		float shrinkY = tempSpr.GetWidth() / 100.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(147.f), float32(80.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 22), float(tempSpr.GetHeight() / 4),
+			vec2(0.f, -22.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
+	}
+#pragma endregion
+
+
 }
 
 int LevelTwo::GetBg1()

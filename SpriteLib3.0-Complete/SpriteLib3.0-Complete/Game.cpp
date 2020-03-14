@@ -53,9 +53,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelThree(level3));
 
 	//Sets active scene reference to our scene
-	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[3]->GetScene();
-	m_activeScene = m_scenes[3];
+	m_scenes[4]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[4]->GetScene();
+	m_activeScene = m_scenes[4];
 	PhysicsSystem::Init();
 	
 	for (int i = 2; i < m_scenes.size(); ++i)
@@ -411,7 +411,7 @@ if (change)
 		{
 			body->SetLinearVelocity(b2Vec2(0, 2));
 		}
-		else if (!(listener.GetPressed()) && trans.GetPosition().y > -75.f)
+		else if (!(listener.GetPressed()) && trans.GetPosition().y > -74.f)
 		{
 			body->SetLinearVelocity(b2Vec2(0, -2));
 		}
