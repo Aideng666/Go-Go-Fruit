@@ -53,9 +53,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelThree(level3));
 
 	//Sets active scene reference to our scene
-	m_scenes[4]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[4]->GetScene();
-	m_activeScene = m_scenes[4];
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
 	PhysicsSystem::Init();
 	
 	for (int i = 2; i < m_scenes.size(); ++i)
@@ -700,11 +700,11 @@ void Game::KeyboardHold()
 			}
 			if (Input::GetKey(Key::LeftArrow))
 			{
-				waterSpeed = -10.f;
+				waterSpeed = -12.f;
 			}
 			if (Input::GetKey(Key::RightArrow))
 			{
-				waterSpeed = 10.f;
+				waterSpeed = 12.f;
 			}
 	
 			float blueChange = blueSpeed - blueVel.x;
