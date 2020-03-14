@@ -421,7 +421,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(-153.f), float32(-86.f));
+		tempDef.position.Set(float32(-155.f), float32(-86.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -432,6 +432,8 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::ElevatorBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blue Elevator");
+
+		m_elevator1 = entity;
 	}
 
 	//BUTTONS
@@ -460,6 +462,8 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blue Button Anim");
+
+		m_button1 = entity;
 	}
 
 	//Button Bodies
@@ -486,7 +490,6 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Left Side of Blue Button");
 	}
-
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -510,7 +513,6 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Right Side of Blue Button");
 	}
-
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -535,7 +537,115 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Top of Blue Button");
 	}
 
-	
+	//JELLO
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "Jello.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 72, 16);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-24.f, -25.f, 98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Jello");
+	}
+
+	//Jello Bodies
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_kinematicBody;
+		tempDef.position.Set(float32(-24.f), float32(-17.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 72, 1, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::JelloBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Top of Jello");
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-60.f), float32(-25.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 16, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Left of Jello");
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(12.f), float32(-25.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 16, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Right of Jello");
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_kinematicBody;
+		tempDef.position.Set(float32(-24.f), float32(-33.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 72, 1, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Bottom of Jello");
+	}
 
 	//Fruit Bowl
 	{
@@ -583,4 +693,24 @@ int LevelTwo::GetBg1()
 int LevelTwo::GetBg2()
 {
 	return m_bg2;
+}
+
+int LevelTwo::GetElevator()
+{
+	return m_elevator1;
+}
+
+int LevelTwo::GetButton()
+{
+	return m_button1;
+}
+
+bool LevelTwo::GetButtonOn1()
+{
+	return turnOn1;
+}
+
+bool LevelTwo::GetButtonOn2()
+{
+	return turnOn2;
 }

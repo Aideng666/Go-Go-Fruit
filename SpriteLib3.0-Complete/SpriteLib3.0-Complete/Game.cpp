@@ -393,6 +393,68 @@ if (change)
 			}	
 		}
 	}
+
+	if (m_activeScene == m_scenes[3])
+	{
+		LevelTwo* scene = (LevelTwo*)m_activeScene;
+		auto elevator = scene->GetElevator();
+		auto button = scene->GetButton();
+		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
+		auto trans = ECS::GetComponent<Transform>(elevator);
+
+		auto turnOn1 = scene->GetButtonOn1();
+		auto turnOn2 = scene->GetButtonOn2();
+
+		if (listener.GetPressed() && trans.GetPosition().y < 51.5f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, 2));
+		}
+		else if (!(listener.GetPressed()) && trans.GetPosition().y > -86.f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, -2));
+		}
+		else
+		{
+			body->SetLinearVelocity(b2Vec2(0, 0));
+		}
+
+		if (listener.GetPressed())
+		{
+			turnOn1 = true;
+
+			if (turnOn1)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(button);
+				animController.SetActiveAnim(1);
+				animController.GetAnimation(1).Reset();
+				animController.SetActiveAnim(0);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
+				animPlat.SetActiveAnim(0);
+				animPlat.GetAnimation(0).Reset();
+				animPlat.SetActiveAnim(1);
+			}
+		}
+		if (!(listener.GetPressed()))
+		{
+			turnOn1 = false;
+
+			if (!turnOn1)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(button);
+				animController.SetActiveAnim(0);
+				animController.GetAnimation(0).Reset();
+				animController.SetActiveAnim(1);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
+				animPlat.SetActiveAnim(1);
+				animPlat.GetAnimation(1).Reset();
+				animPlat.SetActiveAnim(0);
+			}
+
+		}
+	}
+
 	if (m_activeScene == m_scenes[4])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
