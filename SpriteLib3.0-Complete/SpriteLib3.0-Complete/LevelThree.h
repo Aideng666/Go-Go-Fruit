@@ -20,6 +20,9 @@ public:
 	bool GetButtonOn1();
 	bool GetButtonOn2();
 
+	int GetJello();
+	bool GetJelloBounce();
+
 private:
 
 	int m_cam;
@@ -32,4 +35,7 @@ private:
 
 	bool turnOn1 = false;
 	bool turnOn2 = false;
+
+	int m_jello;
+	bool turnJello;
 };

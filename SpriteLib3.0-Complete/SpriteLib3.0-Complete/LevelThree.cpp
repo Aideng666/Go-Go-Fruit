@@ -835,18 +835,30 @@ void LevelThree::InitScene(float windowWidth, float windowHeight)
 
 	//JELLO
 	{
+		auto jelloAnim = File::LoadJSON("Jello.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 
-		std::string fileName = "Jello.png";
+		std::string fileName = "JelloSS.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 72, 16);
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(jelloAnim["Bounce"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 72, 16, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(24.f, -92.5f, 98.f));
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Jello");
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Jello Anim");
+
+		m_jello = entity;
 	}
 
 	//Jello Bodies
@@ -863,7 +875,7 @@ void LevelThree::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(24.f), float32(-85.5f));
+		tempDef.position.Set(float32(24.f), float32(-86.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -886,7 +898,7 @@ void LevelThree::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-11.f), float32(-92.5f));
+		tempDef.position.Set(float32(-11.f), float32(-94.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -971,4 +983,14 @@ bool LevelThree::GetButtonOn1()
 bool LevelThree::GetButtonOn2()
 {
 	return turnOn2;
+}
+
+int LevelThree::GetJello()
+{
+	return m_jello;
+}
+
+bool LevelThree::GetJelloBounce()
+{
+	return turnJello;
 }

@@ -53,9 +53,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelThree(level3));
 
 	//Sets active scene reference to our scene
-	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[3]->GetScene();
-	m_activeScene = m_scenes[3];
+	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[0]->GetScene();
+	m_activeScene = m_scenes[0];
 	PhysicsSystem::Init();
 	
 	for (int i = 2; i < m_scenes.size(); ++i)
@@ -618,6 +618,29 @@ if (change)
 		{
 			turnOn = false;			
 		}		
+	}
+	if (m_activeScene == m_scenes[4])
+	{
+		LevelThree* scene = (LevelThree*)m_activeScene;
+		auto jello = scene->GetJello();
+		auto turnOn = scene->GetJelloBounce();
+
+		if (listener.GetBounced())
+		{
+			turnOn = true;
+
+			if (turnOn)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(jello);
+				animController.SetActiveAnim(0);
+				animController.GetAnimation(0).Reset();
+			}
+		}
+
+		if (!(listener.GetBounced()))
+		{
+			turnOn = false;
+		}
 	}
 #pragma endregion
 

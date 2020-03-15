@@ -82,6 +82,12 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bounced = true;
         impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * jumpForce;   
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
+
+        if (bodyA->GetLinearVelocity().y == 0)
+        {
+            bJump = true;
+            bounced = false;
+        }
     }
     if (identifierB & EntityIdentifier::RedButtonBit())
     {
@@ -146,6 +152,12 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         bounced = true;
         impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * jumpForce;
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
+
+        if (bodyA->GetLinearVelocity().y == 0)
+        {
+            wJump = true;
+            bounced = false;
+        }
     }
     if (identifierB & EntityIdentifier::RedButtonBit())
     {
@@ -220,6 +232,11 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bJump = false;
         bGrounded = false;
         bounced = false;
+
+        if (bodyA->GetLinearVelocity().y == 0)
+        {
+            bJump = true;
+        }
     }
     if (identifierB & EntityIdentifier::ElevatorBit())
     {
@@ -267,6 +284,11 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         wJump = false;
         wGrounded = false;
         bounced = false;
+
+        if (bodyA->GetLinearVelocity().y == 0)
+        {
+            wJump = true;
+        }
     }
     if (identifierB & EntityIdentifier::ElevatorBit())
     {

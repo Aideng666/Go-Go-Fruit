@@ -690,29 +690,6 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::JelloBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top of Jello");
 	}
-	/*{
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
-
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		b2Body* tempBody;
-		b2BodyDef tempDef;
-		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-60.f), float32(-25.f));
-
-		tempBody = m_physicsWorld->CreateBody(&tempDef);
-		tempBody->SetUserData((void*)entity);
-
-		tempPhsBody = PhysicsBody(tempBody, 1, 16, vec2(0.f, 0.f), false);
-
-		unsigned int bitHolder = EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Left of Jello");
-	}*/
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -794,7 +771,6 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
 	}
 #pragma endregion
-
 
 }
 
