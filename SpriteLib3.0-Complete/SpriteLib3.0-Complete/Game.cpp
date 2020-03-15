@@ -594,6 +594,33 @@ if (change)
 		}
 	}
 #pragma endregion
+
+#pragma region Jello Bounce
+	if (m_activeScene == m_scenes[3])
+	{
+		LevelTwo* scene = (LevelTwo*)m_activeScene;
+		auto jello = scene->GetJello();
+		auto turnOn = scene->GetJelloBounce();
+
+		if (listener.GetBounced())
+		{				
+			turnOn = true;
+
+			if (turnOn)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(jello);
+				animController.SetActiveAnim(0);
+				animController.GetAnimation(0).Reset();
+			}		
+		}
+
+		if (!(listener.GetBounced()))
+		{
+			turnOn = false;			
+		}		
+	}
+#pragma endregion
+
 }
 
 void Game::GUI()

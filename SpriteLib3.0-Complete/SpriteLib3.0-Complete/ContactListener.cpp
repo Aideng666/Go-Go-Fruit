@@ -79,6 +79,7 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = false;
         bBowl = false;
+        bounced = true;
         impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * jumpForce;   
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
@@ -142,6 +143,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = false;
         wBowl = false;
+        bounced = true;
         impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * jumpForce;
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
@@ -217,6 +219,7 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = false;
         bGrounded = false;
+        bounced = false;
     }
     if (identifierB & EntityIdentifier::ElevatorBit())
     {
@@ -263,6 +266,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = false;
         wGrounded = false;
+        bounced = false;
     }
     if (identifierB & EntityIdentifier::ElevatorBit())
     {
@@ -325,4 +329,9 @@ void ContactListener::SetShake(bool shake)
 bool ContactListener::GetRedPressed()
 {
     return redButtonPressed;
+}
+
+bool ContactListener::GetBounced()
+{
+    return bounced;
 }

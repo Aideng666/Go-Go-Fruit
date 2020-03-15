@@ -309,7 +309,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(box, bitHolder, "Top Top Left Ground Box");
 	}
 
-	{
+	/*{
 		auto box = ECS::CreateEntity();
 
 		ECS::AttachComponent<Transform>(box);
@@ -332,7 +332,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(box, bitHolder, "Top Left Facing Box");
-	}
+	}*/
 
 	{
 		auto box = ECS::CreateEntity();
@@ -353,7 +353,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		tempBody->SetUserData((void*)box);
 
-		tempPhsBody = PhysicsBody(tempBody, 46, 1, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 48, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
 		ECS::SetUpIdentifier(box, bitHolder, "Top Left Ground Box");
@@ -640,18 +640,30 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 	//JELLO
 	{
+		auto jelloAnim = File::LoadJSON("Jello.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 
-		std::string fileName = "Jello.png";
+		std::string fileName = "JelloSS.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 72, 16);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-24.f, -25.f, 98.f));
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Jello");
+		animController.AddAnimation(jelloAnim["Bounce"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 72, 16, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-24.5f, -23.5f, 98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Jello Anim");
+
+		m_jello = entity;
 	}
 
 	//Jello Bodies
@@ -668,17 +680,17 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(-24.f), float32(-17.f));
+		tempDef.position.Set(float32(-24.5f), float32(-17.5f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, 72, 1, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 68, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::JelloBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top of Jello");
 	}
-	{
+	/*{
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Transform>(entity);
@@ -700,7 +712,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Left of Jello");
-	}
+	}*/
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -714,12 +726,12 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(12.f), float32(-25.f));
+		tempDef.position.Set(float32(10.f), float32(-24.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, 1, 16, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 1, 14, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Right of Jello");
@@ -737,12 +749,12 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(-24.f), float32(-33.f));
+		tempDef.position.Set(float32(-24.5f), float32(-31.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, 72, 1, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 70, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Bottom of Jello");
@@ -819,4 +831,14 @@ bool LevelTwo::GetButtonOn1()
 bool LevelTwo::GetButtonOn2()
 {
 	return turnOn2;
+}
+
+int LevelTwo::GetJello()
+{
+	return m_jello;
+}
+
+bool LevelTwo::GetJelloBounce()
+{
+	return turnJello;
 }
