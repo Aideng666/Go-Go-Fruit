@@ -21,6 +21,7 @@ public:
 	void SetBGrounded(bool grounded);
 	void SetWGrounded(bool grounded);
 	void SetShake(bool shake);
+	bool GetRedPressed();
 
 private:
 
@@ -33,4 +34,5 @@ private:
 	bool bBowl;
 	bool wBowl;
 	bool shake;
+	bool redButtonPressed;
 };

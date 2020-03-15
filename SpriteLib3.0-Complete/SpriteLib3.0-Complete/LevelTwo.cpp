@@ -466,7 +466,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		m_button1 = entity;
 	}
 
-	//Button Bodies
+	//Blue Button Bodies
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -503,7 +503,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-85.f), float32(-15.f));
+		tempDef.position.Set(float32(-84.f), float32(-15.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -535,6 +535,107 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top of Blue Button");
+	}
+
+	{
+		auto blueButton = File::LoadJSON("RedButton.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "RedButtonSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(blueButton["PowerOff"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(blueButton["PowerOn"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(80.f, 56.f, 99.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Red Button Anim");
+
+		m_redButton = entity;
+	}
+
+	//Red Button Bodies
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(80.f), float32(58.5f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 18, 1, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::RedButtonBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Top of Red Button");
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(71.f), float32(56.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 5, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Left Side of Red Button");
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(89.f), float32(56.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 5, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Right Side of Red Button");
 	}
 
 	//JELLO
@@ -703,6 +804,11 @@ int LevelTwo::GetElevator()
 int LevelTwo::GetButton()
 {
 	return m_button1;
+}
+
+int LevelTwo::GetRedButton()
+{
+	return m_redButton;
 }
 
 bool LevelTwo::GetButtonOn1()

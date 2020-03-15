@@ -44,7 +44,7 @@ public:
 	static unsigned int JelloBit();
 	static unsigned int BlueButton2Bit();
 	static unsigned int FruitBowlBit();
-
+	static unsigned int RedButtonBit();
 
 	//Setters
 	//Sets main player entity
@@ -105,6 +105,7 @@ private:
 	static unsigned int m_jelloBit;
 	static unsigned int m_blueButton2Bit;
 	static unsigned int m_fruitBowlBit;
+	static unsigned int m_redButtonBit;
 
 };
 

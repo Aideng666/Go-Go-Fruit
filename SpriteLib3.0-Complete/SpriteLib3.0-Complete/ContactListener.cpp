@@ -82,6 +82,11 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * jumpForce;   
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
     }
+    if (identifierB & EntityIdentifier::RedButtonBit())
+    {
+        bJump = true;
+        bBowl = false;
+    }
 }
 #pragma endregion
 
@@ -139,6 +144,13 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         wBowl = false;
         impulse = bodyA->GetMass() * -bodyA->GetLinearVelocity().y * jumpForce;
         bodyA->ApplyLinearImpulse(b2Vec2(0, impulse), bodyA->GetWorldCenter(), true);
+    }
+    if (identifierB & EntityIdentifier::RedButtonBit())
+    {
+        wJump = true;
+        wBowl = false;
+        wGrounded = true;
+        redButtonPressed = true;
     }
 }
 #pragma endregion
@@ -210,6 +222,10 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = false;
     }
+    if (identifierB & EntityIdentifier::RedButtonBit())
+    {
+        bJump = false;
+    }
 }
 #pragma endregion
     
@@ -251,6 +267,11 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     if (identifierB & EntityIdentifier::ElevatorBit())
     {
         wJump = false;
+    }
+    if (identifierB & EntityIdentifier::RedButtonBit())
+    {
+        wJump = false;
+        redButtonPressed = false;
     }
 }
 #pragma endregion
@@ -299,4 +320,9 @@ void ContactListener::SetWGrounded(bool grounded) {
 void ContactListener::SetShake(bool shake)
 {
     this->shake = shake;
+}
+
+bool ContactListener::GetRedPressed()
+{
+    return redButtonPressed;
 }

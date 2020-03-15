@@ -13,6 +13,7 @@ public:
 	int GetBg2();
 	int GetElevator();
 	int GetButton();
+	int GetRedButton();
 
 	bool GetButtonOn1();
 	bool GetButtonOn2();
@@ -22,6 +23,7 @@ private:
 	int m_bg2;
 	int m_elevator1;
 	int m_button1;
+	int m_redButton;
 
 	bool turnOn1;
 	bool turnOn2;

@@ -401,6 +401,7 @@ if (change)
 		auto button = scene->GetButton();
 		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
 		auto trans = ECS::GetComponent<Transform>(elevator);
+		auto redButton = scene->GetRedButton();
 
 		auto turnOn1 = scene->GetButtonOn1();
 		auto turnOn2 = scene->GetButtonOn2();
@@ -451,7 +452,31 @@ if (change)
 				animPlat.GetAnimation(1).Reset();
 				animPlat.SetActiveAnim(0);
 			}
+		}
 
+		if (listener.GetRedPressed())
+		{
+			turnOn2 = true;
+
+			if (turnOn2)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(redButton);
+				animController.SetActiveAnim(0);
+				animController.GetAnimation(0).Reset();
+				animController.SetActiveAnim(1);
+			}
+		}
+		if (!(listener.GetRedPressed()))
+		{
+			turnOn2 = false;
+
+			if (!turnOn2)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(redButton);
+				animController.SetActiveAnim(1);
+				animController.GetAnimation(1).Reset();
+				animController.SetActiveAnim(0);
+			}
 		}
 	}
 
