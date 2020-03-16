@@ -41,6 +41,32 @@ void GoGoTitle::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Go Go Fruit Title");
 	}
 
+	//Blink Text
+	{
+		auto textAnim = File::LoadJSON("BlinkText.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "BlinkText.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(textAnim["DrawText"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 150, 35, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -53.f, 99.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Text");
+	}
+
 	//Red Stripe
 	{
 		auto entity = ECS::CreateEntity();
