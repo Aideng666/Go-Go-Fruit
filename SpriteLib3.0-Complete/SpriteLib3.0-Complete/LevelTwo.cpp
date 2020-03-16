@@ -117,6 +117,8 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 	//Watermelon
 	{
+		auto waterAnim = File::LoadJSON("Watermelon.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::SetIsMainPlayer2(entity, true);
@@ -125,34 +127,46 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 
-		std::string fileName = "Watermelon.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40.3463203464f, 26.6666666667f);
+		std::string fileName = "WatermelonSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(waterAnim["WalkLeft"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(waterAnim["WalkRight"]);
+		animController.GetAnimation(1);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 45.f, 30.f, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-160.f, 60.f, 99.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 40.3463203464f + 20;
-		float shrinkY = tempSpr.GetWidth() / 26.6666666667f + 5;
+		float shrinkX = tempSpr.GetWidth() / 45.f + 20;
+		float shrinkY = tempSpr.GetWidth() / 30.f + 11;
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-100.f), float32(-92.f));
+		tempDef.position.Set(float32(-100.f), float32(-85.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, -2.f), false);
+			vec2(0.f, -6.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(60.f);
 		tempPhsBody.SetGravity(true);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::WatermelonBit();
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::WatermelonBit() |
+			EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Watermelon");
 	}
 #pragma endregion

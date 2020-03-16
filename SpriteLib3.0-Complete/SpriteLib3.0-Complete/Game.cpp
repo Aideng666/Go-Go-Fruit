@@ -53,9 +53,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelThree(level3));
 
 	//Sets active scene reference to our scene
-	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[0]->GetScene();
-	m_activeScene = m_scenes[0];
+	m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[2]->GetScene();
+	m_activeScene = m_scenes[2];
 	PhysicsSystem::Init();
 	
 	for (int i = 2; i < m_scenes.size(); ++i)
@@ -765,6 +765,9 @@ void Game::KeyboardHold()
 			b2Vec2 waterVel = waterBody->GetLinearVelocity();
 			float blueSpeed = 0.f, waterSpeed = 0.f;
 	
+			auto& waterAnim = ECS::GetComponent<AnimationController>(EntityIdentifier::MainPlayer2());
+
+
 			if (Input::GetKey(Key::A))
 			{
 				blueSpeed = -12.f;
@@ -776,10 +779,12 @@ void Game::KeyboardHold()
 			if (Input::GetKey(Key::LeftArrow))
 			{
 				waterSpeed = -12.f;
+				waterAnim.SetActiveAnim(0);
 			}
 			if (Input::GetKey(Key::RightArrow))
 			{
 				waterSpeed = 12.f;
+				waterAnim.SetActiveAnim(1);
 			}
 	
 			float blueChange = blueSpeed - blueVel.x;
