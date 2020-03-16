@@ -1,0 +1,75 @@
+#include "GoGoTitle.h"
+
+GoGoTitle::GoGoTitle(std::string name)
+	: Scene(name)
+{
+}
+
+void GoGoTitle::InitScene(float windowWidth, float windowHeight)
+{
+	m_sceneReg = new entt::registry;
+
+	ECS::AttachRegister(m_sceneReg);
+
+	float aspectRatio = windowWidth / windowHeight;
+
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Camera>(entity);
+		vec4 temp = ECS::GetComponent<Camera>(entity).GetOrthoSize();
+		ECS::GetComponent<Camera>(entity).SetWindowSize(vec2(float(windowWidth), float(windowHeight)));
+		ECS::GetComponent<Camera>(entity).Orthographic(aspectRatio, temp.x, temp.y, temp.z, temp.w, -100.f, 100.f);
+
+		unsigned int bitHolder = EntityIdentifier::CameraBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Title Camera");
+	}
+
+	//Title Image
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "TitleScreen.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 375.f, 200.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -99.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Go Go Fruit Title");
+	}
+
+	//Red Stripe
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "RedStripe.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 375.f, 200.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Red Stripe");
+	}
+
+	//Blue Stripe
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "BlueStripe.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 375.f, 200.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Blue Stripe");
+	}
+}

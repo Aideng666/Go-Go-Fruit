@@ -2,6 +2,7 @@
 #define __GAME_H__
 
 #include "BackEnd.h"
+#include "GoGoTitle.h"
 #include "GoGoMenu.h"
 #include "GoGoExit.h"
 #include "GoGoGame.h"

@@ -30,6 +30,7 @@ Game::~Game()
 
 void Game::InitGame()
 {
+	std::string titleName = "Title";
 	std::string menuName = "Menu";
 	std::string exitName = "Exit";
 	std::string level1 = "Level 1";
@@ -46,6 +47,7 @@ void Game::InitGame()
 	m_window = BackEnd::GetWindow();
 
 	//Creates a new scene.
+	m_scenes.push_back(new GoGoTitle(titleName));
 	m_scenes.push_back(new GoGoMenu(menuName));
 	m_scenes.push_back(new GoGoExit(exitName));
 	m_scenes.push_back(new GoGoGame(level1));
@@ -53,12 +55,12 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelThree(level3));
 
 	//Sets active scene reference to our scene
-	m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[2]->GetScene();
-	m_activeScene = m_scenes[2];
+	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[0]->GetScene();
+	m_activeScene = m_scenes[0];
 	PhysicsSystem::Init();
 	
-	for (int i = 2; i < m_scenes.size(); ++i)
+	for (int i = 3; i < m_scenes.size(); ++i)
 	{
 		m_scenes[i]->GetPhysicsWorld().SetContactListener(&listener);
 	}
@@ -123,9 +125,9 @@ if (change)
 
 		m_activeScene->Unload();
 
-		m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[2]->GetScene();
-		m_activeScene = m_scenes[2];
+		m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[3]->GetScene();
+		m_activeScene = m_scenes[3];
 		timer = 0.f;
 		change = false;
 	}
@@ -133,7 +135,7 @@ if (change)
 #pragma endregion
 
 #pragma region Shake Effect
-	if (m_activeScene == m_scenes[2])
+	if (m_activeScene == m_scenes[3])
 	{
 			GoGoGame* scene = (GoGoGame*)m_activeScene;
 			auto cam = scene->GetCam();
@@ -169,7 +171,7 @@ if (change)
 		}
 	}
 
-	if (m_activeScene == m_scenes[4])
+	if (m_activeScene == m_scenes[5])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto cam = scene->GetCam();
@@ -211,7 +213,7 @@ if (change)
 #pragma endregion
 
 #pragma region Parallax Background
-	if (m_activeScene == m_scenes[0] && !spikeDestroyed)
+	if (m_activeScene == m_scenes[1] && !spikeDestroyed)
 	{
 		GoGoMenu* scene = (GoGoMenu*)m_activeScene;
 		auto entity = scene->GetSpike1();
@@ -234,7 +236,7 @@ if (change)
 		m_register->get<Transform>(entity).SetPositionY(position.y - (spikeSpeed * Timer::deltaTime));
 		m_register->get<Transform>(entity2).SetPositionY(position2.y - (spikeSpeed * Timer::deltaTime));			
 	}
-	if (m_activeScene == m_scenes[1])
+	if (m_activeScene == m_scenes[2])
 	{
 		GoGoExit* scene = (GoGoExit*)m_activeScene;
 		auto entity = scene->GetSpike1();
@@ -257,7 +259,7 @@ if (change)
 		m_register->get<Transform>(entity).SetPositionY(position.y - (spikeSpeed * Timer::deltaTime));
 		m_register->get<Transform>(entity2).SetPositionY(position2.y - (spikeSpeed * Timer::deltaTime));
 	}
-	if (m_activeScene == m_scenes[2])
+	if (m_activeScene == m_scenes[3])
 	{
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto entity = scene->GetBackground();
@@ -280,7 +282,7 @@ if (change)
 		m_register->get<Transform>(entity).SetPositionX(position.x - (bgSpeed * Timer::deltaTime));
 		m_register->get<Transform>(entity2).SetPositionX(position2.x - (bgSpeed * Timer::deltaTime));
 	}
-	if (m_activeScene == m_scenes[3])
+	if (m_activeScene == m_scenes[4])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
 		auto entity = scene->GetBg1();
@@ -303,7 +305,7 @@ if (change)
 		m_register->get<Transform>(entity).SetPositionX(position.x - (bgSpeed * Timer::deltaTime));
 		m_register->get<Transform>(entity2).SetPositionX(position2.x - (bgSpeed * Timer::deltaTime));
 	}
-	if (m_activeScene == m_scenes[4])
+	if (m_activeScene == m_scenes[5])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto entity = scene->GetBackground();
@@ -330,7 +332,7 @@ if (change)
 #pragma endregion
 	
 #pragma region Activation of Buttons
-	if (m_activeScene == m_scenes[2])
+	if (m_activeScene == m_scenes[3])
 	{
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto elevator = scene->GetElevator();
@@ -394,7 +396,7 @@ if (change)
 		}
 	}
 
-	if (m_activeScene == m_scenes[3])
+	if (m_activeScene == m_scenes[4])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
 		auto elevator = scene->GetElevator();
@@ -480,7 +482,7 @@ if (change)
 		}
 	}
 
-	if (m_activeScene == m_scenes[4])
+	if (m_activeScene == m_scenes[5])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto elevator = scene->GetElevator();
@@ -596,7 +598,7 @@ if (change)
 #pragma endregion
 
 #pragma region Jello Bounce
-	if (m_activeScene == m_scenes[3])
+	if (m_activeScene == m_scenes[4])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
 		auto jello = scene->GetJello();
@@ -619,7 +621,7 @@ if (change)
 			turnOn = false;			
 		}		
 	}
-	if (m_activeScene == m_scenes[4])
+	if (m_activeScene == m_scenes[5])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto jello = scene->GetJello();
@@ -755,7 +757,7 @@ void Game::KeyboardHold()
 {
 #pragma region MOVEMENT SYSTEM
 	//MOVEMENT
-	for (int i = 2; i < m_scenes.size(); ++i)
+	for (int i = 3; i < m_scenes.size(); ++i)
 	{
 		if (m_activeScene == m_scenes[i])
 		{
@@ -808,8 +810,19 @@ void Game::KeyboardDown()
 	}
 
 #pragma region SCREEN MANIPULATION
-//Space on play goes to game
+//Space on title screen goes to play screen
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
+}
+//Space on play goes to game
+else if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -824,8 +837,8 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 	ECS::DestroyEntity(scene->GetSpike1());
 	ECS::DestroyEntity(scene->GetSpike2());
 }
-//Up arrow goes to exit
-if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
+//Up arrow goes from menu to exit
+if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 
@@ -833,37 +846,11 @@ if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[0])
 
 	m_activeScene->Unload();
 
-	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[1]->GetScene();
-	m_activeScene = m_scenes[1];
+	m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[2]->GetScene();
+	m_activeScene = m_scenes[2];
 }
 //Down arrow on menu goes to exit
-else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[0])
-{
-	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
-
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
-	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[1]->GetScene();
-	m_activeScene = m_scenes[1];
-}
-//Up arrow on exit goes to menu
-else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
-{
-	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
-
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
-	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[0]->GetScene();
-	m_activeScene = m_scenes[0];
-}
-//Down arrow on exit goes to menu
 else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
@@ -872,12 +859,38 @@ else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[1])
 
 	m_activeScene->Unload();
 
-	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[0]->GetScene();
-	m_activeScene = m_scenes[0];
+	m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[2]->GetScene();
+	m_activeScene = m_scenes[2];
+}
+//Up arrow on exit goes to menu
+else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[2])
+{
+	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
+}
+//Down arrow on exit goes to menu
+else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[2])
+{
+	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
 }
 //Exits the game
-if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
+if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[2])
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 	exit(1);
@@ -886,7 +899,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 
 #pragma region JUMPING CODE
 //Jumping
-if (m_activeScene == m_scenes[2] || m_activeScene == m_scenes[3] || m_activeScene == m_scenes[4])
+if (m_activeScene == m_scenes[3] || m_activeScene == m_scenes[4] || m_activeScene == m_scenes[5])
 {
 	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
 	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
@@ -923,21 +936,11 @@ if (Input::GetKeyDown(Key::NumPad1))
 
 	m_activeScene->Unload();
 
-	m_scenes[2]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[2]->GetScene();
-	m_activeScene = m_scenes[2];
-}
-if (Input::GetKeyDown(Key::NumPad2))
-{
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
 	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 	m_register = m_scenes[3]->GetScene();
 	m_activeScene = m_scenes[3];
 }
-if (Input::GetKeyDown(Key::NumPad3))
+if (Input::GetKeyDown(Key::NumPad2))
 {
 	SceneEditor::ResetEditor();
 
@@ -946,6 +949,16 @@ if (Input::GetKeyDown(Key::NumPad3))
 	m_scenes[4]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 	m_register = m_scenes[4]->GetScene();
 	m_activeScene = m_scenes[4];
+}
+if (Input::GetKeyDown(Key::NumPad3))
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[5]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[5]->GetScene();
+	m_activeScene = m_scenes[5];
 }
 #pragma endregion
 

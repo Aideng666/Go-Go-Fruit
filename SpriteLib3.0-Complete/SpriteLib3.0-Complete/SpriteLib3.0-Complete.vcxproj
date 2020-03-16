@@ -151,6 +151,7 @@
     <ClInclude Include="GoGoExit.h" />
     <ClInclude Include="GoGoGame.h" />
     <ClInclude Include="GoGoMenu.h" />
+    <ClInclude Include="GoGoTitle.h" />
     <ClInclude Include="GrainEffect.h" />
     <ClInclude Include="GreyscaleEffect.h" />
     <ClInclude Include="include\imgui\imconfig.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="GoGoExit.cpp" />
     <ClCompile Include="GoGoGame.cpp" />
     <ClCompile Include="GoGoMenu.cpp" />
+    <ClCompile Include="GoGoTitle.cpp" />
     <ClCompile Include="GrainEffect.cpp" />
     <ClCompile Include="GreyscaleEffect.cpp" />
     <ClCompile Include="include\imgui\imgui.cpp" />
