@@ -40,11 +40,12 @@ public:
 	static unsigned int WatermelonBit();
 	static unsigned int GroundBit();
 	static unsigned int BlueButtonBit();
-	static unsigned int ElevatorBit();
+	static unsigned int BlueElevatorBit();
 	static unsigned int JelloBit();
 	static unsigned int BlueButton2Bit();
 	static unsigned int FruitBowlBit();
 	static unsigned int RedButtonBit();
+	static unsigned int RedElevatorBit();
 
 	//Setters
 	//Sets main player entity
@@ -101,12 +102,12 @@ private:
 	static unsigned int m_watermelonBit;
 	static unsigned int m_groundBit;
 	static unsigned int m_buttonBit;
-	static unsigned int m_elevatorBit;
+	static unsigned int m_blueElevatorBit;
 	static unsigned int m_jelloBit;
 	static unsigned int m_blueButton2Bit;
 	static unsigned int m_fruitBowlBit;
 	static unsigned int m_redButtonBit;
-
+	static unsigned int m_redElevatorBit;
 };
 
 #ifndef __ENTITYIDENTIFIERJSON_H__

@@ -68,7 +68,7 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         button2Pressed = true;
         bGrounded = true;
     }
-    if (identifierB & EntityIdentifier::ElevatorBit())
+    if (identifierB & EntityIdentifier::BlueElevatorBit())
     {
         bJump = true;
         bBowl = false;
@@ -93,6 +93,12 @@ if (identifierA & EntityIdentifier::BlueberryBit())
     {
         bJump = true;
         bBowl = false;
+    }
+    if (identifierB & EntityIdentifier::RedElevatorBit())
+    {
+        bJump = true;
+        bBowl = false;
+        bGrounded = true;
     }
 }
 #pragma endregion
@@ -134,7 +140,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         wJump = true;
         wBowl = false;
     }
-    if (identifierB & EntityIdentifier::ElevatorBit())
+    if (identifierB & EntityIdentifier::BlueElevatorBit())
     {
         wJump = true;
         wBowl = false;
@@ -165,6 +171,12 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         wBowl = false;
         wGrounded = true;
         redButtonPressed = true;
+    }
+    if (identifierB & EntityIdentifier::RedElevatorBit())
+    {
+        wJump = true;
+        wBowl = false;
+        wGrounded = true;
     }
 }
 #pragma endregion
@@ -238,11 +250,15 @@ if (identifierA & EntityIdentifier::BlueberryBit())
             bJump = true;
         }
     }
-    if (identifierB & EntityIdentifier::ElevatorBit())
+    if (identifierB & EntityIdentifier::BlueElevatorBit())
     {
         bJump = false;
     }
     if (identifierB & EntityIdentifier::RedButtonBit())
+    {
+        bJump = false;
+    }
+    if (identifierB & EntityIdentifier::RedElevatorBit())
     {
         bJump = false;
     }
@@ -290,7 +306,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
             wJump = true;
         }
     }
-    if (identifierB & EntityIdentifier::ElevatorBit())
+    if (identifierB & EntityIdentifier::BlueElevatorBit())
     {
         wJump = false;
     }
@@ -298,6 +314,10 @@ if (identifierA & EntityIdentifier::WatermelonBit())
     {
         wJump = false;
         redButtonPressed = false;
+    }
+    if (identifierB & EntityIdentifier::RedElevatorBit())
+    {
+        wJump = false;
     }
 }
 #pragma endregion

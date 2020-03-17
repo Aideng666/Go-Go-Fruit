@@ -12,6 +12,7 @@ public:
 	int GetBg1();
 	int GetBg2();
 	int GetElevator();
+	int GetElevator2();
 	int GetButton();
 	int GetRedButton();
 
@@ -25,6 +26,7 @@ private:
 	int m_bg;
 	int m_bg2;
 	int m_elevator1;
+	int m_elevator2;
 	int m_button1;
 	int m_redButton;
 
