@@ -180,6 +180,12 @@
     <ClInclude Include="LevelSelectMain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LevelSelect2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelSelect3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\imgui\imgui.cpp">
@@ -339,6 +345,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelSelectMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSelect2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSelect3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,11 +1,11 @@
-#include "LevelSelectMain.h"
+#include "LevelSelect2.h"
 
-LevelSelectMain::LevelSelectMain(std::string name)
+LevelSelect2::LevelSelect2(std::string name)
 	: Scene(name)
 {
 }
 
-void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
+void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 {
 	m_sceneReg = new entt::registry;
 
@@ -22,7 +22,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Camera>(entity).Orthographic(aspectRatio, temp.x, temp.y, temp.z, temp.w, -100.f, 100.f);
 
 		unsigned int bitHolder = EntityIdentifier::CameraBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Level Select Main Camera");
+		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 2 Camera");
 	}
 
 	{
@@ -31,13 +31,13 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 
-		std::string fileName = "LevelSelect1.png";
+		std::string fileName = "LevelSelect2.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360, 202);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -99.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 1");
+		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 2");
 	}
 
 	//Arrows
@@ -113,6 +113,6 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -85.f, -97.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Blink Play Text");	
+		ECS::SetUpIdentifier(entity, bitHolder, "Blink Play Text");
 	}
 }
