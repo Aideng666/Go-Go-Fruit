@@ -221,14 +221,14 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		animController.GetAnimation(1);
 		animController.SetActiveAnim(1);
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 45.f, 30.f, true, &animController);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 35.f, 35.f, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-160.f, 60.f, 99.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 45.f + 20;
-		float shrinkY = tempSpr.GetWidth() / 30.f + 11;
+		float shrinkX = tempSpr.GetWidth() / 35.f + 20;
+		float shrinkY = tempSpr.GetWidth() / 35.f + 13;
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
@@ -240,7 +240,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, -6.f), false);
+			vec2(0.f, -7.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(60.f);
@@ -402,7 +402,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 400, 5, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top Wall");
 	}
 	//Left Wall
@@ -426,7 +426,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 5, 400, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Left Wall");
 	}
 	//Right Wall
@@ -450,7 +450,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 5, 400, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::GroundBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Right Wall");
 	}
 #pragma endregion

@@ -5,6 +5,7 @@
 #include "GoGoTitle.h"
 #include "GoGoMenu.h"
 #include "GoGoExit.h"
+#include "LevelSelectMain.h"
 #include "GoGoGame.h"
 #include "LevelTwo.h"
 #include "LevelThree.h"

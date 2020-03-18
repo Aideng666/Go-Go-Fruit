@@ -177,6 +177,9 @@
     <ClInclude Include="GoGoTitle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LevelSelectMain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\imgui\imgui.cpp">
@@ -333,6 +336,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GoGoTitle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSelectMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
