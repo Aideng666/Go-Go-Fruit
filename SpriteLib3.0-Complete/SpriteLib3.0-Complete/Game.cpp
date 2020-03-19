@@ -1141,6 +1141,85 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[5])
 	ECS::DestroyEntity(scene->GetLeft());
 	ECS::DestroyEntity(scene->GetPlay());
 }
+//Level Select to Main Menu
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[3])
+{
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
+}
+//Level Select 2 to Main Menu
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[4])
+{
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
+}
+//Level Select 3 to Main Menu
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[5])
+{
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
+}
+//Level 1 to Level Select
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6])
+{
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
+}
+//Level 2 to Level Select
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7])
+{
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
+}
+//Level 3 to Level Select
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8])
+{
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
+}
+
 #pragma endregion
 
 #pragma region JUMPING CODE
