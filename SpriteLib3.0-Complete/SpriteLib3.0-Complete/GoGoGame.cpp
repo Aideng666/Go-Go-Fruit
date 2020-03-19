@@ -228,7 +228,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 		float shrinkX = tempSpr.GetWidth() / 35.f + 20;
-		float shrinkY = tempSpr.GetWidth() / 35.f + 13;
+		float shrinkY = tempSpr.GetWidth() / 35.f + 14;
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
