@@ -111,6 +111,7 @@ private:
 	float num = 0.f; 
 	bool reset;
 	bool change;
+	bool change2, change3, change4;
 	bool orth;
 	bool changeRand = true;
 	bool spikeDestroyed;

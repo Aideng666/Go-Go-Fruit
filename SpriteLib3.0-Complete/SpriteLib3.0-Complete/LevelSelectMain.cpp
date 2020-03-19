@@ -1,4 +1,5 @@
 #include "LevelSelectMain.h"
+#include "Utilities.h"
 
 LevelSelectMain::LevelSelectMain(std::string name)
 	: Scene(name)
@@ -38,6 +39,8 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 1");
+
+		m_menu = entity;
 	}
 
 	//Arrows
@@ -64,6 +67,8 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Right Arrow");
+
+		m_right = entity;
 	}
 
 	{
@@ -89,6 +94,8 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Left Arrow");
+
+		m_left = entity;
 	}
 
 	{
@@ -114,5 +121,68 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blink Play Text");	
+
+		m_play = entity;
 	}
+}
+
+void LevelSelectMain::Update()
+{
+	if (fade)
+	{
+		FadeBackground();
+		timer += Timer::deltaTime;
+		if (timer >= (m_repeatTime * 2))
+		{
+			fade = false;
+			timer = 0.f;
+		}
+	}
+}
+
+void LevelSelectMain::FadeBackground()
+{
+	m_clearColor = Util::Lerp<vec4>(m_clearColor1, m_clearColor2, m_lerpVal);
+
+	if (m_lerpVal >= 1.f)
+	{
+		vec4 temp = m_clearColor2;
+
+		m_clearColor2 = m_clearColor1;
+		m_clearColor1 = temp;
+
+		m_lerpVal = 0.f;
+	}
+
+	m_lerpVal += Timer::deltaTime / m_repeatTime;
+}
+
+bool LevelSelectMain::GetFade()
+{
+	return fade;
+}
+
+void LevelSelectMain::SetFade(bool fade)
+{
+	this->fade = fade;
+}
+
+int LevelSelectMain::GetMenu()
+{
+	return m_menu;
+}
+
+int LevelSelectMain::GetRight()
+{
+	return m_right;
+}
+
+int LevelSelectMain::GetLeft()
+{
+	return m_left;
+}
+
+int LevelSelectMain::GetPlay()
+{
+	return m_play;
 }

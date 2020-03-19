@@ -61,9 +61,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelThree(level3));
 
 	//Sets active scene reference to our scene
-	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[3]->GetScene();
-	m_activeScene = m_scenes[3];
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
 	PhysicsSystem::Init();
 	
 	for (int i = 6; i < m_scenes.size(); ++i)
@@ -138,6 +138,57 @@ if (change)
 		change = false;
 	}
 }
+if (change2)
+{
+	timer += Timer::deltaTime;
+
+	if (timer >= 1.f)
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[6]->GetScene();
+		m_activeScene = m_scenes[6];
+		timer = 0.f;
+		change2 = false;
+	}
+}
+if (change3)
+{
+	timer += Timer::deltaTime;
+
+	if (timer >= 1.f)
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[7]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[7]->GetScene();
+		m_activeScene = m_scenes[7];
+		timer = 0.f;
+		change3 = false;
+	}
+}
+if (change4)
+{
+	timer += Timer::deltaTime;
+
+	if (timer >= 1.f)
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[8]->GetScene();
+		m_activeScene = m_scenes[8];
+		timer = 0.f;
+		change4 = false;
+	}
+}
 #pragma endregion
 
 #pragma region Shake Effect
@@ -167,6 +218,42 @@ if (change)
 			ECS::GetComponent<Camera>(cam).Shake(-num);
 			reset = false;
 			changeRand = true;
+			}
+
+			if (timer2 >= 0.1f)
+			{
+				timer2 = 0.f;
+				listener.SetShake(false);
+			}
+		}
+	}
+
+	if (m_activeScene == m_scenes[7])
+	{
+		LevelTwo* scene = (LevelTwo*)m_activeScene;
+		auto cam = scene->GetCam();
+		auto body = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
+
+
+		if (changeRand)
+		{
+			num = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1.f)) - 0.5f;
+			changeRand = false;
+		}
+		if (listener.GetShake())
+		{
+			timer2 += Timer::deltaTime;
+
+			if (!reset)
+			{
+				ECS::GetComponent<Camera>(cam).Shake(num);
+				reset = true;
+			}
+			else
+			{
+				ECS::GetComponent<Camera>(cam).Shake(-num);
+				reset = false;
+				changeRand = true;
 			}
 
 			if (timer2 >= 0.1f)
@@ -1011,39 +1098,48 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[3])
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 
-	SceneEditor::ResetEditor();
+	LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
 
-	m_activeScene->Unload();
+	scene->SetFade(true);
 
-	m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[6]->GetScene();
-	m_activeScene = m_scenes[6];
+	change2 = true;
+
+	ECS::DestroyEntity(scene->GetMenu());
+	ECS::DestroyEntity(scene->GetRight());
+	ECS::DestroyEntity(scene->GetLeft());
+	ECS::DestroyEntity(scene->GetPlay());
 }
 //Level Select 2 to Level 2
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[4])
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 
-	SceneEditor::ResetEditor();
+	LevelSelect2* scene = (LevelSelect2*)m_activeScene;
 
-	m_activeScene->Unload();
+	scene->SetFade(true);
 
-	m_scenes[7]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[7]->GetScene();
-	m_activeScene = m_scenes[7];
+	change3 = true;
+
+	ECS::DestroyEntity(scene->GetMenu());
+	ECS::DestroyEntity(scene->GetRight());
+	ECS::DestroyEntity(scene->GetLeft());
+	ECS::DestroyEntity(scene->GetPlay());
 }
 //Level Select 3 to Level 3
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[5])
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 
-	SceneEditor::ResetEditor();
+	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
 
-	m_activeScene->Unload();
+	scene->SetFade(true);
 
-	m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[8]->GetScene();
-	m_activeScene = m_scenes[8];
+	change4 = true;
+
+	ECS::DestroyEntity(scene->GetMenu());
+	ECS::DestroyEntity(scene->GetRight());
+	ECS::DestroyEntity(scene->GetLeft());
+	ECS::DestroyEntity(scene->GetPlay());
 }
 #pragma endregion
 

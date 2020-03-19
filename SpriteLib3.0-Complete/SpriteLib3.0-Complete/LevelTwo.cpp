@@ -29,6 +29,8 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::CameraBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Game Camera");
 		ECS::SetIsMainCamera(entity, true);
+
+		m_cam = entity;
 	}
 
 #pragma region Aesthetics + Environment
@@ -838,4 +840,9 @@ int LevelTwo::GetJello()
 bool LevelTwo::GetJelloBounce()
 {
 	return turnJello;
+}
+
+int LevelTwo::GetCam()
+{
+	return m_cam;
 }
