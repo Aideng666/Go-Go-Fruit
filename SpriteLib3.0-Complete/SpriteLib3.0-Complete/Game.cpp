@@ -153,6 +153,8 @@ if (change2)
 		m_activeScene = m_scenes[6];
 		timer = 0.f;
 		change2 = false;
+
+		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
 }
 if (change3)
@@ -170,6 +172,8 @@ if (change3)
 		m_activeScene = m_scenes[7];
 		timer = 0.f;
 		change3 = false;
+
+		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
 }
 if (change4)
@@ -187,6 +191,8 @@ if (change4)
 		m_activeScene = m_scenes[8];
 		timer = 0.f;
 		change4 = false;
+
+		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
 }
 #pragma endregion
@@ -1264,6 +1270,8 @@ if (Input::GetKeyDown(Key::NumPad1))
 	m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 	m_register = m_scenes[6]->GetScene();
 	m_activeScene = m_scenes[6];
+
+	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
 if (Input::GetKeyDown(Key::NumPad2))
 {
@@ -1274,6 +1282,8 @@ if (Input::GetKeyDown(Key::NumPad2))
 	m_scenes[7]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 	m_register = m_scenes[7]->GetScene();
 	m_activeScene = m_scenes[7];
+
+	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
 if (Input::GetKeyDown(Key::NumPad3))
 {
@@ -1284,6 +1294,8 @@ if (Input::GetKeyDown(Key::NumPad3))
 	m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 	m_register = m_scenes[8]->GetScene();
 	m_activeScene = m_scenes[8];
+
+	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
 #pragma endregion
 
