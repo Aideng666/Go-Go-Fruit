@@ -529,8 +529,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(75.f, 9.f, 100.f));
 
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Button Anim");
 
@@ -642,6 +640,33 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
 	}
+
+	{
+		auto fruitBowlAnim = File::LoadJSON("SaladBowl.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "FruitBowlSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(fruitBowlAnim["Smile"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 70, 39, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Fruit Bowl Anim");
+
+		m_fruitBowl = entity;
+	}
 #pragma endregion
 }
 
@@ -664,6 +689,11 @@ int GoGoGame::GetCam()
 int GoGoGame::GetElevator()
 {
 	return m_elevator;
+}
+
+int GoGoGame::GetFruitBowl()
+{
+	return m_fruitBowl;
 }
 
 bool GoGoGame::GetButtonOn()

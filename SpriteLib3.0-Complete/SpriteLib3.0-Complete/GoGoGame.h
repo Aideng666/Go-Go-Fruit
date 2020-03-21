@@ -13,6 +13,7 @@ public:
 	int GetButton();
 	int GetCam();
 	int GetElevator();
+	int GetFruitBowl();
 
 	bool GetButtonOn();
 
@@ -22,6 +23,7 @@ private:
 	int m_button;
 	int m_cam;
 	int m_elevator;
+	int m_fruitBowl;
 
 	bool turnOn = false;
 };
