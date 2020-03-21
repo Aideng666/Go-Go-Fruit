@@ -1,5 +1,6 @@
 #include "LevelSelectMain.h"
 #include "Utilities.h"
+#include "Game.h"
 
 LevelSelectMain::LevelSelectMain(std::string name)
 	: Scene(name)
@@ -41,6 +42,59 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 1");
 
 		m_menu = entity;
+	}
+
+	{
+		auto entity = ECS::CreateEntity();
+	
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+	
+		std::string fileName = "LevelPic1.png";
+	
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -98.f));
+	
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Level 1 Template");
+	
+		level1Template = entity;
+	}
+	
+	{
+		auto entity = ECS::CreateEntity();
+	
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+	
+		std::string fileName = "LevelPic2.png";
+	
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(220.f, 0.f, -98.f));
+	
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Level 2 Template");
+	
+		level2Template = entity;
+	}
+	
+	{
+		auto entity = ECS::CreateEntity();
+	
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+	
+		std::string fileName = "LevelPic3.png";
+	
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-220.f, 0.f, -98.f));
+	
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Level 3 Template");
+	
+		level3Template = entity;
 	}
 
 	//Arrows
@@ -98,32 +152,32 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		m_left = entity;
 	}
 
-	{
-		auto textAnim = File::LoadJSON("BlinkText.json");
-
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<AnimationController>(entity);
-
-		std::string fileName = "BlinkPlay.png";
-
-		auto& animController = ECS::GetComponent<AnimationController>(entity);
-		animController.InitUVs(fileName);
-
-		animController.AddAnimation(textAnim["DrawText"]);
-		animController.GetAnimation(0);
-		animController.SetActiveAnim(0);
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 110, 33, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -85.f, -97.f));
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Blink Play Text");	
-
-		m_play = entity;
-	}
+	//{
+	//	auto textAnim = File::LoadJSON("BlinkText.json");
+	//
+	//	auto entity = ECS::CreateEntity();
+	//
+	//	ECS::AttachComponent<Sprite>(entity);
+	//	ECS::AttachComponent<Transform>(entity);
+	//	ECS::AttachComponent<AnimationController>(entity);
+	//
+	//	std::string fileName = "BlinkPlay.png";
+	//
+	//	auto& animController = ECS::GetComponent<AnimationController>(entity);
+	//	animController.InitUVs(fileName);
+	//
+	//	animController.AddAnimation(textAnim["DrawText"]);
+	//	animController.GetAnimation(0);
+	//	animController.SetActiveAnim(0);
+	//
+	//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 110, 33, true, &animController);
+	//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -85.f, -97.f));
+	//
+	//	unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+	//	ECS::SetUpIdentifier(entity, bitHolder, "Blink Play Text");	
+	//
+	//	m_play = entity;
+	//}
 }
 
 void LevelSelectMain::Update()
@@ -185,4 +239,19 @@ int LevelSelectMain::GetLeft()
 int LevelSelectMain::GetPlay()
 {
 	return m_play;
+}
+
+int LevelSelectMain::GetLevel1Template()
+{
+	return level1Template;
+}
+
+int LevelSelectMain::GetLevel2Template()
+{
+	return level2Template;
+}
+
+int LevelSelectMain::GetLevel3Template()
+{
+	return level3Template;
 }

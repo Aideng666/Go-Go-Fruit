@@ -641,7 +641,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
 	}
 
-	{
+	/*{
 		auto fruitBowlAnim = File::LoadJSON("SaladBowl.json");
 
 		auto entity = ECS::CreateEntity();
@@ -666,7 +666,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Fruit Bowl Anim");
 
 		m_fruitBowl = entity;
-	}
+	}*/
 #pragma endregion
 }
 

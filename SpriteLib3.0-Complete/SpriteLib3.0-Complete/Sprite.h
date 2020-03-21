@@ -12,7 +12,7 @@ public:
 	//Honestly you won't use this constructor
 	//As when you add the Animated Sprite component
 	//You won't be able to give parameters to the component when you create it
-	Sprite(std::string& fileName, int width, int height);
+	Sprite(std::string& fileName, int width, int height, float transparenct = 1.0f);
 
 	//Loads sprite
 	//*Checks if uvs are setup
@@ -32,6 +32,10 @@ public:
 	//Unbinds the texture of the sprite at textureSlot
 	void Unbind(int textureSlot) const;
 
+	//Sets transparenct value
+	void SetTransparency(float transparency);
+	//Gets transparency value
+	float GetTransparency();
 	//Sets the width of the sprite
 	void SetWidth(int width);
 	//Gets the width of the sprite
@@ -77,6 +81,7 @@ protected:
 	//The width and height
 	int m_width = 0;
 	int m_height = 0;
+	float m_transparency = 1.0f;
 	
 	vec2 m_bottomLeft = vec2(0.f, 0.f);
 	vec2 m_topRight = vec2(1.f, 1.f);

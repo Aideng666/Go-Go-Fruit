@@ -75,7 +75,6 @@ public:
 
 	Scene* GetActiveScene();
 
-
 private:
 	//The window
 	Window *m_window = nullptr;
@@ -114,8 +113,11 @@ private:
 	bool change2, change3, change4;
 	bool orth;
 	bool changeRand = true;
-	bool spikeDestroyed;
+	bool spikeDestroyed = false;
 
+	bool level1Cleared = false;
+	bool level2Cleared = false;
+	bool level3Cleared = false;
 };
 
 

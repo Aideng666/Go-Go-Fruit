@@ -43,6 +43,59 @@ void LevelSelect3::InitScene(float windowWidth, float windowHeight)
 		m_menu = entity;
 	}
 
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "LevelPic3.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Level 3 Template");
+
+		level3Template = entity;
+	}
+
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "LevelPic1.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(220.f, 0.f, -98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Level 1 Template");
+
+		level1Template = entity;
+	}
+
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "LevelPic2.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-220.f, 0.f, -98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Level 2 Template");
+
+		level2Template = entity;
+	}
+
 	//Arrows
 	{
 		auto arrowAnim = File::LoadJSON("RightArrow.json");
@@ -98,32 +151,32 @@ void LevelSelect3::InitScene(float windowWidth, float windowHeight)
 		m_left = entity;
 	}
 
-	{
-		auto textAnim = File::LoadJSON("BlinkText.json");
-
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<AnimationController>(entity);
-
-		std::string fileName = "BlinkPlay.png";
-
-		auto& animController = ECS::GetComponent<AnimationController>(entity);
-		animController.InitUVs(fileName);
-
-		animController.AddAnimation(textAnim["DrawText"]);
-		animController.GetAnimation(0);
-		animController.SetActiveAnim(0);
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 110, 33, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -85.f, -97.f));
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Blink Play Text");
-
-		m_play = entity;
-	}
+	//{
+	//	auto textAnim = File::LoadJSON("BlinkText.json");
+	//
+	//	auto entity = ECS::CreateEntity();
+	//
+	//	ECS::AttachComponent<Sprite>(entity);
+	//	ECS::AttachComponent<Transform>(entity);
+	//	ECS::AttachComponent<AnimationController>(entity);
+	//
+	//	std::string fileName = "BlinkPlay.png";
+	//
+	//	auto& animController = ECS::GetComponent<AnimationController>(entity);
+	//	animController.InitUVs(fileName);
+	//
+	//	animController.AddAnimation(textAnim["DrawText"]);
+	//	animController.GetAnimation(0);
+	//	animController.SetActiveAnim(0);
+	//
+	//	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 110, 33, true, &animController);
+	//	ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -85.f, -97.f));
+	//
+	//	unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+	//	ECS::SetUpIdentifier(entity, bitHolder, "Blink Play Text");
+	//
+	//	m_play = entity;
+	//}
 }
 void LevelSelect3::Update()
 {
@@ -184,4 +237,19 @@ int LevelSelect3::GetLeft()
 int LevelSelect3::GetPlay()
 {
 	return m_play;
+}
+
+int LevelSelect3::GetLevel1Template()
+{
+	return level1Template;
+}
+
+int LevelSelect3::GetLevel2Template()
+{
+	return level2Template;
+}
+
+int LevelSelect3::GetLevel3Template()
+{
+	return level3Template;
 }
