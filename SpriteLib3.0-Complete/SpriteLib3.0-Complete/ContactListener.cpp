@@ -47,7 +47,7 @@ if (identifierA & EntityIdentifier::BlueberryBit())
         bJump = true;
         wJump = true;
     }
-    //Fruit Bowl
+    //Level 1 Fruit Bowl
     if (identifierB & EntityIdentifier::FruitBowlBit())
     {
         bJump = true;
@@ -123,7 +123,7 @@ if (identifierA & EntityIdentifier::WatermelonBit())
         wJump = true;
         wBowl = false;
     }
-    //Fruit Bowl
+    //Level 1 Fruit Bowl
     if (identifierB & EntityIdentifier::FruitBowlBit())
     {
         wJump = true;
@@ -183,7 +183,12 @@ if (identifierA & EntityIdentifier::WatermelonBit())
 
     if (bBowl && wBowl)
     {
-        sndPlaySound("YouWin.wav", SND_FILENAME | SND_ASYNC);
+        level1Cleared = true;
+
+        if (level1Cleared)
+        {
+            sndPlaySound("YouWin.wav", SND_FILENAME | SND_ASYNC);
+        }
     }
 }
 
@@ -376,4 +381,24 @@ bool ContactListener::GetRedPressed()
 bool ContactListener::GetBounced()
 {
     return bounced;
+}
+
+bool ContactListener::GetLevel1Cleared()
+{
+    return level1Cleared;
+}
+
+void ContactListener::SetLevel1Cleared(bool isLevel1Cleared)
+{
+    level1Cleared = isLevel1Cleared;
+}
+
+bool ContactListener::GetLevel2Cleared()
+{
+    return level2Cleared;
+}
+
+void ContactListener::SetLevel2Cleared(bool isLevel2Cleared)
+{
+    level2Cleared = isLevel2Cleared;
 }

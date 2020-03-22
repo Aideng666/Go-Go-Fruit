@@ -61,9 +61,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelThree(level3));
 
 	//Sets active scene reference to our scene
-	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[1]->GetScene();
-	m_activeScene = m_scenes[1];
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
 	PhysicsSystem::Init();
 	
 	for (int i = 6; i < m_scenes.size(); ++i)
@@ -136,6 +136,19 @@ if (change)
 		m_activeScene = m_scenes[3];
 		timer = 0.f;
 		change = false;
+
+		if (level1Cleared)
+		{
+			LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+			auto level2 = scene->GetLevel2Template();
+			ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+		}
+		if (level2Cleared)
+		{
+			LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+			auto level3 = scene->GetLevel3Template();
+			ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+		}
 	}
 }
 if (change2)
@@ -770,6 +783,68 @@ if (change4)
 		}
 	}
 #pragma endregion
+
+	if (listener.GetLevel1Cleared())
+	{
+		std::cout << "Level 1 is cleared\n";
+	}
+
+	if (m_activeScene == m_scenes[6] && listener.GetLevel1Cleared())
+	{
+		level1Timer += Timer::deltaTime;
+
+		level1Cleared = true;
+
+		if (level1Timer >= 3.f)
+		{
+			if (level1Cleared)
+			{
+				SceneEditor::ResetEditor();
+
+				m_activeScene->Unload();
+
+				m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+				m_register = m_scenes[3]->GetScene();
+				m_activeScene = m_scenes[3];
+
+				LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+				auto level2 = scene->GetLevel2Template();
+				ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+
+				level1Timer = 0.f;
+				listener.SetLevel1Cleared(false);
+			}
+		}
+	}	
+	/*else if (m_activeScene == m_scenes[7] && listener.GetLevel2Cleared())
+	{
+		level2Timer += Timer::deltaTime;
+
+		level2Cleared = true;
+
+		if (level2Timer >= 3.f)
+		{
+			if (level2Cleared)
+			{
+				SceneEditor::ResetEditor();
+
+				m_activeScene->Unload();
+
+				m_scenes[4]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+				m_register = m_scenes[4]->GetScene();
+				m_activeScene = m_scenes[4];
+
+				LevelSelect2* scene = (LevelSelect2*)m_activeScene;
+				auto level2 = scene->GetLevel2Template();
+				auto level3 = scene->GetLevel3Template();
+				ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+				ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+
+				level2Timer = 0.f;
+				listener.SetLevel2Cleared(false);
+			}
+		}
+	}*/
 }
 
 void Game::GUI()

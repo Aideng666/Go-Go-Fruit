@@ -118,6 +118,9 @@ private:
 	bool level1Cleared = false;
 	bool level2Cleared = false;
 	bool level3Cleared = false;
+
+	float level1Timer = 0.f;
+	float level2Timer = 0.f;
 };
 
 

@@ -23,6 +23,12 @@ public:
 	void SetShake(bool shake);
 	bool GetRedPressed();
 	bool GetBounced();
+	
+	bool GetLevel1Cleared();
+	void SetLevel1Cleared(bool isLevel1Cleared);
+
+	bool GetLevel2Cleared();
+	void SetLevel2Cleared(bool isLevel2Cleared);
 
 private:
 
@@ -37,4 +43,7 @@ private:
 	bool shake;
 	bool redButtonPressed;
 	bool bounced;
+
+	bool level1Cleared = false;
+	bool level2Cleared = false;
 };

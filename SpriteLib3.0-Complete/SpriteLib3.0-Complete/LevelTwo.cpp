@@ -427,7 +427,6 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 	}
 #pragma endregion
 
-
 #pragma region Map Layout
 	//ELEVATORS
 	{
