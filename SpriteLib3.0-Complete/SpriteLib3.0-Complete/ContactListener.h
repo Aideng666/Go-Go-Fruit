@@ -38,8 +38,8 @@ private:
 	bool wGrounded;
 	bool buttonPressed;
 	bool button2Pressed;
-	bool bBowl;
-	bool wBowl;
+	bool bBowl = false;
+	bool wBowl = false;
 	bool shake;
 	bool redButtonPressed;
 	bool bounced;

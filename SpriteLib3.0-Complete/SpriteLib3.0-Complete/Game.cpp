@@ -789,7 +789,34 @@ if (change4)
 		std::cout << "Level 1 is cleared\n";
 	}
 
-	if (m_activeScene == m_scenes[6] && listener.GetLevel1Cleared())
+	if (listener.GetLevel1Cleared())
+	{
+		//level1Timer += Timer::deltaTime;
+		level1Cleared = true;
+
+		//if (level1Timer >= 3.f)
+		//{
+			if (level1Cleared)
+			{
+				SceneEditor::ResetEditor();
+
+				m_activeScene->Unload();
+
+				m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+				m_register = m_scenes[3]->GetScene();
+				m_activeScene = m_scenes[3];
+
+				LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+				auto level2 = scene->GetLevel2Template();
+				ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+
+				//level1Timer = 0.f;
+				listener.SetLevel1Cleared(false);
+			}
+		//}
+	}
+
+	/*if (m_activeScene == m_scenes[6] && listener.GetLevel1Cleared())
 	{
 		level1Timer += Timer::deltaTime;
 
@@ -815,7 +842,7 @@ if (change4)
 				listener.SetLevel1Cleared(false);
 			}
 		}
-	}	
+	}	*/
 	/*else if (m_activeScene == m_scenes[7] && listener.GetLevel2Cleared())
 	{
 		level2Timer += Timer::deltaTime;

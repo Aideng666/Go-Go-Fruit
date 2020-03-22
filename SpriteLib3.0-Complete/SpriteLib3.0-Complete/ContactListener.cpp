@@ -183,12 +183,8 @@ if (identifierA & EntityIdentifier::WatermelonBit())
 
     if (bBowl && wBowl)
     {
-        level1Cleared = true;
-
-        if (level1Cleared)
-        {
-            sndPlaySound("YouWin.wav", SND_FILENAME | SND_ASYNC);
-        }
+       sndPlaySound("YouWin.wav", SND_FILENAME | SND_ASYNC);     
+       level1Cleared = true;
     }
 }
 
