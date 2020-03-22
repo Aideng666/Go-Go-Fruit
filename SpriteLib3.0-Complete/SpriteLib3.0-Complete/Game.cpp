@@ -784,36 +784,45 @@ if (change4)
 	}
 #pragma endregion
 
-	if (listener.GetLevel1Cleared())
-	{
-		std::cout << "Level 1 is cleared\n";
-	}
+	
 
-	if (listener.GetLevel1Cleared())
+	if (listener.GetLevelCheck())
 	{
-		//level1Timer += Timer::deltaTime;
-		level1Cleared = true;
+		
+		if (m_activeScene == m_scenes[6])
+		{
+			listener.SetLevelCleared(true, 0);
+		}
+		if (m_activeScene == m_scenes[7])
+		{
+			listener.SetLevelCleared(true, 1);
+		}
+		if (m_activeScene == m_scenes[8])
+		{
+			listener.SetLevelCleared(true, 2);
+		}
 
-		//if (level1Timer >= 3.f)
-		//{
-			if (level1Cleared)
+
+		for (int i = 0; i < 3; i++)
+		{
+			if (listener.GetLevelCleared(i))
 			{
 				SceneEditor::ResetEditor();
 
 				m_activeScene->Unload();
 
-				m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-				m_register = m_scenes[3]->GetScene();
-				m_activeScene = m_scenes[3];
+				m_scenes[3+i]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+				m_register = m_scenes[3+i]->GetScene();
+				m_activeScene = m_scenes[3+i];
 
 				LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
 				auto level2 = scene->GetLevel2Template();
 				ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
 
-				//level1Timer = 0.f;
-				listener.SetLevel1Cleared(false);
+				listener.SetLevelCheck(false);
 			}
-		//}
+		}
+		
 	}
 
 	/*if (m_activeScene == m_scenes[6] && listener.GetLevel1Cleared())

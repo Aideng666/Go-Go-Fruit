@@ -24,11 +24,11 @@ public:
 	bool GetRedPressed();
 	bool GetBounced();
 	
-	bool GetLevel1Cleared();
-	void SetLevel1Cleared(bool isLevel1Cleared);
+	bool GetLevelCheck();
+	void SetLevelCheck(bool levelCheck);
+	bool GetLevelCleared(int spot);
+	void SetLevelCleared(bool cleared, int spot);
 
-	bool GetLevel2Cleared();
-	void SetLevel2Cleared(bool isLevel2Cleared);
 
 private:
 
@@ -44,6 +44,6 @@ private:
 	bool redButtonPressed;
 	bool bounced;
 
-	bool level1Cleared = false;
-	bool level2Cleared = false;
+	bool levelCleared[3];
+	bool levelCheck;
 };
