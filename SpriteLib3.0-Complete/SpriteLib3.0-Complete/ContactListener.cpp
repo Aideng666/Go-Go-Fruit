@@ -399,4 +399,3 @@ void ContactListener::SetLevelCleared(bool cleared, int spot)
 {
     levelCleared[spot] = cleared;
 }
-
