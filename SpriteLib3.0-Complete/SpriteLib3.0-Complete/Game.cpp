@@ -788,20 +788,32 @@ if (change4)
 
 	if (listener.GetLevelCheck())
 	{		
+		levelTimer += Timer::deltaTime;
+		std::cout << levelTimer << "\n";
+
 		if (m_activeScene == m_scenes[6])
 		{
-			listener.SetLevelCleared(true, 0);
-			level1Cleared = true;
+			//if (levelTimer >= 3.f)
+			//{
+				listener.SetLevelCleared(true, 0);
+				level1Cleared = true;
+			//}	
 		}
 		if (m_activeScene == m_scenes[7])
 		{
-			listener.SetLevelCleared(true, 1);
-			level2Cleared = true;
+			//if (levelTimer >= 3.f)
+			//{
+				listener.SetLevelCleared(true, 1);
+				level2Cleared = true;
+			//}		
 		}
 		if (m_activeScene == m_scenes[8])
 		{
-			listener.SetLevelCleared(true, 2);
-			level3Cleared = true;
+			//if (levelTimer >= 3.f)
+			//{
+				listener.SetLevelCleared(true, 2);
+				level3Cleared = true;
+			//}		
 		}
 
 		for (int i = 0; i < 3; i++)
@@ -811,11 +823,11 @@ if (change4)
 				SceneEditor::ResetEditor();
 
 				m_activeScene->Unload();
-
-				m_scenes[3+i]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-				m_register = m_scenes[3+i]->GetScene();
-				m_activeScene = m_scenes[3+i];
-
+			
+				m_scenes[3 + i]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+				m_register = m_scenes[3 + i]->GetScene();
+				m_activeScene = m_scenes[3 + i];			
+			
 				if (level1Cleared)
 				{
 					LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
@@ -828,10 +840,11 @@ if (change4)
 					auto level3 = scene->GetLevel3Template();
 					ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 				}
-
+				
+				//levelTimer = 0.f;
 				listener.SetLevelCheck(false);
 			}
-		}		
+		}	
 	}
 #pragma endregion
 }
@@ -995,6 +1008,11 @@ void Game::KeyboardDown()
 	if (Input::GetKeyDown(Key::Escape))
 	{
 		exit(1);
+	}
+
+	if (Input::GetKeyDown(Key::T))
+	{
+		std::cout << "Current Time: " << levelTimer << "\n";
 	}
 
 #pragma region SCREEN MANIPULATION
