@@ -186,15 +186,10 @@ void LevelSelectMain::Update()
 	{
 		FadeBackground();
 		timer += Timer::deltaTime;
-		if (timer >= (m_repeatTime))
+		if (timer >= (m_repeatTime * 2))
 		{
 			fade = false;
 			timer = 0.f;
-
-			vec4 temp = m_clearColor2;
-			m_clearColor2 = m_clearColor1;
-			m_clearColor1 = temp;
-
 		}
 	}
 }
@@ -206,7 +201,6 @@ void LevelSelectMain::FadeBackground()
 	if (m_lerpVal >= 1.f)
 	{
 		vec4 temp = m_clearColor2;
-
 		m_clearColor2 = m_clearColor1;
 		m_clearColor1 = temp;
 

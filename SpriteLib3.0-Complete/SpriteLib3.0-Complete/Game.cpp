@@ -151,6 +151,7 @@ if (change)
 		}
 	}
 }
+//Fades into Level 1
 if (change2)
 {
 	timer += Timer::deltaTime;
@@ -170,6 +171,7 @@ if (change2)
 		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
 }
+//Fades into Level 2
 if (change3)
 {
 	timer += Timer::deltaTime;
@@ -189,6 +191,7 @@ if (change3)
 		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
 }
+//Fades into Level 3
 if (change4)
 {
 	timer += Timer::deltaTime;

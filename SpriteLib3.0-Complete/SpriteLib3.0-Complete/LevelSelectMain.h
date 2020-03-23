@@ -26,7 +26,6 @@ private:
 	float m_repeatTime = 1.f;
 	float m_lerpVal = 0.f;
 	bool fade;
-	bool swap;
 	int m_menu;
 	int m_right;
 	int m_left;
