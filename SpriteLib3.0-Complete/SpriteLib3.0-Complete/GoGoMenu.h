@@ -28,6 +28,7 @@ protected:
 	int m_spike1;
 	int m_spike2;
 	bool fade;
+	bool swap;
 	float timer = 0.f;
 
 	vec4 m_clearColor2 = vec4(0.f, 0.f, 0.f, 1.f);
