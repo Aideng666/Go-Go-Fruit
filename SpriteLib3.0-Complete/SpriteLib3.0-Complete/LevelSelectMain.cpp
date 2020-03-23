@@ -200,22 +200,20 @@ void LevelSelectMain::Update()
 }
 
 void LevelSelectMain::FadeBackground()
-{
-	
-		m_clearColor = Util::Lerp<vec4>(m_clearColor1, m_clearColor2, m_lerpVal);
+{	
+	m_clearColor = Util::Lerp<vec4>(m_clearColor1, m_clearColor2, m_lerpVal);
 
-		if (m_lerpVal >= 1.f)
-		{
-			vec4 temp = m_clearColor2;
+	if (m_lerpVal >= 1.f)
+	{
+		vec4 temp = m_clearColor2;
 
-			m_clearColor2 = m_clearColor1;
-			m_clearColor1 = temp;
+		m_clearColor2 = m_clearColor1;
+		m_clearColor1 = temp;
 
-			m_lerpVal = 0.f;
-		}
+		m_lerpVal = 0.f;
+	}
 
-		m_lerpVal += Timer::deltaTime / m_repeatTime;
-	
+	m_lerpVal += Timer::deltaTime / m_repeatTime;	
 }
 
 bool LevelSelectMain::GetFade()

@@ -789,28 +789,21 @@ if (change4)
 	if (listener.GetLevelCheck())
 	{		
 		levelTimer += Timer::deltaTime;
-		std::cout << levelTimer << "\n";
 
 		if (m_activeScene == m_scenes[6])
-		{
-			
-				listener.SetLevelCleared(true, 0);
-				level1Cleared = true;
-			
+		{			
+			listener.SetLevelCleared(true, 0);
+			level1Cleared = true;			
 		}
 		if (m_activeScene == m_scenes[7])
-		{
-			
-				listener.SetLevelCleared(true, 1);
-				level2Cleared = true;
-				
+		{		
+			listener.SetLevelCleared(true, 1);
+			level2Cleared = true;			
 		}
 		if (m_activeScene == m_scenes[8])
-		{
-			
-				listener.SetLevelCleared(true, 2);
-				level3Cleared = true;
-				
+		{	
+			listener.SetLevelCleared(true, 2);
+			level3Cleared = true;			
 		}
 
 		for (int i = 0; i < 3; i++)
@@ -826,7 +819,7 @@ if (change4)
 					m_scenes[3 + i]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 					m_register = m_scenes[3 + i]->GetScene();
 					m_activeScene = m_scenes[3 + i];
-
+					
 					if (level1Cleared)
 					{
 						LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
@@ -839,10 +832,10 @@ if (change4)
 						auto level3 = scene->GetLevel3Template();
 						ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 					}
+
 					levelTimer = 0.f;
 					listener.SetLevelCheck(false);
-				}
-				
+				}				
 			}
 		}	
 	}
@@ -1400,6 +1393,12 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6])
 		auto level2 = scene->GetLevel2Template();
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
 	}
+	if (level2Cleared)
+	{
+		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+		auto level3 = scene->GetLevel3Template();
+		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	}
 }
 //Level 2 to Level Select
 if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7])
@@ -1602,6 +1601,18 @@ if (Input::GetKeyDown(Key::NumPad3))
 	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
 #pragma endregion
+
+	if (Input::GetKeyDown(Key::G))
+	{
+		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+		auto level2 = scene->GetLevel2Template();
+		auto level3 = scene->GetLevel3Template();
+		auto lvl2Trans = ECS::GetComponent<Sprite>(level2).GetTransparency();
+		auto lvl3Trans = ECS::GetComponent<Sprite>(level3).GetTransparency();
+
+		std::cout << "Level 2 Transparency: " << lvl2Trans << "\n";
+		std::cout << "Level 3 Transparency: " << lvl3Trans << "\n";
+	}	
 
 }
 
