@@ -793,56 +793,56 @@ if (change4)
 
 		if (m_activeScene == m_scenes[6])
 		{
-			//if (levelTimer >= 3.f)
-			//{
+			
 				listener.SetLevelCleared(true, 0);
 				level1Cleared = true;
-			//}	
+			
 		}
 		if (m_activeScene == m_scenes[7])
 		{
-			//if (levelTimer >= 3.f)
-			//{
+			
 				listener.SetLevelCleared(true, 1);
 				level2Cleared = true;
-			//}		
+				
 		}
 		if (m_activeScene == m_scenes[8])
 		{
-			//if (levelTimer >= 3.f)
-			//{
+			
 				listener.SetLevelCleared(true, 2);
 				level3Cleared = true;
-			//}		
+				
 		}
 
 		for (int i = 0; i < 3; i++)
 		{
 			if (listener.GetLevelCleared(i))
 			{
-				SceneEditor::ResetEditor();
+				if (levelTimer >= 3.f)
+				{
+					SceneEditor::ResetEditor();
 
-				m_activeScene->Unload();
-			
-				m_scenes[3 + i]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-				m_register = m_scenes[3 + i]->GetScene();
-				m_activeScene = m_scenes[3 + i];			
-			
-				if (level1Cleared)
-				{
-					LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-					auto level2 = scene->GetLevel2Template();
-					ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-				}
-				if (level2Cleared)
-				{
-					LevelSelect2* scene = (LevelSelect2*)m_activeScene;
-					auto level3 = scene->GetLevel3Template();
-					ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+					m_activeScene->Unload();
+
+					m_scenes[3 + i]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+					m_register = m_scenes[3 + i]->GetScene();
+					m_activeScene = m_scenes[3 + i];
+
+					if (level1Cleared)
+					{
+						LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+						auto level2 = scene->GetLevel2Template();
+						ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+					}
+					if (level2Cleared)
+					{
+						LevelSelect2* scene = (LevelSelect2*)m_activeScene;
+						auto level3 = scene->GetLevel3Template();
+						ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+					}
+					levelTimer = 0.f;
+					listener.SetLevelCheck(false);
 				}
 				
-				//levelTimer = 0.f;
-				listener.SetLevelCheck(false);
 			}
 		}	
 	}
