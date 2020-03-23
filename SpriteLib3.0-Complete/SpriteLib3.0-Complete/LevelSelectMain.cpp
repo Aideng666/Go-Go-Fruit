@@ -27,7 +27,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select Main Camera");
 	}
 
-	/*{
+	{
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
@@ -36,13 +36,13 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "LevelSelect1.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360, 202);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -99.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 1");
 
 		m_menu = entity;
-	}*/
+	}
 
 	{
 		auto entity = ECS::CreateEntity();
@@ -53,7 +53,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "LevelPic1.png";
 	
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -98.f));
 	
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 1 Template");
@@ -71,7 +71,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 	
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(220.f, 0.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(220.f, 0.f, -98.f));
 	
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 2 Template");
@@ -89,7 +89,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 	
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-220.f, 0.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-220.f, 0.f, -98.f));
 	
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 3 Template");
@@ -117,7 +117,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(0);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 27, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(111.f, -4.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(111.f, -4.f, -98.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Right Arrow");
@@ -144,7 +144,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(0);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 27, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-111.f, -4.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-111.f, -4.f, -98.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Left Arrow");
@@ -153,20 +153,31 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 	}
 
 	{
+		auto medalAnim = File::LoadJSON("Medal.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 
-		std::string fileName = "LevelSelect1.png";
+		std::string fileName = "MedalSS.png";
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360, 202);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 1");
+		animController.AddAnimation(medalAnim["Shine"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
 
-		m_menu = entity;
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(70.f, 34.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Medal");
+
+		m_medal = entity;
 	}
 
 	//{
@@ -255,6 +266,11 @@ int LevelSelectMain::GetLeft()
 int LevelSelectMain::GetPlay()
 {
 	return m_play;
+}
+
+int LevelSelectMain::GetMedal()
+{
+	return m_medal;
 }
 
 int LevelSelectMain::GetLevel1Template()

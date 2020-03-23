@@ -151,6 +151,34 @@ void LevelSelect3::InitScene(float windowWidth, float windowHeight)
 		m_left = entity;
 	}
 
+	{
+		auto medalAnim = File::LoadJSON("Medal.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "MedalSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(medalAnim["Shine"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(70.f, 34.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Medal");
+
+		m_medal = entity;
+	}
+
 	//{
 	//	auto textAnim = File::LoadJSON("BlinkText.json");
 	//
@@ -240,6 +268,11 @@ int LevelSelect3::GetLeft()
 int LevelSelect3::GetPlay()
 {
 	return m_play;
+}
+
+int LevelSelect3::GetMedal()
+{
+	return m_medal;
 }
 
 int LevelSelect3::GetLevel1Template()

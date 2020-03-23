@@ -141,7 +141,9 @@ if (change)
 		{
 			LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
 			auto level2 = scene->GetLevel2Template();
+			auto medal = scene->GetMedal();
 			ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+			ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 		}
 		if (level2Cleared)
 		{
@@ -822,18 +824,28 @@ if (change4)
 					m_scenes[3 + i]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 					m_register = m_scenes[3 + i]->GetScene();
 					m_activeScene = m_scenes[3 + i];
-					
+
 					if (level1Cleared)
 					{
 						LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
 						auto level2 = scene->GetLevel2Template();
+						auto medal = scene->GetMedal();
 						ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+						ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 					}
 					if (level2Cleared)
 					{
 						LevelSelect2* scene = (LevelSelect2*)m_activeScene;
 						auto level3 = scene->GetLevel3Template();
+						auto medal = scene->GetMedal();
 						ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+						ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+					}
+					if (level3Cleared)
+					{
+						LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+						auto medal = scene->GetMedal();
+						ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 					}
 
 					levelTimer = 0.f;
@@ -1130,7 +1142,9 @@ if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[3])
 	{
 		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
 		auto level3 = scene->GetLevel3Template();
+		auto medal = scene->GetMedal();
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
 }
 //Level Select 1 to Level Select 3
@@ -1159,6 +1173,13 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[3])
 		auto level3 = scene->GetLevel3Template();
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 	}
+
+	if (level3Cleared)
+	{
+		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+		auto medal = scene->GetMedal();
+		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	}
 }
 //Level Select 2 to Level Select 1
 else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[4])
@@ -1177,7 +1198,9 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[4])
 	{
 		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
 		auto level2 = scene->GetLevel2Template();
+		auto medal = scene->GetMedal();
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
 
 	if (level2Cleared)
@@ -1213,6 +1236,13 @@ else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[4])
 		auto level3 = scene->GetLevel3Template();
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 	}
+
+	if (level3Cleared)
+	{
+		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+		auto medal = scene->GetMedal();
+		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	}
 }
 //Level Select 3 to Level Select 1
 else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[5])
@@ -1231,7 +1261,9 @@ else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[5])
 	{
 		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
 		auto level2 = scene->GetLevel2Template();
+		auto medal = scene->GetMedal();
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
 
 	if (level2Cleared)
@@ -1265,7 +1297,9 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[5])
 	{
 		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
 		auto level3 = scene->GetLevel3Template();
+		auto medal = scene->GetMedal();
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
 }
 //Level Select to Level 1
@@ -1286,6 +1320,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[3])
 	ECS::DestroyEntity(scene->GetLevel1Template());
 	ECS::DestroyEntity(scene->GetLevel2Template());
 	ECS::DestroyEntity(scene->GetLevel3Template());
+	ECS::DestroyEntity(scene->GetMedal());
 }
 //Level Select 2 to Level 2
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[4] && level1Cleared)
@@ -1305,6 +1340,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[4] && level1Clear
 	ECS::DestroyEntity(scene->GetLevel1Template());
 	ECS::DestroyEntity(scene->GetLevel2Template());
 	ECS::DestroyEntity(scene->GetLevel3Template());
+	ECS::DestroyEntity(scene->GetMedal());
 }
 //Level Select 3 to Level 3
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[5] && level2Cleared)
@@ -1321,6 +1357,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[5] && level2Clear
 	ECS::DestroyEntity(scene->GetRight());
 	ECS::DestroyEntity(scene->GetLeft());
 	//ECS::DestroyEntity(scene->GetPlay());
+	ECS::DestroyEntity(scene->GetMedal());
 	ECS::DestroyEntity(scene->GetLevel1Template());
 	ECS::DestroyEntity(scene->GetLevel2Template());
 	ECS::DestroyEntity(scene->GetLevel3Template());
@@ -1394,7 +1431,9 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6])
 	{
 		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
 		auto level2 = scene->GetLevel2Template();
+		auto medal = scene->GetMedal();
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
 	if (level2Cleared)
 	{
@@ -1427,9 +1466,9 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7])
 	{
 		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
 		auto level2 = scene->GetLevel2Template();
-		auto level3 = scene->GetLevel3Template();
+		auto medal = scene->GetMedal();
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
 }
 //Level 3 to Level Select
@@ -1457,10 +1496,10 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8])
 	if (level3Cleared)
 	{
 		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
 		auto level3 = scene->GetLevel3Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+		auto medal = scene->GetMedal();
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
 }
 #pragma endregion
@@ -1604,18 +1643,6 @@ if (Input::GetKeyDown(Key::NumPad3))
 	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
 #pragma endregion
-
-	if (Input::GetKeyDown(Key::G))
-	{
-		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		auto level3 = scene->GetLevel3Template();
-		auto lvl2Trans = ECS::GetComponent<Sprite>(level2).GetTransparency();
-		auto lvl3Trans = ECS::GetComponent<Sprite>(level3).GetTransparency();
-
-		std::cout << "Level 2 Transparency: " << lvl2Trans << "\n";
-		std::cout << "Level 3 Transparency: " << lvl3Trans << "\n";
-	}	
 
 }
 

@@ -17,6 +17,7 @@ public:
 	int GetRight();
 	int GetLeft();
 	int GetPlay();
+	int GetMedal();
 
 	int GetLevel1Template();
 	int GetLevel2Template();
@@ -30,6 +31,7 @@ private:
 	int m_right;
 	int m_left;
 	int m_play;
+	int m_medal;
 	float timer = 0.f;
 	vec4 m_clearColor2 = vec4(0.f, 0.f, 0.f, 1.f);
 	vec4 m_clearColor1 = vec4(0.7058823529f, 0.9803921569f, 1.f, 1.f);
