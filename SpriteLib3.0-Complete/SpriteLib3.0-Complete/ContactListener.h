@@ -23,7 +23,8 @@ public:
 	void SetShake(bool shake);
 	bool GetRedPressed();
 	bool GetBounced();
-	
+	void SetBJump(bool jump);
+	void SetWJump(bool jump);
 	bool GetLevelCheck();
 	void SetLevelCheck(bool levelCheck);
 	bool GetLevelCleared(int spot);

@@ -1546,6 +1546,7 @@ if (m_activeScene == m_scenes[6] || m_activeScene == m_scenes[7] || m_activeScen
 			float impulse = blueBody->GetMass() * blueJumpForce;
 			blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
 			listener.SetBGrounded(false);
+			listener.SetBJump(false);
 		}
 	}
 
@@ -1556,6 +1557,7 @@ if (m_activeScene == m_scenes[6] || m_activeScene == m_scenes[7] || m_activeScen
 			float impulse = waterBody->GetMass() * waterJumpForce;
 			waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
 			listener.SetWGrounded(false);
+			listener.SetWJump(false);
 		}
 	}	
 }

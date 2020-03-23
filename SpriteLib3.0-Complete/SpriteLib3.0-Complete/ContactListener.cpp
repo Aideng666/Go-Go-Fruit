@@ -380,6 +380,16 @@ bool ContactListener::GetBounced()
     return bounced;
 }
 
+void ContactListener::SetBJump(bool jump)
+{
+    this->bJump = jump;
+}
+
+void ContactListener::SetWJump(bool jump)
+{
+    this->wJump = jump;
+}
+
 bool ContactListener::GetLevelCheck()
 {
     return levelCheck;
