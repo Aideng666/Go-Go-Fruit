@@ -156,7 +156,7 @@ if (change2)
 {
 	timer += Timer::deltaTime;
 
-	if (timer >= 1.f)
+	if (timer >= 2.f)
 	{
 		SceneEditor::ResetEditor();
 
@@ -176,7 +176,7 @@ if (change3)
 {
 	timer += Timer::deltaTime;
 
-	if (timer >= 1.f)
+	if (timer >= 2.f)
 	{
 		SceneEditor::ResetEditor();
 
@@ -196,7 +196,7 @@ if (change4)
 {
 	timer += Timer::deltaTime;
 
-	if (timer >= 1.f)
+	if (timer >= 2.f)
 	{
 		SceneEditor::ResetEditor();
 

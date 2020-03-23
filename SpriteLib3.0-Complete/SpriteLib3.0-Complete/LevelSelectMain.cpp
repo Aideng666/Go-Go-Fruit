@@ -27,7 +27,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select Main Camera");
 	}
 
-	{
+	/*{
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
@@ -36,13 +36,13 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "LevelSelect1.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360, 202);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -99.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 1");
 
 		m_menu = entity;
-	}
+	}*/
 
 	{
 		auto entity = ECS::CreateEntity();
@@ -53,7 +53,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "LevelPic1.png";
 	
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -98.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 	
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 1 Template");
@@ -71,7 +71,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 	
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(220.f, 0.f, -98.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(220.f, 0.f, 100.f));
 	
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 2 Template");
@@ -89,7 +89,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 	
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 166, 94);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-220.f, 0.f, -98.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-220.f, 0.f, 100.f));
 	
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 3 Template");
@@ -117,7 +117,7 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(0);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 27, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(111.f, -4.f, -98.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(111.f, -4.f, 100.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Right Arrow");
@@ -144,12 +144,29 @@ void LevelSelectMain::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(0);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 27, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-111.f, -4.f, -98.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-111.f, -4.f, 100.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Left Arrow");
 
 		m_left = entity;
+	}
+
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "LevelSelect1.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 360, 202);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 1");
+
+		m_menu = entity;
 	}
 
 	//{
