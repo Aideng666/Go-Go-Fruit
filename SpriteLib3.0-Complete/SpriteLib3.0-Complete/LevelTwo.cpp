@@ -73,6 +73,75 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		m_bg = entity;
 		m_bg2 = entity2;
 	}
+
+	//Flowers
+	{
+		std::string fileName = "Flowers.png";
+
+		auto entity = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 10);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-51.f, -84.f, 70.f));
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Flower 1");
+
+		auto entity2 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity2);
+		ECS::AttachComponent<Transform>(entity2);
+		ECS::GetComponent<Sprite>(entity2).LoadSprite(fileName, 20, 10);
+		ECS::GetComponent<Transform>(entity2).SetPosition(vec3(-30.f, -84.f, 70.f));
+		unsigned int bitHolder2 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity2, bitHolder2, "Flower 2");
+	}
+
+	//Grass
+	{
+		auto grassAnim = File::LoadJSON("Grass.json");
+		std::string fileName = "GrassV2.png";
+
+		auto entity = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+		animController.AddAnimation(grassAnim["GrassSway"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 80, 11, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(19.f, -83.5f, 70.f));
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Grass Anim 1");
+
+		auto entity2 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity2);
+		ECS::AttachComponent<Transform>(entity2);
+		ECS::AttachComponent<AnimationController>(entity2);
+		auto& animController2 = ECS::GetComponent<AnimationController>(entity2);
+		animController2.InitUVs(fileName);
+		animController2.AddAnimation(grassAnim["GrassSway"]);
+		animController2.GetAnimation(0);
+		animController2.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity2).LoadSprite(fileName, 80, 11, true, &animController2);
+		ECS::GetComponent<Transform>(entity2).SetPosition(vec3(-99.f, -83.5f, 70.f));
+		unsigned int bitHolder2 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity2, bitHolder2, "Grass Anim 2");
+
+		auto entity3 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity3);
+		ECS::AttachComponent<Transform>(entity3);
+		ECS::AttachComponent<AnimationController>(entity3);
+		auto& animController3 = ECS::GetComponent<AnimationController>(entity3);
+		animController3.InitUVs(fileName);
+		animController3.AddAnimation(grassAnim["GrassSway"]);
+		animController3.GetAnimation(0);
+		animController3.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity3).LoadSprite(fileName, 80, 11, true, &animController3);
+		ECS::GetComponent<Transform>(entity3).SetPosition(vec3(99.5f, 59.f, 70.f));
+		unsigned int bitHolder3 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity3, bitHolder3, "Grass Anim 3");
+	}
 #pragma endregion
 
 #pragma region PLAYER ENTITIES
@@ -201,7 +270,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(0.f), float32(-94));
+		tempDef.position.Set(float32(0.f), float32(-94.5f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 

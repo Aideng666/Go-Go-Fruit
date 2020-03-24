@@ -83,12 +83,12 @@ void PhysicsSystem::Draw(entt::registry * reg)
 
 void PhysicsSystem::Run(b2World & world)
 {
-	float32 timeStep = 1.f / 60.f;
+	float32 timeStep = 1 / 60.f;
 
 	int32 velocityIterations = 8;
 	int32 positionIterations = 3;
 
-	world.Step(timeStep, velocityIterations, positionIterations);	
+	world.Step(timeStep, velocityIterations, positionIterations);
 }
 
 bool PhysicsSystem::BoxBoxCollision(std::pair<PhysicsBody&, Box> group1, std::pair<PhysicsBody&, Box> group2)
