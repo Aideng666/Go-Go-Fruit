@@ -976,16 +976,18 @@ void Game::KeyboardHold()
 			b2Vec2 waterVel = waterBody->GetLinearVelocity();
 			float blueSpeed = 0.f, waterSpeed = 0.f;
 	
+			auto& blueAnim = ECS::GetComponent<AnimationController>(EntityIdentifier::MainPlayer());
 			auto& waterAnim = ECS::GetComponent<AnimationController>(EntityIdentifier::MainPlayer2());
-
 
 			if (Input::GetKey(Key::A))
 			{
 				blueSpeed = -12.f;
+				blueAnim.SetActiveAnim(0);
 			}
 			if (Input::GetKey(Key::D))
 			{
 				blueSpeed = 12.f;
+				blueAnim.SetActiveAnim(1);
 			}
 			if (Input::GetKey(Key::LeftArrow))
 			{

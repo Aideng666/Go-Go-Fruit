@@ -157,6 +157,8 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 #pragma region PLAYER ENTITIES
 	//Blueberry
 	{
+		auto blueberryAnim = File::LoadJSON("Blueberry.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::SetIsMainPlayer(entity, true);
@@ -165,28 +167,39 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
 
-		std::string fileName = "Blueberry.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 30.2597402598f, 20);
+		std::string fileName = "BlueberrySS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(blueberryAnim["WalkLeft"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(blueberryAnim["WalkRight"]);
+		animController.GetAnimation(1);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40.f, 34.f, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-100.f, 50.f, 99.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 30.2597402598f + 17;
-		float shrinkY = tempSpr.GetWidth() / 20.f;
+		float shrinkX = tempSpr.GetWidth() / 40.f + 23;
+		float shrinkY = tempSpr.GetWidth() / 34.f + 18;
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-120.f), float32(-95.f));
+		tempDef.position.Set(float32(-120.f), float32(-85.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, 0.f), false);
+			vec2(0.f, -9.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(60.f);
