@@ -840,6 +840,33 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		m_jello = entity;
 	}
 
+	/*{
+		auto jelloAnim = File::LoadJSON("Jello2.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "JelloSS2.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(jelloAnim["Bounce"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(jelloAnim["Blink"]);
+		animController.GetAnimation(1);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 60, 15, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 98.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Jello Anim 2");
+	}*/
+
 	//Jello Bodies
 	{
 		auto entity = ECS::CreateEntity();
