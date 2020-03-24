@@ -33,7 +33,6 @@ void LevelThree::InitScene(float windowWidth, float windowHeight)
 		m_cam = entity;
 	}
 
-//Add flowers and grass
 #pragma region Aesthetics + Environment
 	//Background Level Image
 	{

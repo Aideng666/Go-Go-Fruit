@@ -163,6 +163,7 @@
     <ClInclude Include="include\imgui\imstb_truetype.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="JSON.h" />
+    <ClInclude Include="LevelFour.h" />
     <ClInclude Include="LevelSelect2.h" />
     <ClInclude Include="LevelSelect3.h" />
     <ClInclude Include="LevelSelectMain.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="JSON.cpp" />
+    <ClCompile Include="LevelFour.cpp" />
     <ClCompile Include="LevelSelect2.cpp" />
     <ClCompile Include="LevelSelect3.cpp" />
     <ClCompile Include="LevelSelectMain.cpp" />

@@ -11,6 +11,7 @@
 #include "GoGoGame.h"
 #include "LevelTwo.h"
 #include "LevelThree.h"
+#include "LevelFour.h"
 
 //Our main class for running our game
 class Game
