@@ -83,7 +83,7 @@ void PhysicsSystem::Draw(entt::registry * reg)
 
 void PhysicsSystem::Run(b2World & world)
 {
-	float32 timeStep = 1 / 60.f;
+	float32 timeStep = 1 / 40.f;
 
 	int32 velocityIterations = 8;
 	int32 positionIterations = 3;
