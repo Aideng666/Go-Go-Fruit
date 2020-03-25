@@ -964,46 +964,64 @@ if (change4)
 	}
 #pragma endregion
 
+//ANIM DOESN'T RESET BACK TO IDLE?!
 #pragma region Jello Bounce
 	if (m_activeScene == m_scenes[7])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
 		auto jello = scene->GetJello();
 		auto turnOn = scene->GetJelloBounce();
+		auto& animController = ECS::GetComponent<AnimationController>(jello);
 
-		if (listener.GetBounced())
+		if (listener.GetBounced() && !turnOn)
 		{				
+			//if (turnOn)
+			//{
+			animController.SetActiveAnim(0);
+			animController.GetAnimation(0).Reset();
 			turnOn = true;
+				//animController.SetActiveAnim(0);
+				//animController.GetAnimation(1).Reset();
+				//animController.SetActiveAnim(1);
+			//}				
+		}
 
-			if (turnOn)
-			{
-				auto& animController = ECS::GetComponent<AnimationController>(jello);
-				animController.SetActiveAnim(0);
-				animController.GetAnimation(0).Reset();
-			}		
+		if (turnOn)
+		{
+			std::cout << "Bounced\n";
+			jelloTimer += Timer::deltaTime;
+			//animController.SetActiveAnim(1);
 		}
 
 		if (!(listener.GetBounced()))
 		{
-			turnOn = false;			
-		}		
+			turnOn = false;
+		}
+
+		//if (!(listener.GetBounced()))
+		//{
+		//	//turnOn = false;				
+		//	//auto& animController = ECS::GetComponent<AnimationController>(jello);
+		//	animController.SetActiveAnim(1);
+		//	animController.GetAnimation(1).Reset();
+		//}		
 	}
 	if (m_activeScene == m_scenes[8])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto jello = scene->GetJello();
 		auto turnOn = scene->GetJelloBounce();
+		auto& animController = ECS::GetComponent<AnimationController>(jello);
 
-		if (listener.GetBounced())
+		if (listener.GetBounced() && !turnOn)
 		{
+			animController.SetActiveAnim(0);
+			animController.GetAnimation(0).Reset();
 			turnOn = true;
 
-			if (turnOn)
-			{
-				auto& animController = ECS::GetComponent<AnimationController>(jello);
-				animController.SetActiveAnim(0);
-				animController.GetAnimation(0).Reset();
-			}
+			//if (turnOn)
+			//{
+			//}
 		}
 
 		if (!(listener.GetBounced()))
