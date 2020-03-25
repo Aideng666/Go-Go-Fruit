@@ -20,7 +20,8 @@ public:
 	bool GetButtonOn2();
 
 	int GetJello();
-	bool GetJelloBounce();
+	int GetFruitBowl();
+
 	int GetCam();
 private:
 	int m_bg;
@@ -35,5 +36,5 @@ private:
 	bool turnOn2;
 
 	int m_jello;
-	bool turnJello;
+	int m_fruitBowl;
 };

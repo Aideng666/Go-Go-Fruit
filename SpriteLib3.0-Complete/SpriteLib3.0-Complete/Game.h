@@ -119,6 +119,7 @@ private:
 	bool level1Cleared = false;
 	bool level2Cleared = false;
 	bool level3Cleared = false;
+	bool level4Cleared = false;
 
 	float levelTimer = 0.f;
 	float jelloTimer = 0.f;

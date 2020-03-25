@@ -19,6 +19,8 @@ public:
 	int GetBlueElevator2();
 	int GetRedElevator();
 
+	int GetFruitBowl();
+
 	bool GetButtonOn1();
 	bool GetButtonOn2();
 	bool GetButtonOn3();
@@ -34,6 +36,8 @@ private:
 	int m_elevator1;
 	int m_elevator2;
 	int m_elevator3;
+
+	int m_fruitBowl;
 
 	bool turnOn1;
 	bool turnOn2;

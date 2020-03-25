@@ -1046,64 +1046,83 @@ void LevelThree::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::JelloBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top of Jello");
 	}
-	/*{
-		auto entity = ECS::CreateEntity();
 
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
-
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		b2Body* tempBody;
-		b2BodyDef tempDef;
-		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-11.f), float32(-94.f));
-
-		tempBody = m_physicsWorld->CreateBody(&tempDef);
-		tempBody->SetUserData((void*)entity);
-
-		tempPhsBody = PhysicsBody(tempBody, 1, 15, vec2(0.f, 0.f), false);
-
-		unsigned int bitHolder = EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Left of Jello");
-	}*/
-
-	//Fruit Bowl
+	//Fruit Bowl Anim
 	{
+		auto fruitBowlAnim = File::LoadJSON("SaladBowl.json");
+
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "FruitBowlSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(fruitBowlAnim["Smile"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(fruitBowlAnim["Shine"]);
+		animController.GetAnimation(1);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 45, 32, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(154.f, 80.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Fruit Bowl Anim");
+
+		m_fruitBowl = entity;
+	}
+
+	//Fruit Bowl Bodies
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 
-		std::string fileName = "FruitBowl.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50.7692307694, 36.6666666667);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
 
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		float shrinkX = tempSpr.GetWidth() / 100.f;
-		float shrinkY = tempSpr.GetWidth() / 100.f;
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(155.f), float32(81.f));
+		tempDef.position.Set(float32(153.f), float32(75.5f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
-
 		tempBody->SetUserData((void*)entity);
 
+		tempPhsBody = PhysicsBody(tempBody, 42.5, 1, vec2(0.f, 0.f), false);
 
-		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 15), float(tempSpr.GetHeight() / 4),
-			vec2(0.f, -15.f), false);
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Top of Fruit Bowl");
+	}
+	{
+		auto entity = ECS::CreateEntity();
 
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(132.f), float32(69.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 12, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Left of Fruit Bowl");
 	}
 #pragma endregion
 }
@@ -1151,7 +1170,7 @@ int LevelThree::GetJello()
 	return m_jello;
 }
 
-bool LevelThree::GetJelloBounce()
+int LevelThree::GetFruitBowl()
 {
-	return turnJello;
+	return m_fruitBowl;
 }

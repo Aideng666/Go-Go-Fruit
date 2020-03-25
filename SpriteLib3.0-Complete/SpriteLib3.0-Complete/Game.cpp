@@ -63,9 +63,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelFour(level4));
 
 	//Sets active scene reference to our scene
-	m_scenes[9]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[9]->GetScene();
-	m_activeScene = m_scenes[9];
+	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[0]->GetScene();
+	m_activeScene = m_scenes[0];
 	PhysicsSystem::Init();
 	
 	for (int i = 6; i < m_scenes.size(); ++i)
@@ -964,74 +964,62 @@ if (change4)
 	}
 #pragma endregion
 
-//ANIM DOESN'T RESET BACK TO IDLE?!
 #pragma region Jello Bounce
 	if (m_activeScene == m_scenes[7])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
-		auto jello = scene->GetJello();
-		auto turnOn = scene->GetJelloBounce();
-		auto& animController = ECS::GetComponent<AnimationController>(jello);
+		auto jelloAnim = scene->GetJello();
+		auto& jelloController = ECS::GetComponent<AnimationController>(jelloAnim);
 
-		if (listener.GetBounced() && !turnOn)
-		{				
-			//if (turnOn)
-			//{
-			animController.SetActiveAnim(0);
-			animController.GetAnimation(0).Reset();
-			turnOn = true;
-				//animController.SetActiveAnim(0);
-				//animController.GetAnimation(1).Reset();
-				//animController.SetActiveAnim(1);
-			//}				
-		}
-
-		if (turnOn)
+		if (listener.GetBounced())
 		{
-			std::cout << "Bounced\n";
-			jelloTimer += Timer::deltaTime;
-			//animController.SetActiveAnim(1);
+			jelloController.SetActiveAnim(0);
+			jelloController.GetAnimation(0).Reset();
+			jelloTimer = 0.f;
 		}
-
 		if (!(listener.GetBounced()))
 		{
-			turnOn = false;
+			jelloTimer += Timer::deltaTime;
 		}
-
-		//if (!(listener.GetBounced()))
-		//{
-		//	//turnOn = false;				
-		//	//auto& animController = ECS::GetComponent<AnimationController>(jello);
-		//	animController.SetActiveAnim(1);
-		//	animController.GetAnimation(1).Reset();
-		//}		
+		if (jelloTimer >= 2.f)
+		{
+			jelloController.SetActiveAnim(1);
+		}
 	}
 	if (m_activeScene == m_scenes[8])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto jello = scene->GetJello();
-		auto turnOn = scene->GetJelloBounce();
 		auto& animController = ECS::GetComponent<AnimationController>(jello);
 
-		if (listener.GetBounced() && !turnOn)
+		if (listener.GetBounced())
 		{
 			animController.SetActiveAnim(0);
 			animController.GetAnimation(0).Reset();
-			turnOn = true;
-
-			//if (turnOn)
-			//{
-			//}
+			jelloTimer = 0.f;
 		}
-
 		if (!(listener.GetBounced()))
 		{
-			turnOn = false;
+			jelloTimer += Timer::deltaTime;
+		}
+		if (jelloTimer >= 2.f)
+		{
+			animController.SetActiveAnim(1);
 		}
 	}
 #pragma endregion
 
 #pragma region Level Check
+
+	//Temp just for level 4
+	if (m_activeScene == m_scenes[9])
+	{
+		level4Cleared = true;
+		LevelFour* scene = (LevelFour*)m_activeScene;
+		auto fruitBowl = scene->GetFruitBowl();
+		auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
+		fbAnim.SetActiveAnim(0);
+	}
 
 	if (listener.GetLevelCheck())
 	{		
@@ -1040,17 +1028,29 @@ if (change4)
 		if (m_activeScene == m_scenes[6])
 		{			
 			listener.SetLevelCleared(true, 0);
-			level1Cleared = true;			
+			level1Cleared = true;		
+			GoGoGame* scene = (GoGoGame*)m_activeScene;
+			auto fruitBowl = scene->GetFruitBowl();
+			auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
+			fbAnim.SetActiveAnim(0);
 		}
 		if (m_activeScene == m_scenes[7])
 		{		
 			listener.SetLevelCleared(true, 1);
 			level2Cleared = true;			
+			LevelTwo* scene = (LevelTwo*)m_activeScene;
+			auto fruitBowl = scene->GetFruitBowl();
+			auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
+			fbAnim.SetActiveAnim(0);
 		}
 		if (m_activeScene == m_scenes[8])
 		{	
 			listener.SetLevelCleared(true, 2);
-			level3Cleared = true;			
+			level3Cleared = true;	
+			LevelThree* scene = (LevelThree*)m_activeScene;
+			auto fruitBowl = scene->GetFruitBowl();
+			auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
+			fbAnim.SetActiveAnim(0);
 		}
 
 		for (int i = 0; i < 3; i++)

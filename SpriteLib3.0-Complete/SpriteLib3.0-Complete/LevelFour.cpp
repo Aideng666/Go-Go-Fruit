@@ -85,7 +85,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		animController.GetAnimation(0);
 		animController.SetActiveAnim(0);
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 30, 14, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-45.f, -22.4f, 70.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(83.f, 61.f, 70.f));
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Flower Anim 1");
 
@@ -136,20 +136,6 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-151.f, -85.f, 70.f));
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Grass Anim 1");
-
-		auto entity2 = ECS::CreateEntity();
-		ECS::AttachComponent<Sprite>(entity2);
-		ECS::AttachComponent<Transform>(entity2);
-		ECS::AttachComponent<AnimationController>(entity2);
-		auto& animController2 = ECS::GetComponent<AnimationController>(entity2);
-		animController2.InitUVs(fileName);
-		animController2.AddAnimation(grassAnim["GrassSway"]);
-		animController2.GetAnimation(0);
-		animController2.SetActiveAnim(0);
-		ECS::GetComponent<Sprite>(entity2).LoadSprite(fileName, 50, 7, true, &animController2);
-		ECS::GetComponent<Transform>(entity2).SetPosition(vec3(84.f, 57.f, 70.f));
-		unsigned int bitHolder2 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
-		ECS::SetUpIdentifier(entity2, bitHolder2, "Grass Anim 2");
 
 		auto entity3 = ECS::CreateEntity();
 		ECS::AttachComponent<Sprite>(entity3);
@@ -1095,7 +1081,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		m_elevator3 = entity;
 	}
 	//Fruit Bowl
-	{
+	/*{
 		auto entity = ECS::CreateEntity();
 
 		ECS::AttachComponent<Sprite>(entity);
@@ -1126,6 +1112,84 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
+	}*/
+
+	//Fruit Bowl Anim
+	{
+		auto fruitBowlAnim = File::LoadJSON("SaladBowl.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "FruitBowlSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(fruitBowlAnim["Smile"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(fruitBowlAnim["Shine"]);
+		animController.GetAnimation(1);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 52, 37, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-151.f, 73.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Fruit Bowl Anim");
+
+		m_fruitBowl = entity;
+	}
+
+	//Fruit Bowl Bodies
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-152.f), float32(68.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 48, 1, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Top of Fruit Bowl");
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-128.f), float32(61.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 14, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Right of Fruit Bowl");
 	}
 #pragma endregion
 
@@ -1159,6 +1223,11 @@ int LevelFour::GetBlueElevator2()
 int LevelFour::GetRedElevator()
 {
 	return m_elevator2;
+}
+
+int LevelFour::GetFruitBowl()
+{
+	return m_fruitBowl;
 }
 
 
