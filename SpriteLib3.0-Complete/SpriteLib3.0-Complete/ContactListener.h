@@ -14,7 +14,9 @@ public:
 	bool GetWGrounded();
 	bool GetBGrounded();
 	bool GetPressed();
+	bool SetBlue1Pressed(bool isPressed);
 	bool Get2Pressed();
+	bool SetBlue2Pressed(bool isPressed);
 	bool GetBBowl();
 	bool GetWBowl();
 	bool GetShake();
@@ -22,6 +24,7 @@ public:
 	void SetWGrounded(bool grounded);
 	void SetShake(bool shake);
 	bool GetRedPressed();
+	bool SetRed1Pressed(bool isPressed);
 	bool GetBounced();
 	void SetBJump(bool jump);
 	void SetWJump(bool jump);
@@ -29,7 +32,6 @@ public:
 	void SetLevelCheck(bool levelCheck);
 	bool GetLevelCleared(int spot);
 	void SetLevelCleared(bool cleared, int spot);
-
 
 private:
 

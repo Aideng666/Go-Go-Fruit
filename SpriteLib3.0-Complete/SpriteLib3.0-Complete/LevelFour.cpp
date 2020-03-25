@@ -1080,40 +1080,6 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 
 		m_elevator3 = entity;
 	}
-	//Fruit Bowl
-	/*{
-		auto entity = ECS::CreateEntity();
-
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-		ECS::AttachComponent<PhysicsBody>(entity);
-
-		std::string fileName = "FruitBowl.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 76.1538461541, 55);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
-
-		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
-		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
-
-		float shrinkX = tempSpr.GetWidth() / 100.f;
-		float shrinkY = tempSpr.GetWidth() / 100.f;
-
-		b2Body* tempBody;
-		b2BodyDef tempDef;
-		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-150.f), float32(81.f));
-
-		tempBody = m_physicsWorld->CreateBody(&tempDef);
-		tempBody->SetUserData((void*)entity);
-
-		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 22), float(tempSpr.GetHeight() / 4),
-			vec2(0.f, -22.f), false);
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
-	}*/
-
 	//Fruit Bowl Anim
 	{
 		auto fruitBowlAnim = File::LoadJSON("SaladBowl.json");
@@ -1136,7 +1102,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(1);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 52, 37, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-151.f, 73.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-151.f, 72.f, 100.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Fruit Bowl Anim");

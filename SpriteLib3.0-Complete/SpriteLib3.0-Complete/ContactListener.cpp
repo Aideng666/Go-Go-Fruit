@@ -342,9 +342,17 @@ bool ContactListener::GetPressed()
 {
     return buttonPressed;
 }
+bool ContactListener::SetBlue1Pressed(bool isPressed)
+{
+    return buttonPressed = isPressed;
+}
 bool ContactListener::Get2Pressed()
 {
     return button2Pressed;
+}
+bool ContactListener::SetBlue2Pressed(bool isPressed)
+{
+    return button2Pressed = isPressed;
 }
 bool ContactListener::GetBBowl()
 {
@@ -373,6 +381,11 @@ void ContactListener::SetShake(bool shake)
 bool ContactListener::GetRedPressed()
 {
     return redButtonPressed;
+}
+
+bool ContactListener::SetRed1Pressed(bool isPressed)
+{
+    return redButtonPressed = isPressed;
 }
 
 bool ContactListener::GetBounced()

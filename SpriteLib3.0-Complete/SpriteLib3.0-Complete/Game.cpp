@@ -63,9 +63,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelFour(level4));
 
 	//Sets active scene reference to our scene
-	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[0]->GetScene();
-	m_activeScene = m_scenes[0];
+	m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[6]->GetScene();
+	m_activeScene = m_scenes[6];
 	PhysicsSystem::Init();
 	
 	for (int i = 6; i < m_scenes.size(); ++i)
@@ -1671,6 +1671,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6])
 	m_register = m_scenes[3]->GetScene();
 	m_activeScene = m_scenes[3];
 
+	listener.SetBlue1Pressed(false);
+
 	if (level1Cleared)
 	{
 		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
@@ -1698,6 +1700,9 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7])
 	m_scenes[4]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 	m_register = m_scenes[4]->GetScene();
 	m_activeScene = m_scenes[4];
+
+	listener.SetBlue1Pressed(false);
+	listener.SetRed1Pressed(false);
 
 	if (level1Cleared)
 	{
@@ -1728,6 +1733,9 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8])
 	m_register = m_scenes[5]->GetScene();
 	m_activeScene = m_scenes[5];
 
+	listener.SetBlue1Pressed(false);
+	listener.SetBlue2Pressed(false);
+
 	if (level2Cleared)
 	{
 		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
@@ -1745,6 +1753,24 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8])
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
+}
+//Level 4 to Level Select
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9])
+{
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	//Temporary scene to go back to
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
+
+	listener.SetBlue1Pressed(false);
+	listener.SetBlue2Pressed(false);
+	listener.SetRed1Pressed(false);
 }
 #pragma endregion
 
