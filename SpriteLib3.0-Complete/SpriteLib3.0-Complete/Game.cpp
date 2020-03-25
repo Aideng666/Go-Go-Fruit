@@ -329,6 +329,41 @@ if (change4)
 			}
 		}
 	}
+	if (m_activeScene == m_scenes[9])
+	{
+		LevelFour* scene = (LevelFour*)m_activeScene;
+		auto cam = scene->GetCam();
+		auto body = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
+
+
+		if (changeRand)
+		{
+			num = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1.f)) - 0.5f;
+			changeRand = false;
+		}
+		if (listener.GetShake())
+		{
+			timer2 += Timer::deltaTime;
+
+			if (!reset)
+			{
+				ECS::GetComponent<Camera>(cam).Shake(num);
+				reset = true;
+			}
+			else
+			{
+				ECS::GetComponent<Camera>(cam).Shake(-num);
+				reset = false;
+				changeRand = true;
+			}
+
+			if (timer2 >= 0.1f)
+			{
+				timer2 = 0.f;
+				listener.SetShake(false);
+			}
+		}
+	}
 #pragma endregion
 
 #pragma region Parallax Background
@@ -761,6 +796,169 @@ if (change4)
 					animPlat.GetAnimation(1).Reset();
 					animPlat.SetActiveAnim(0);
 				}
+			}
+		}
+	}
+	if (m_activeScene == m_scenes[9])
+	{
+		LevelFour* scene = (LevelFour*)m_activeScene;
+		auto elevator = scene->GetBlueElevator();
+		auto button = scene->GetBlueButton1();
+		auto body = ECS::GetComponent<PhysicsBody>(elevator).GetBody();
+		auto trans = ECS::GetComponent<Transform>(elevator);
+		auto redButton = scene->GetRedButton();
+		auto redPlat = scene->GetRedElevator();
+		auto body2 = ECS::GetComponent<PhysicsBody>(redPlat).GetBody();
+		auto trans2 = ECS::GetComponent<Transform>(redPlat);
+		auto bluePlat2 = scene->GetBlueElevator2();
+		auto blueButton2 = scene->GetBlueButton2();
+		auto body3 = ECS::GetComponent<PhysicsBody>(bluePlat2).GetBody();
+		auto trans3 = ECS::GetComponent<Transform>(bluePlat2);
+
+		auto turnOn1 = scene->GetButtonOn1();
+		auto turnOn2 = scene->GetButtonOn2();
+		auto turnOn3 = scene->GetButtonOn3();
+
+		if (listener.GetPressed() && trans.GetPosition().y < 51.5f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, 4));
+		}
+		else if (!(listener.GetPressed()) && trans.GetPosition().y > -86.f)
+		{
+			body->SetLinearVelocity(b2Vec2(0, -4));
+		}
+		else
+		{
+			body->SetLinearVelocity(b2Vec2(0, 0));
+		}
+
+		if (listener.GetPressed())
+		{
+			turnOn1 = true;
+
+			if (turnOn1)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(button);
+				animController.SetActiveAnim(1);
+				animController.GetAnimation(1).Reset();
+				animController.SetActiveAnim(0);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
+				animPlat.SetActiveAnim(0);
+				animPlat.GetAnimation(0).Reset();
+				animPlat.SetActiveAnim(1);
+			}
+		}
+		if (!(listener.GetPressed()))
+		{
+			turnOn1 = false;
+
+			if (!turnOn1)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(button);
+				animController.SetActiveAnim(0);
+				animController.GetAnimation(0).Reset();
+				animController.SetActiveAnim(1);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(elevator);
+				animPlat.SetActiveAnim(1);
+				animPlat.GetAnimation(1).Reset();
+				animPlat.SetActiveAnim(0);
+			}
+		}
+
+		if (listener.GetRedPressed() && trans2.GetPosition().y < 51.5f)
+		{
+			body2->SetLinearVelocity(b2Vec2(0, 4));
+		}
+		else if (!(listener.GetRedPressed()) && trans2.GetPosition().y > -86.f)
+		{
+			body2->SetLinearVelocity(b2Vec2(0, -4));
+		}
+		else
+		{
+			body2->SetLinearVelocity(b2Vec2(0, 0));
+		}
+
+		if (listener.GetRedPressed())
+		{
+			turnOn2 = true;
+
+			if (turnOn2)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(redButton);
+				animController.SetActiveAnim(0);
+				animController.GetAnimation(0).Reset();
+				animController.SetActiveAnim(1);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(redPlat);
+				animPlat.SetActiveAnim(0);
+				animPlat.GetAnimation(0).Reset();
+				animPlat.SetActiveAnim(1);
+			}
+		}
+		if (!(listener.GetRedPressed()))
+		{
+			turnOn2 = false;
+
+			if (!turnOn2)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(redButton);
+				animController.SetActiveAnim(1);
+				animController.GetAnimation(1).Reset();
+				animController.SetActiveAnim(0);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(redPlat);
+				animPlat.SetActiveAnim(1);
+				animPlat.GetAnimation(1).Reset();
+				animPlat.SetActiveAnim(0);
+			}
+		}
+		if (listener.Get2Pressed() && trans3.GetPosition().x < 12.5f)
+		{
+			body3->SetLinearVelocity(b2Vec2(2, 0));
+		}
+		else if (!(listener.Get2Pressed()) && trans3.GetPosition().x > -83.f)
+		{
+			body3->SetLinearVelocity(b2Vec2(-2, 0));
+		}
+		else
+		{
+			body3->SetLinearVelocity(b2Vec2(0, 0));
+		}
+
+		if (listener.Get2Pressed())
+		{
+			turnOn3 = true;
+
+			if (turnOn3)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(blueButton2);
+				animController.SetActiveAnim(1);
+				animController.GetAnimation(1).Reset();
+				animController.SetActiveAnim(0);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(bluePlat2);
+				animPlat.SetActiveAnim(0);
+				animPlat.GetAnimation(0).Reset();
+				animPlat.SetActiveAnim(1);
+			}
+		}
+		if (!(listener.Get2Pressed()))
+		{
+			turnOn3 = false;
+
+			if (!turnOn3)
+			{
+				auto& animController = ECS::GetComponent<AnimationController>(blueButton2);
+				animController.SetActiveAnim(0);
+				animController.GetAnimation(0).Reset();
+				animController.SetActiveAnim(1);
+
+				auto& animPlat = ECS::GetComponent<AnimationController>(bluePlat2);
+				animPlat.SetActiveAnim(1);
+				animPlat.GetAnimation(1).Reset();
+				animPlat.SetActiveAnim(0);
 			}
 		}
 	}

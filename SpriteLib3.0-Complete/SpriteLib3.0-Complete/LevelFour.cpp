@@ -28,6 +28,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::CameraBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Game Camera");
 		ECS::SetIsMainCamera(entity, true);
+		m_cam = entity;
 	}
 #pragma region Aesthetics + Environment
 	//Background Level Image
@@ -614,7 +615,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 
 		m_button3 = entity;
 	}
-	//Blue Button Bodies  69
+	//Blue Button Bodies
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -750,7 +751,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 18, 1, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::BlueButton2Bit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top of Blue Button 2");
 	}
 	{
@@ -819,9 +820,189 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 
 		tempPhsBody = PhysicsBody(tempBody, 18, 1, vec2(0.f, 0.f), false);
 
-		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::BlueButtonBit();
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::RedButtonBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top of Red Button");
 	}
+
+	//ELEVATORS
+	{
+		auto bluePlatform = File::LoadJSON("BluePlatform.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		std::string fileName = "BluePlatformSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(bluePlatform["PowerOff"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(bluePlatform["PowerOn"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 48, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 98.f));
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = tempSpr.GetWidth() / 400.f;
+		float shrinkY = tempSpr.GetWidth() / 400.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_kinematicBody;
+		tempDef.position.Set(float32(155.5f), float32(-85.5f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
+			vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::BlueElevatorBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Blue Elevator");
+
+		m_elevator1 = entity;
+	}
+	{
+		auto bluePlatform = File::LoadJSON("RedPlatform.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		std::string fileName = "RedPlatformSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(bluePlatform["PowerOff"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(bluePlatform["PowerOn"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 48, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 98.f));
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = tempSpr.GetWidth() / 400.f;
+		float shrinkY = tempSpr.GetWidth() / 400.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_kinematicBody;
+		tempDef.position.Set(float32(12.f), float32(-85.5f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
+			vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::RedElevatorBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Red Elevator");
+
+		m_elevator2 = entity;
+	}
+	{
+		auto bluePlatform = File::LoadJSON("BluePlatform.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		std::string fileName = "BluePlatformSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(bluePlatform["PowerOff"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(bluePlatform["PowerOn"]);
+		animController.GetAnimation(1);
+
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 48, 5, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 98.f));
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = tempSpr.GetWidth() / 400.f;
+		float shrinkY = tempSpr.GetWidth() / 400.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_kinematicBody;
+		tempDef.position.Set(float32(-83.f), float32(51.5f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
+			vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::BlueElevatorBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Blue Elevator 2");
+
+		m_elevator3 = entity;
+	}
+	//Fruit Bowl
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		std::string fileName = "FruitBowl.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 76.1538461541, 55);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		float shrinkX = tempSpr.GetWidth() / 100.f;
+		float shrinkY = tempSpr.GetWidth() / 100.f;
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-150.f), float32(81.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - 22), float(tempSpr.GetHeight() / 4),
+			vec2(0.f, -22.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Bowl");
+	}
+
 }
 
 int LevelFour::GetBg1()
@@ -837,6 +1018,42 @@ int LevelFour::GetBg2()
 int LevelFour::GetRedButton()
 {
 	return m_button3;
+}
+
+int LevelFour::GetBlueElevator()
+{
+	return m_elevator1;
+}
+
+int LevelFour::GetBlueElevator2()
+{
+	return m_elevator3;
+}
+
+int LevelFour::GetRedElevator()
+{
+	return m_elevator2;
+}
+
+
+bool LevelFour::GetButtonOn1()
+{
+	return turnOn1;
+}
+
+bool LevelFour::GetButtonOn2()
+{
+	return turnOn2;
+}
+
+bool LevelFour::GetButtonOn3()
+{
+	return turnOn3;
+}
+
+int LevelFour::GetCam()
+{
+	return m_cam;
 }
 
 int LevelFour::GetBlueButton1()
