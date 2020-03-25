@@ -63,9 +63,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelFour(level4));
 
 	//Sets active scene reference to our scene
-	m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[6]->GetScene();
-	m_activeScene = m_scenes[6];
+	m_scenes[9]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[9]->GetScene();
+	m_activeScene = m_scenes[9];
 	PhysicsSystem::Init();
 	
 	for (int i = 6; i < m_scenes.size(); ++i)
@@ -916,11 +916,11 @@ if (change4)
 		}
 		if (listener.Get2Pressed() && trans3.GetPosition().x < 12.5f)
 		{
-			body3->SetLinearVelocity(b2Vec2(2, 0));
+			body3->SetLinearVelocity(b2Vec2(4, 0));
 		}
 		else if (!(listener.Get2Pressed()) && trans3.GetPosition().x > -83.f)
 		{
-			body3->SetLinearVelocity(b2Vec2(-2, 0));
+			body3->SetLinearVelocity(b2Vec2(-4, 0));
 		}
 		else
 		{
@@ -1014,11 +1014,14 @@ if (change4)
 	//Temp just for level 4
 	if (m_activeScene == m_scenes[9])
 	{
-		level4Cleared = true;
-		LevelFour* scene = (LevelFour*)m_activeScene;
-		auto fruitBowl = scene->GetFruitBowl();
-		auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
-		fbAnim.SetActiveAnim(0);
+		if (listener.GetLevelCheck())
+		{
+			level4Cleared = true;
+			LevelFour* scene = (LevelFour*)m_activeScene;
+			auto fruitBowl = scene->GetFruitBowl();
+			auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
+			fbAnim.SetActiveAnim(0);
+		}	
 	}
 
 	if (listener.GetLevelCheck())
