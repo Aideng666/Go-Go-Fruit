@@ -528,7 +528,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		animController.SetActiveAnim(0);
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 44.1333333334, 5, true, &animController);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 44, 5, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 98.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
@@ -546,7 +546,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
+		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth()), float(tempSpr.GetHeight()),
 			vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit() | EntityIdentifier::BlueElevatorBit();
