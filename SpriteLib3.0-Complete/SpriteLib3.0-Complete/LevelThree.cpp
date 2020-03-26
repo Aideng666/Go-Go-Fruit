@@ -1068,8 +1068,8 @@ void LevelThree::InitScene(float windowWidth, float windowHeight)
 		animController.GetAnimation(1);
 		animController.SetActiveAnim(1);
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 45, 32, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(154.f, 80.f, 100.f));
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 45, 26, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(154.f, 77.f, 100.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Fruit Bowl Anim");
@@ -1091,7 +1091,7 @@ void LevelThree::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(153.f), float32(75.5f));
+		tempDef.position.Set(float32(153.f), float32(73.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -1114,7 +1114,7 @@ void LevelThree::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(132.f), float32(69.f));
+		tempDef.position.Set(float32(132.f), float32(67.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
