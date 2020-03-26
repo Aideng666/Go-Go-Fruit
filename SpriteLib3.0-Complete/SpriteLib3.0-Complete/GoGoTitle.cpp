@@ -98,19 +98,4 @@ void GoGoTitle::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blue Stripe");
 	}
-
-	//Logo
-	{
-		auto entity = ECS::CreateEntity();
-		ECS::AttachComponent<Sprite>(entity);
-		ECS::AttachComponent<Transform>(entity);
-
-		std::string fileName = "Logo.png";
-
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 30, 30);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-163.f, -84.f, -98.f));
-
-		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(entity, bitHolder, "Logo");
-	}
 }

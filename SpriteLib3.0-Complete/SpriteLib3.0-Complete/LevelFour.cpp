@@ -663,7 +663,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(1);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-25.f, -26.5f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-36.f, -26.5f, 100.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blue Button Anim");
@@ -740,7 +740,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-34.f), float32(-26.5f));
+		tempDef.position.Set(float32(-45.f), float32(-26.5f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -763,7 +763,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-16.f), float32(-26.5f));
+		tempDef.position.Set(float32(-27.f), float32(-26.5f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -786,7 +786,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-25.f), float32(-24.f));
+		tempDef.position.Set(float32(-36.f), float32(-24.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
