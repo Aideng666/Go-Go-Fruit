@@ -185,6 +185,7 @@ void ContactListener::BeginContact(b2Contact* contact)
     {
         sndPlaySound("YouWin.wav", SND_FILENAME | SND_ASYNC);
         levelCheck = true;
+        win = true;
     }
 }
 
@@ -421,4 +422,14 @@ bool ContactListener::GetLevelCleared(int spot)
 void ContactListener::SetLevelCleared(bool cleared, int spot)
 {
     levelCleared[spot] = cleared;
+}
+
+bool ContactListener::GetWin()
+{
+    return win;
+}
+
+void ContactListener::SetWin(bool win)
+{
+    this->win = win;
 }

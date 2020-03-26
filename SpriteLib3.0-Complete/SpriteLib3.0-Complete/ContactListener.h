@@ -32,6 +32,8 @@ public:
 	void SetLevelCheck(bool levelCheck);
 	bool GetLevelCleared(int spot);
 	void SetLevelCleared(bool cleared, int spot);
+	bool GetWin();
+	void SetWin(bool win);
 
 private:
 
@@ -46,6 +48,7 @@ private:
 	bool shake;
 	bool redButtonPressed;
 	bool bounced;
+	bool win;
 
 	bool levelCleared[3];
 	bool levelCheck;

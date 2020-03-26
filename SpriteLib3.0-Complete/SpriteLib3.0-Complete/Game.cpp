@@ -1662,7 +1662,7 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[5])
 	spikeDestroyed = false;
 }
 //Level 1 to Level Select
-if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6])
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6] && !(listener.GetWin()))
 {
 	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1692,7 +1692,7 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6])
 	}
 }
 //Level 2 to Level Select
-if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7])
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7] && !(listener.GetWin()))
 {
 	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1724,7 +1724,7 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7])
 	}
 }
 //Level 3 to Level Select
-if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8])
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(listener.GetWin()))
 {
 	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1758,7 +1758,7 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8])
 	}
 }
 //Level 4 to Level Select
-if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9])
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9] && !(listener.GetWin()))
 {
 	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
 
