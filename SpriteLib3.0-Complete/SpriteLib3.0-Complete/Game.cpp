@@ -171,6 +171,7 @@ if (change2)
 		m_activeScene = m_scenes[6];
 		timer = 0.f;
 		change2 = false;
+		loading = false;
 
 		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
@@ -191,6 +192,7 @@ if (change3)
 		m_activeScene = m_scenes[7];
 		timer = 0.f;
 		change3 = false;
+		loading = false;
 
 		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
@@ -211,6 +213,7 @@ if (change4)
 		m_activeScene = m_scenes[8];
 		timer = 0.f;
 		change4 = false;
+		loading = false;
 
 		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
@@ -1366,7 +1369,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[2])
 ///////////////////////////////////////////////////////////
 
 //Level Select 1 to Level Select 2
-if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[3])
+if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[3] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1395,7 +1398,7 @@ if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[3])
 	}
 }
 //Level Select 1 to Level Select 3
-else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[3])
+else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[3] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1429,7 +1432,7 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[3])
 	}
 }
 //Level Select 2 to Level Select 1
-else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[4])
+else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[4] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1458,7 +1461,7 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[4])
 	}
 }
 //Level Select 2 to Level Select 3
-else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[4])
+else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[4] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1492,7 +1495,7 @@ else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[4])
 	}
 }
 //Level Select 3 to Level Select 1
-else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[5])
+else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[5] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1521,7 +1524,7 @@ else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[5])
 	}
 }
 //Level Select 3 to Level Select 2
-else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[5])
+else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[5] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1559,6 +1562,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[3])
 	scene->SetFade(true);
 
 	change2 = true;
+	loading = true;
 
 	ECS::DestroyEntity(scene->GetMenu());
 	ECS::DestroyEntity(scene->GetRight());
@@ -1579,6 +1583,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[4] && level1Clear
 	scene->SetFade(true);
 
 	change3 = true;
+	loading = true;
 
 	ECS::DestroyEntity(scene->GetMenu());
 	ECS::DestroyEntity(scene->GetRight());
@@ -1599,6 +1604,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[5] && level2Clear
 	scene->SetFade(true);
 
 	change4 = true;
+	loading = true;
 
 	ECS::DestroyEntity(scene->GetMenu());
 	ECS::DestroyEntity(scene->GetRight());
@@ -1675,6 +1681,7 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6] && !(liste
 	m_activeScene = m_scenes[3];
 
 	listener.SetBlue1Pressed(false);
+	listener.SetWin(false);
 
 	if (level1Cleared)
 	{
@@ -1706,6 +1713,7 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7] && !(liste
 
 	listener.SetBlue1Pressed(false);
 	listener.SetRed1Pressed(false);
+	listener.SetWin(false);
 
 	if (level1Cleared)
 	{
@@ -1722,6 +1730,7 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7] && !(liste
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
+
 }
 //Level 3 to Level Select
 if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(listener.GetWin()))
@@ -1738,6 +1747,7 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(liste
 
 	listener.SetBlue1Pressed(false);
 	listener.SetBlue2Pressed(false);
+	listener.SetWin(false);
 
 	if (level2Cleared)
 	{
@@ -1774,6 +1784,7 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9] && !(liste
 	listener.SetBlue1Pressed(false);
 	listener.SetBlue2Pressed(false);
 	listener.SetRed1Pressed(false);
+	listener.SetWin(false);
 }
 #pragma endregion
 

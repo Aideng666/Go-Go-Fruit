@@ -112,6 +112,7 @@ private:
 	bool reset;
 	bool change;
 	bool change2, change3, change4;
+	bool loading;
 	bool orth;
 	bool changeRand = true;
 	bool spikeDestroyed = false;
