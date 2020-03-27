@@ -40,6 +40,7 @@ void Game::InitGame()
 	std::string level2 = "Level 2";
 	std::string level3   = "Level 3";
 	std::string level4 = "Level 4";
+	std::string level5 = "Level 5";
 
 	m_name = menuName;
 	m_clearColor = vec4(0.f, 0.f, 0.f, 1.f);
@@ -61,14 +62,15 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelTwo(level2));
 	m_scenes.push_back(new LevelThree(level3));
 	m_scenes.push_back(new LevelFour(level4));
+	m_scenes.push_back(new LevelFive(level5));
 
 	//Sets active scene reference to our scene
-	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[0]->GetScene();
-	m_activeScene = m_scenes[0];
+	m_scenes[10]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[10]->GetScene();
+	m_activeScene = m_scenes[10];
 	PhysicsSystem::Init();
 	
-	for (int i = 6; i < m_scenes.size(); ++i)
+	for (int i = 6; i < 10/*m_scenes.size()*/; ++i)
 	{
 		m_scenes[i]->GetPhysicsWorld().SetContactListener(&listener);
 	}
@@ -489,6 +491,30 @@ if (change4)
 	if (m_activeScene == m_scenes[9])
 	{
 		LevelFour* scene = (LevelFour*)m_activeScene;
+		auto entity = scene->GetBg1();
+		auto entity2 = scene->GetBg2();
+		vec2 position = m_register->get<Transform>(entity).GetPosition();
+		vec2 position2 = m_register->get<Transform>(entity2).GetPosition();
+
+		int bgWidth = m_register->get<Sprite>(entity).GetWidth();
+
+		float bgSpeed = 30.f;
+
+		if (position.x + bgWidth <= 0)
+		{
+			position.x = position2.x + bgWidth;
+		}
+		if (position2.x + bgWidth <= 0)
+		{
+			position2.x = position.x + bgWidth;
+		}
+
+		m_register->get<Transform>(entity).SetPositionX(position.x - (bgSpeed * Timer::deltaTime));
+		m_register->get<Transform>(entity2).SetPositionX(position2.x - (bgSpeed * Timer::deltaTime));
+	}
+	if (m_activeScene == m_scenes[10])
+	{
+		LevelFive* scene = (LevelFive*)m_activeScene;
 		auto entity = scene->GetBg1();
 		auto entity2 = scene->GetBg2();
 		vec2 position = m_register->get<Transform>(entity).GetPosition();
@@ -1217,7 +1243,7 @@ void Game::KeyboardHold()
 {
 #pragma region MOVEMENT SYSTEM
 	//MOVEMENT
-	for (int i = 6; i < m_scenes.size(); ++i)
+	for (int i = 6; i < 10/*m_scenes.size()*/; ++i)
 	{
 		if (m_activeScene == m_scenes[i])
 		{
