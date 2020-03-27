@@ -70,7 +70,7 @@ void Game::InitGame()
 	m_activeScene = m_scenes[10];
 	PhysicsSystem::Init();
 	
-	for (int i = 6; i < 10/*m_scenes.size()*/; ++i)
+	for (int i = 6; i < m_scenes.size(); ++i)
 	{
 		m_scenes[i]->GetPhysicsWorld().SetContactListener(&listener);
 	}
@@ -1243,7 +1243,7 @@ void Game::KeyboardHold()
 {
 #pragma region MOVEMENT SYSTEM
 	//MOVEMENT
-	for (int i = 6; i < 10/*m_scenes.size()*/; ++i)
+	for (int i = 6; i < m_scenes.size(); ++i)
 	{
 		if (m_activeScene == m_scenes[i])
 		{
@@ -1295,11 +1295,6 @@ void Game::KeyboardDown()
 	if (Input::GetKeyDown(Key::Escape))
 	{
 		exit(1);
-	}
-
-	if (Input::GetKeyDown(Key::T))
-	{
-		std::cout << "Current Time: " << levelTimer << "\n";
 	}
 
 #pragma region SCREEN MANIPULATION
@@ -1888,7 +1883,8 @@ if (Input::GetKeyDown(Key::Three))
 
 #pragma region JUMPING CODE
 //Jumping
-if (m_activeScene == m_scenes[6] || m_activeScene == m_scenes[7] || m_activeScene == m_scenes[8] || m_activeScene == m_scenes[9])
+if (m_activeScene == m_scenes[6] || m_activeScene == m_scenes[7] || m_activeScene == m_scenes[8] || m_activeScene == m_scenes[9] 
+	|| m_activeScene == m_scenes[10])
 {
 	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
 	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();

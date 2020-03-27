@@ -718,7 +718,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		animController.GetAnimation(0);
 		animController.AddAnimation(blueButton["PowerOn"]);
 		animController.GetAnimation(1);
-		animController.SetActiveAnim(1);
+		animController.SetActiveAnim(0);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(118.f, 56.5f, 100.f));

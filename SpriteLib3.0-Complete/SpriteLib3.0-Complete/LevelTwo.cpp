@@ -693,7 +693,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 		animController.AddAnimation(blueButton["PowerOff"]);
 		animController.GetAnimation(0);
 		animController.AddAnimation(blueButton["PowerOn"]);
-		animController.GetAnimation(1);
+		animController.GetAnimation(0);
 
 		animController.SetActiveAnim(0);
 
