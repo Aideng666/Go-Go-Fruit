@@ -63,9 +63,9 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelFour(level4));
 
 	//Sets active scene reference to our scene
-	m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[8]->GetScene();
-	m_activeScene = m_scenes[8];
+	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[0]->GetScene();
+	m_activeScene = m_scenes[0];
 	PhysicsSystem::Init();
 	
 	for (int i = 6; i < m_scenes.size(); ++i)
@@ -1073,6 +1073,8 @@ if (change4)
 					m_register = m_scenes[3 + i]->GetScene();
 					m_activeScene = m_scenes[3 + i];
 
+					listener.SetWin(false);
+
 					if (level1Cleared)
 					{
 						LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
@@ -1103,6 +1105,7 @@ if (change4)
 		}	
 	}
 #pragma endregion
+
 }
 
 void Game::GUI()
@@ -1726,8 +1729,10 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7] && !(liste
 	{
 		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
 		auto level2 = scene->GetLevel2Template();
+		auto level3 = scene->GetLevel3Template();
 		auto medal = scene->GetMedal();
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
 
