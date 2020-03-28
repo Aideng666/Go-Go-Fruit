@@ -8,6 +8,8 @@
 #include "LevelSelectMain.h"
 #include "LevelSelect2.h"
 #include "LevelSelect3.h"
+#include "LevelSelect4.h"
+#include "LevelSelect5.h"
 #include "GoGoGame.h"
 #include "LevelTwo.h"
 #include "LevelThree.h"

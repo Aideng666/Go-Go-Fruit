@@ -167,6 +167,8 @@
     <ClInclude Include="LevelFour.h" />
     <ClInclude Include="LevelSelect2.h" />
     <ClInclude Include="LevelSelect3.h" />
+    <ClInclude Include="LevelSelect4.h" />
+    <ClInclude Include="LevelSelect5.h" />
     <ClInclude Include="LevelSelectMain.h" />
     <ClInclude Include="LevelThree.h" />
     <ClInclude Include="LevelTwo.h" />
@@ -225,6 +227,8 @@
     <ClCompile Include="LevelFour.cpp" />
     <ClCompile Include="LevelSelect2.cpp" />
     <ClCompile Include="LevelSelect3.cpp" />
+    <ClCompile Include="LevelSelect4.cpp" />
+    <ClCompile Include="LevelSelect5.cpp" />
     <ClCompile Include="LevelSelectMain.cpp" />
     <ClCompile Include="LevelThree.cpp" />
     <ClCompile Include="LevelTwo.cpp" />

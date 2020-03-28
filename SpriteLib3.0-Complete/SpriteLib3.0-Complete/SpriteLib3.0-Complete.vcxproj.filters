@@ -192,6 +192,12 @@
     <ClInclude Include="LevelFive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LevelSelect4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelSelect5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\imgui\imgui.cpp">
@@ -363,6 +369,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelFive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSelect4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSelect5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

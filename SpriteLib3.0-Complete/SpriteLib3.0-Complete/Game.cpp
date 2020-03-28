@@ -36,6 +36,8 @@ void Game::InitGame()
 	std::string levelSelect1 = "Level Select 1";
 	std::string levelSelect2 = "Level Select 2";
 	std::string levelSelect3 = "Level Select 3";
+	std::string levelSelect4 = "Level Select 4";
+	std::string levelSelect5 = "Level Select 5";
 	std::string level1 = "Level 1";
 	std::string level2 = "Level 2";
 	std::string level3   = "Level 3";
@@ -58,6 +60,8 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelSelectMain(levelSelect1));
 	m_scenes.push_back(new LevelSelect2(levelSelect2));
 	m_scenes.push_back(new LevelSelect3(levelSelect3));
+	m_scenes.push_back(new LevelSelect4(levelSelect4));
+	m_scenes.push_back(new LevelSelect5(levelSelect5));
 	m_scenes.push_back(new GoGoGame(level1));
 	m_scenes.push_back(new LevelTwo(level2));
 	m_scenes.push_back(new LevelThree(level3));
@@ -65,12 +69,12 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelFive(level5));
 
 	//Sets active scene reference to our scene
-	m_scenes[10]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[10]->GetScene();
-	m_activeScene = m_scenes[10];
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
 	PhysicsSystem::Init();
 	
-	for (int i = 6; i < m_scenes.size(); ++i)
+	for (int i = 8; i < m_scenes.size(); ++i)
 	{
 		m_scenes[i]->GetPhysicsWorld().SetContactListener(&listener);
 	}
@@ -123,6 +127,7 @@ void Game::Update()
 	//Updates the active scene
 	m_activeScene->Update();
 
+//Add fade to m_scenes[12] and m_scenes[10] IN THAT ORDER (Level 4 is m_scenes[12], 5 is m_scenes[10]
 #pragma region Fade Effect
 //Fades the Menu 
 if (change)
@@ -141,20 +146,20 @@ if (change)
 		timer = 0.f;
 		change = false;
 
-		if (level1Cleared)
-		{
-			LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-			auto level2 = scene->GetLevel2Template();
-			auto medal = scene->GetMedal();
-			ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-			ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-		}
-		if (level2Cleared)
-		{
-			LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-			auto level3 = scene->GetLevel3Template();
-			ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-		}
+		//if (level1Cleared)
+		//{
+		//	LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+		//	auto level2 = scene->GetLevel2Template();
+		//	auto medal = scene->GetMedal();
+		//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+		//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+		//}
+		//if (level2Cleared)
+		//{
+		//	LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+		//	auto level3 = scene->GetLevel3Template();
+		//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+		//}
 	}
 }
 //Fades into Level 1
@@ -168,9 +173,9 @@ if (change2)
 
 		m_activeScene->Unload();
 
-		m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[6]->GetScene();
-		m_activeScene = m_scenes[6];
+		m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[8]->GetScene();
+		m_activeScene = m_scenes[8];
 		timer = 0.f;
 		change2 = false;
 		loading = false;
@@ -189,9 +194,9 @@ if (change3)
 
 		m_activeScene->Unload();
 
-		m_scenes[7]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[7]->GetScene();
-		m_activeScene = m_scenes[7];
+		m_scenes[11]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[11]->GetScene();
+		m_activeScene = m_scenes[11];
 		timer = 0.f;
 		change3 = false;
 		loading = false;
@@ -210,9 +215,9 @@ if (change4)
 
 		m_activeScene->Unload();
 
-		m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[8]->GetScene();
-		m_activeScene = m_scenes[8];
+		m_scenes[9]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[9]->GetScene();
+		m_activeScene = m_scenes[9];
 		timer = 0.f;
 		change4 = false;
 		loading = false;
@@ -223,7 +228,7 @@ if (change4)
 #pragma endregion
 
 #pragma region Shake Effect
-	if (m_activeScene == m_scenes[6])
+	if (m_activeScene == m_scenes[8])
 	{
 			GoGoGame* scene = (GoGoGame*)m_activeScene;
 			auto cam = scene->GetCam();
@@ -259,7 +264,7 @@ if (change4)
 		}
 	}
 
-	if (m_activeScene == m_scenes[7])
+	if (m_activeScene == m_scenes[9])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
 		auto cam = scene->GetCam();
@@ -295,7 +300,7 @@ if (change4)
 		}
 	}
 
-	if (m_activeScene == m_scenes[8])
+	if (m_activeScene == m_scenes[10])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto cam = scene->GetCam();
@@ -334,7 +339,7 @@ if (change4)
 			}
 		}
 	}
-	if (m_activeScene == m_scenes[9])
+	if (m_activeScene == m_scenes[11])
 	{
 		LevelFour* scene = (LevelFour*)m_activeScene;
 		auto cam = scene->GetCam();
@@ -369,7 +374,7 @@ if (change4)
 			}
 		}
 	}
-	if (m_activeScene == m_scenes[10])
+	if (m_activeScene == m_scenes[12])
 	{
 		LevelFive* scene = (LevelFive*)m_activeScene;
 		auto cam = scene->GetCam();
@@ -453,7 +458,7 @@ if (change4)
 		m_register->get<Transform>(entity).SetPositionY(position.y - (spikeSpeed * Timer::deltaTime));
 		m_register->get<Transform>(entity2).SetPositionY(position2.y - (spikeSpeed * Timer::deltaTime));
 	}
-	if (m_activeScene == m_scenes[6])
+	if (m_activeScene == m_scenes[8])
 	{
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto entity = scene->GetBackground();
@@ -476,7 +481,7 @@ if (change4)
 		m_register->get<Transform>(entity).SetPositionX(position.x - (bgSpeed * Timer::deltaTime));
 		m_register->get<Transform>(entity2).SetPositionX(position2.x - (bgSpeed * Timer::deltaTime));
 	}
-	if (m_activeScene == m_scenes[7])
+	if (m_activeScene == m_scenes[9])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
 		auto entity = scene->GetBg1();
@@ -499,7 +504,7 @@ if (change4)
 		m_register->get<Transform>(entity).SetPositionX(position.x - (bgSpeed * Timer::deltaTime));
 		m_register->get<Transform>(entity2).SetPositionX(position2.x - (bgSpeed * Timer::deltaTime));
 	}
-	if (m_activeScene == m_scenes[8])
+	if (m_activeScene == m_scenes[10])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto entity = scene->GetBackground();
@@ -523,7 +528,7 @@ if (change4)
 		m_register->get<Transform>(entity).SetPositionX(position.x - (bgSpeed * Timer::deltaTime));
 		m_register->get<Transform>(entity2).SetPositionX(position2.x - (bgSpeed * Timer::deltaTime));
 	}
-	if (m_activeScene == m_scenes[9])
+	if (m_activeScene == m_scenes[11])
 	{
 		LevelFour* scene = (LevelFour*)m_activeScene;
 		auto entity = scene->GetBg1();
@@ -547,7 +552,7 @@ if (change4)
 		m_register->get<Transform>(entity).SetPositionX(position.x - (bgSpeed * Timer::deltaTime));
 		m_register->get<Transform>(entity2).SetPositionX(position2.x - (bgSpeed * Timer::deltaTime));
 	}
-	if (m_activeScene == m_scenes[10])
+	if (m_activeScene == m_scenes[12])
 	{
 		LevelFive* scene = (LevelFive*)m_activeScene;
 		auto entity = scene->GetBg1();
@@ -574,7 +579,7 @@ if (change4)
 #pragma endregion
 	
 #pragma region Activation of Buttons
-	if (m_activeScene == m_scenes[6])
+	if (m_activeScene == m_scenes[8])
 	{
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
 		auto elevator = scene->GetElevator();
@@ -638,7 +643,7 @@ if (change4)
 		}
 	}
 
-	if (m_activeScene == m_scenes[7])
+	if (m_activeScene == m_scenes[9])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
 		auto elevator = scene->GetElevator();
@@ -750,7 +755,7 @@ if (change4)
 		}
 	}
 
-	if (m_activeScene == m_scenes[8])
+	if (m_activeScene == m_scenes[10])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto elevator = scene->GetElevator();
@@ -863,7 +868,7 @@ if (change4)
 			}
 		}
 	}
-	if (m_activeScene == m_scenes[9])
+	if (m_activeScene == m_scenes[11])
 	{
 		LevelFour* scene = (LevelFour*)m_activeScene;
 		auto elevator = scene->GetBlueElevator();
@@ -1026,7 +1031,7 @@ if (change4)
 			}
 		}
 	}
-	if (m_activeScene == m_scenes[10])
+	if (m_activeScene == m_scenes[12])
 	{
 		LevelFive* scene = (LevelFive*)m_activeScene;
 		auto elevator = scene->GetElevator1();
@@ -1192,7 +1197,7 @@ if (change4)
 #pragma endregion
 
 #pragma region Jello Bounce
-	if (m_activeScene == m_scenes[7])
+	if (m_activeScene == m_scenes[9])
 	{
 		LevelTwo* scene = (LevelTwo*)m_activeScene;
 		auto jelloAnim = scene->GetJello();
@@ -1213,7 +1218,7 @@ if (change4)
 			jelloController.SetActiveAnim(1);
 		}
 	}
-	if (m_activeScene == m_scenes[8])
+	if (m_activeScene == m_scenes[10])
 	{
 		LevelThree* scene = (LevelThree*)m_activeScene;
 		auto jello = scene->GetJello();
@@ -1234,7 +1239,7 @@ if (change4)
 			animController.SetActiveAnim(1);
 		}
 	}
-	if (m_activeScene == m_scenes[10])
+	if (m_activeScene == m_scenes[12])
 	{
 		LevelFive* scene = (LevelFive*)m_activeScene;
 		auto jello = scene->GetJello();
@@ -1258,9 +1263,8 @@ if (change4)
 #pragma endregion
 
 #pragma region Level Check
-
 	//Temp just for level 4
-	if (m_activeScene == m_scenes[9])
+	if (m_activeScene == m_scenes[11])
 	{
 		if (listener.GetLevelCheck())
 		{
@@ -1273,7 +1277,7 @@ if (change4)
 	}
 
 	//Temp just for level 5
-	if (m_activeScene == m_scenes[10])
+	if (m_activeScene == m_scenes[12])
 	{
 		if (listener.GetLevelCheck())
 		{
@@ -1289,7 +1293,7 @@ if (change4)
 	{		
 		levelTimer += Timer::deltaTime;
 
-		if (m_activeScene == m_scenes[6])
+		if (m_activeScene == m_scenes[8])
 		{			
 			listener.SetLevelCleared(true, 0);
 			level1Cleared = true;		
@@ -1298,7 +1302,7 @@ if (change4)
 			auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
 			fbAnim.SetActiveAnim(0);
 		}
-		if (m_activeScene == m_scenes[7])
+		if (m_activeScene == m_scenes[9])
 		{		
 			listener.SetLevelCleared(true, 1);
 			level2Cleared = true;			
@@ -1307,7 +1311,7 @@ if (change4)
 			auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
 			fbAnim.SetActiveAnim(0);
 		}
-		if (m_activeScene == m_scenes[8])
+		if (m_activeScene == m_scenes[10])
 		{	
 			listener.SetLevelCleared(true, 2);
 			level3Cleared = true;	
@@ -1336,24 +1340,24 @@ if (change4)
 					if (level1Cleared)
 					{
 						LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-						auto level2 = scene->GetLevel2Template();
-						auto medal = scene->GetMedal();
-						ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-						ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+						//auto level2 = scene->GetLevel2Template();
+						//auto medal = scene->GetMedal();
+						//ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+						//ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 					}
 					if (level2Cleared)
 					{
 						LevelSelect2* scene = (LevelSelect2*)m_activeScene;
-						auto level3 = scene->GetLevel3Template();
-						auto medal = scene->GetMedal();
-						ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-						ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+						//auto level3 = scene->GetLevel3Template();
+						//auto medal = scene->GetMedal();
+						//ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+						//ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 					}
 					if (level3Cleared)
 					{
 						LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-						auto medal = scene->GetMedal();
-						ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+						//auto medal = scene->GetMedal();
+						//ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 					}
 
 					levelTimer = 0.f;
@@ -1475,7 +1479,7 @@ void Game::KeyboardHold()
 {
 #pragma region MOVEMENT SYSTEM
 	//MOVEMENT
-	for (int i = 6; i < m_scenes.size(); ++i)
+	for (int i = 8; i < m_scenes.size(); ++i)
 	{
 		if (m_activeScene == m_scenes[i])
 		{
@@ -1637,23 +1641,23 @@ if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[3] && !loadi
 	m_register = m_scenes[4]->GetScene();
 	m_activeScene = m_scenes[4];
 
-	if (level1Cleared)
-	{
-		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-	}
-
-	if (level2Cleared)
-	{
-		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
-		auto level3 = scene->GetLevel3Template();
-		auto medal = scene->GetMedal();
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-	}
+	//if (level1Cleared)
+	//{
+	//	LevelSelect2* scene = (LevelSelect2*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//}
+	//
+	//if (level2Cleared)
+	//{
+	//	LevelSelect2* scene = (LevelSelect2*)m_activeScene;
+	//	auto level3 = scene->GetLevel3Template();
+	//	auto medal = scene->GetMedal();
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	//}
 }
-//Level Select 1 to Level Select 3
+//Level Select 1 to Level Select 5
 else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[3] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
@@ -1662,30 +1666,30 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[3] && !l
 
 	m_activeScene->Unload();
 
-	m_scenes[5]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[5]->GetScene();
-	m_activeScene = m_scenes[5];
+	m_scenes[7]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[7]->GetScene();
+	m_activeScene = m_scenes[7];
 
-	if (level1Cleared)
-	{
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-	}
-
-	if (level2Cleared)
-	{
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto level3 = scene->GetLevel3Template();
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-	}
-
-	if (level3Cleared)
-	{
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto medal = scene->GetMedal();
-		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-	}
+	//if (level1Cleared)
+	//{
+	//	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//}
+	//
+	//if (level2Cleared)
+	//{
+	//	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	//	auto level3 = scene->GetLevel3Template();
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//}
+	//
+	//if (level3Cleared)
+	//{
+	//	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	//	auto medal = scene->GetMedal();
+	//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	//}
 }
 //Level Select 2 to Level Select 1
 else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[4] && !loading)
@@ -1700,21 +1704,21 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[4] && !l
 	m_register = m_scenes[3]->GetScene();
 	m_activeScene = m_scenes[3];
 
-	if (level1Cleared)
-	{
-		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		auto medal = scene->GetMedal();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-	}
-
-	if (level2Cleared)
-	{
-		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-		auto level3 = scene->GetLevel3Template();
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-	}
+	//if (level1Cleared)
+	//{
+	//	LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	auto medal = scene->GetMedal();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	//}
+	//
+	//if (level2Cleared)
+	//{
+	//	LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+	//	auto level3 = scene->GetLevel3Template();
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//}
 }
 //Level Select 2 to Level Select 3
 else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[4] && !loading)
@@ -1729,28 +1733,27 @@ else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[4] && !
 	m_register = m_scenes[5]->GetScene();
 	m_activeScene = m_scenes[5];
 
-	if (level1Cleared)
-	{
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-	}
-
-	if (level2Cleared)
-	{
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto level3 = scene->GetLevel3Template();
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-	}
-
-	if (level3Cleared)
-	{
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto medal = scene->GetMedal();
-		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-	}
+	//if (level1Cleared)
+	//{
+	//	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//}
+	//
+	//if (level2Cleared)
+	//{
+	//	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	//	auto level3 = scene->GetLevel3Template();
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//}
+	//if (level3Cleared)
+	//{
+	//	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	//	auto medal = scene->GetMedal();
+	//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	//}
 }
-//Level Select 3 to Level Select 1
+//Level Select 3 to Level Select 4
 else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[5] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
@@ -1759,25 +1762,25 @@ else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[5] && !
 
 	m_activeScene->Unload();
 
-	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[3]->GetScene();
-	m_activeScene = m_scenes[3];
+	m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[6]->GetScene();
+	m_activeScene = m_scenes[6];
 
-	if (level1Cleared)
-	{
-		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		auto medal = scene->GetMedal();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-	}
-
-	if (level2Cleared)
-	{
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto level3 = scene->GetLevel3Template();
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-	}
+	//if (level1Cleared)
+	//{
+	//	LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	auto medal = scene->GetMedal();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	//}
+	//
+	//if (level2Cleared)
+	//{
+	//	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	//	auto level3 = scene->GetLevel3Template();
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//}
 }
 //Level Select 3 to Level Select 2
 else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[5] && !loading)
@@ -1792,21 +1795,72 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[5] && !l
 	m_register = m_scenes[4]->GetScene();
 	m_activeScene = m_scenes[4];
 
-	if (level1Cleared)
-	{
-		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-	}
+	//if (level1Cleared)
+	//{
+	//	LevelSelect2* scene = (LevelSelect2*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//}
+	//if (level2Cleared)
+	//{
+	//	LevelSelect2* scene = (LevelSelect2*)m_activeScene;
+	//	auto level3 = scene->GetLevel3Template();
+	//	auto medal = scene->GetMedal();
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	//}
+}
+//Level Select 4 to Level Select 5
+else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[6])
+{
+	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
+	
+	SceneEditor::ResetEditor();
+	
+	m_activeScene->Unload();
+	
+	m_scenes[7]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[7]->GetScene();
+	m_activeScene = m_scenes[7];
+}
+//Level Select 4 to Level Select 3
+else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[6])
+{
+	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
+	
+	SceneEditor::ResetEditor();
+	
+	m_activeScene->Unload();
+	
+	m_scenes[5]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[5]->GetScene();
+	m_activeScene = m_scenes[5];
+}
+//Level Select 5 to Level Select 1
+else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[7])
+{
+sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 
-	if (level2Cleared)
-	{
-		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
-		auto level3 = scene->GetLevel3Template();
-		auto medal = scene->GetMedal();
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-	}
+SceneEditor::ResetEditor();
+
+m_activeScene->Unload();
+
+m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+m_register = m_scenes[3]->GetScene();
+m_activeScene = m_scenes[3];
+}
+//Level Select 5 to Level Select 4
+else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[7])
+{
+sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
+
+SceneEditor::ResetEditor();
+
+m_activeScene->Unload();
+
+m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+m_register = m_scenes[6]->GetScene();
+m_activeScene = m_scenes[6];
 }
 //Level Select to Level 1
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[3])
@@ -1820,17 +1874,17 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[3])
 	change2 = true;
 	loading = true;
 
-	ECS::DestroyEntity(scene->GetMenu());
-	ECS::DestroyEntity(scene->GetRight());
-	ECS::DestroyEntity(scene->GetLeft());
-	//ECS::DestroyEntity(scene->GetPlay());
-	ECS::DestroyEntity(scene->GetLevel1Template());
-	ECS::DestroyEntity(scene->GetLevel2Template());
-	ECS::DestroyEntity(scene->GetLevel3Template());
-	ECS::DestroyEntity(scene->GetMedal());
+	//ECS::DestroyEntity(scene->GetMenu());
+	//ECS::DestroyEntity(scene->GetRight());
+	//ECS::DestroyEntity(scene->GetLeft());
+	////ECS::DestroyEntity(scene->GetPlay());
+	//ECS::DestroyEntity(scene->GetLevel1Template());
+	//ECS::DestroyEntity(scene->GetLevel2Template());
+	//ECS::DestroyEntity(scene->GetLevel3Template());
+	//ECS::DestroyEntity(scene->GetMedal());
 }
 //Level Select 2 to Level 2
-if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[4] && level1Cleared)
+if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[4] /*&& level1Cleared*/)
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1841,17 +1895,17 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[4] && level1Clear
 	change3 = true;
 	loading = true;
 
-	ECS::DestroyEntity(scene->GetMenu());
-	ECS::DestroyEntity(scene->GetRight());
-	ECS::DestroyEntity(scene->GetLeft());
-	//ECS::DestroyEntity(scene->GetPlay());
-	ECS::DestroyEntity(scene->GetLevel1Template());
-	ECS::DestroyEntity(scene->GetLevel2Template());
-	ECS::DestroyEntity(scene->GetLevel3Template());
-	ECS::DestroyEntity(scene->GetMedal());
+	//ECS::DestroyEntity(scene->GetMenu());
+	//ECS::DestroyEntity(scene->GetRight());
+	//ECS::DestroyEntity(scene->GetLeft());
+	////ECS::DestroyEntity(scene->GetPlay());
+	//ECS::DestroyEntity(scene->GetLevel1Template());
+	//ECS::DestroyEntity(scene->GetLevel2Template());
+	//ECS::DestroyEntity(scene->GetLevel3Template());
+	//ECS::DestroyEntity(scene->GetMedal());
 }
 //Level Select 3 to Level 3
-if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[5] && level2Cleared)
+if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[5] /*&& level2Cleared*/)
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1862,14 +1916,44 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[5] && level2Clear
 	change4 = true;
 	loading = true;
 
-	ECS::DestroyEntity(scene->GetMenu());
-	ECS::DestroyEntity(scene->GetRight());
-	ECS::DestroyEntity(scene->GetLeft());
-	//ECS::DestroyEntity(scene->GetPlay());
-	ECS::DestroyEntity(scene->GetMedal());
-	ECS::DestroyEntity(scene->GetLevel1Template());
-	ECS::DestroyEntity(scene->GetLevel2Template());
-	ECS::DestroyEntity(scene->GetLevel3Template());
+	//ECS::DestroyEntity(scene->GetMenu());
+	//ECS::DestroyEntity(scene->GetRight());
+	//ECS::DestroyEntity(scene->GetLeft());
+	////ECS::DestroyEntity(scene->GetPlay());
+	//ECS::DestroyEntity(scene->GetMedal());
+	//ECS::DestroyEntity(scene->GetLevel1Template());
+	//ECS::DestroyEntity(scene->GetLevel2Template());
+	//ECS::DestroyEntity(scene->GetLevel3Template());
+}
+//Level Select 4 to Level 4
+if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[6])
+{
+	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[12]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[12]->GetScene();
+	m_activeScene = m_scenes[12];
+
+	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
+}
+//Level Select 5 to Level 5
+if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[7])
+{
+	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[10]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[10]->GetScene();
+	m_activeScene = m_scenes[10];
+
+	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
 #pragma endregion
 
@@ -1923,8 +2007,38 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[5])
 
 	spikeDestroyed = false;
 }
+//Level Select 4 to Main Menu
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6])
+{
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
+
+	spikeDestroyed = false;
+}
+//Level Select 5 to Main Menu
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7])
+{
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
+
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
+
+	spikeDestroyed = false;
+}
 //Level 1 to Level Select
-if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6] && !(listener.GetWin()))
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(listener.GetWin()))
 {
 	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1939,23 +2053,23 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[6] && !(liste
 	listener.SetBlue1Pressed(false);
 	listener.SetWin(false);
 
-	if (level1Cleared)
-	{
-		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		auto medal = scene->GetMedal();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-	}
-	if (level2Cleared)
-	{
-		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-		auto level3 = scene->GetLevel3Template();
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-	}
+	//if (level1Cleared)
+	//{
+	//	LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	auto medal = scene->GetMedal();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	//}
+	//if (level2Cleared)
+	//{
+	//	LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+	//	auto level3 = scene->GetLevel3Template();
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//}
 }
 //Level 2 to Level Select
-if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7] && !(listener.GetWin()))
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[11] && !(listener.GetWin()))
 {
 	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1968,30 +2082,30 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[7] && !(liste
 	m_activeScene = m_scenes[4];
 
 	listener.SetBlue1Pressed(false);
+	listener.SetBlue2Pressed(false);
 	listener.SetRed1Pressed(false);
 	listener.SetWin(false);
 
-	if (level1Cleared)
-	{
-		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-	}
-
-	if (level2Cleared)
-	{
-		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		auto level3 = scene->GetLevel3Template();
-		auto medal = scene->GetMedal();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-	}
-
+	//if (level1Cleared)
+	//{
+	//	LevelSelect2* scene = (LevelSelect2*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//}
+	//
+	//if (level2Cleared)
+	//{
+	//	LevelSelect2* scene = (LevelSelect2*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	auto level3 = scene->GetLevel3Template();
+	//	auto medal = scene->GetMedal();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	//}
 }
 //Level 3 to Level Select
-if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(listener.GetWin()))
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9] && !(listener.GetWin()))
 {
 	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -2004,29 +2118,28 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(liste
 	m_activeScene = m_scenes[5];
 
 	listener.SetBlue1Pressed(false);
-	listener.SetBlue2Pressed(false);
+	listener.SetRed1Pressed(false);
 	listener.SetWin(false);
 
-	if (level2Cleared)
-	{
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		auto level3 = scene->GetLevel3Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-	}
-
-	if (level3Cleared)
-	{
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto level3 = scene->GetLevel3Template();
-		auto medal = scene->GetMedal();
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
-	}
+	//if (level2Cleared)
+	//{
+	//	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	//	auto level2 = scene->GetLevel2Template();
+	//	auto level3 = scene->GetLevel3Template();
+	//	ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//}
+	//if (level3Cleared)
+	//{
+	//	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	//	auto level3 = scene->GetLevel3Template();
+	//	auto medal = scene->GetMedal();
+	//	ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+	//	ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+	//}
 }
 //Level 4 to Level Select
-if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9] && !(listener.GetWin()))
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[12] /*&& !(listener.GetWin())*/)
 {
 	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
 
@@ -2034,89 +2147,38 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9] && !(liste
 
 	m_activeScene->Unload();
 
-	//Temporary scene to go back to
-	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[3]->GetScene();
-	m_activeScene = m_scenes[3];
+	m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[6]->GetScene();
+	m_activeScene = m_scenes[6];
 
 	listener.SetBlue1Pressed(false);
 	listener.SetBlue2Pressed(false);
 	listener.SetRed1Pressed(false);
-	listener.SetWin(false);
+	//listener.SetWin(false);
 }
-#pragma endregion
-
-#pragma region Commands for Win Cons
-//TEST PURPOSES
-if (Input::GetKeyDown(Key::One))
+//Level 5 to Level Select
+if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[10] /*&& !(listener.GetWin())*/)
 {
-	level1Cleared = true;
+	sndPlaySound("MenuDeselect.wav", SND_FILENAME | SND_ASYNC);
 
-	if (level1Cleared)
-	{
-		SceneEditor::ResetEditor();
+	SceneEditor::ResetEditor();
 
-		m_activeScene->Unload();
+	m_activeScene->Unload();
 
-		m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[3]->GetScene();
-		m_activeScene = m_scenes[3];
+	m_scenes[7]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[7]->GetScene();
+	m_activeScene = m_scenes[7];
 
-		LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-	}
-}
-
-if (Input::GetKeyDown(Key::Two))
-{
-	level2Cleared = true;
-
-	if (level2Cleared)
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[4]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[4]->GetScene();
-		m_activeScene = m_scenes[4];
-
-		LevelSelect2* scene = (LevelSelect2*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		auto level3 = scene->GetLevel3Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-	}
-}
-
-if (Input::GetKeyDown(Key::Three))
-{
-	level3Cleared = true;
-
-	if (level3Cleared)
-	{
-		SceneEditor::ResetEditor();
-
-		m_activeScene->Unload();
-
-		m_scenes[5]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[5]->GetScene();
-		m_activeScene = m_scenes[5];
-
-		LevelSelect3* scene = (LevelSelect3*)m_activeScene;
-		auto level2 = scene->GetLevel2Template();
-		auto level3 = scene->GetLevel3Template();
-		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
-		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
-	}
+	listener.SetBlue1Pressed(false);
+	listener.SetBlue2Pressed(false);
+	//listener.SetWin(false);
 }
 #pragma endregion
 
 #pragma region JUMPING CODE
 //Jumping
-if (m_activeScene == m_scenes[6] || m_activeScene == m_scenes[7] || m_activeScene == m_scenes[8] || m_activeScene == m_scenes[9] 
-	|| m_activeScene == m_scenes[10])
+if (m_activeScene == m_scenes[8] || m_activeScene == m_scenes[9] || m_activeScene == m_scenes[10] || m_activeScene == m_scenes[11] 
+	|| m_activeScene == m_scenes[12])
 {
 	auto blueBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer()).GetBody();
 	auto waterBody = ECS::GetComponent<PhysicsBody>(EntityIdentifier::MainPlayer2()).GetBody();
@@ -2155,37 +2217,13 @@ if (Input::GetKeyDown(Key::NumPad1))
 
 	m_activeScene->Unload();
 
-	m_scenes[6]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[6]->GetScene();
-	m_activeScene = m_scenes[6];
-
-	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
-}
-if (Input::GetKeyDown(Key::NumPad2))
-{
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
-	m_scenes[7]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[7]->GetScene();
-	m_activeScene = m_scenes[7];
-
-	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
-}
-if (Input::GetKeyDown(Key::NumPad3))
-{
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
 	m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 	m_register = m_scenes[8]->GetScene();
 	m_activeScene = m_scenes[8];
 
 	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
-if (Input::GetKeyDown(Key::NumPad4))
+if (Input::GetKeyDown(Key::NumPad2))
 {
 	SceneEditor::ResetEditor();
 
@@ -2197,7 +2235,7 @@ if (Input::GetKeyDown(Key::NumPad4))
 
 	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
-if (Input::GetKeyDown(Key::NumPad5))
+if (Input::GetKeyDown(Key::NumPad3))
 {
 	SceneEditor::ResetEditor();
 
@@ -2206,6 +2244,30 @@ if (Input::GetKeyDown(Key::NumPad5))
 	m_scenes[10]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 	m_register = m_scenes[10]->GetScene();
 	m_activeScene = m_scenes[10];
+
+	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
+}
+if (Input::GetKeyDown(Key::NumPad4))
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[11]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[11]->GetScene();
+	m_activeScene = m_scenes[11];
+
+	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
+}
+if (Input::GetKeyDown(Key::NumPad5))
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[12]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[12]->GetScene();
+	m_activeScene = m_scenes[12];
 
 	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
