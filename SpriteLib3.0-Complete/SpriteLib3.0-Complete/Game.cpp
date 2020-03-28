@@ -1234,6 +1234,27 @@ if (change4)
 			animController.SetActiveAnim(1);
 		}
 	}
+	if (m_activeScene == m_scenes[10])
+	{
+		LevelFive* scene = (LevelFive*)m_activeScene;
+		auto jello = scene->GetJello();
+		auto& animController = ECS::GetComponent<AnimationController>(jello);
+
+		if (listener.GetBounced())
+		{
+			animController.SetActiveAnim(0);
+			animController.GetAnimation(0).Reset();
+			jelloTimer = 0.f;
+		}
+		if (!(listener.GetBounced()))
+		{
+			jelloTimer += Timer::deltaTime;
+		}
+		if (jelloTimer >= 2.f)
+		{
+			animController.SetActiveAnim(1);
+		}
+	}
 #pragma endregion
 
 #pragma region Level Check
@@ -1249,6 +1270,19 @@ if (change4)
 			auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
 			fbAnim.SetActiveAnim(0);
 		}	
+	}
+
+	//Temp just for level 5
+	if (m_activeScene == m_scenes[10])
+	{
+		if (listener.GetLevelCheck())
+		{
+			level5Cleared = true;
+			LevelFive* scene = (LevelFive*)m_activeScene;
+			auto fruitBowl = scene->GetFruitBowl();
+			auto& fbAnim = ECS::GetComponent<AnimationController>(fruitBowl);
+			fbAnim.SetActiveAnim(0);
+		}		
 	}
 
 	if (listener.GetLevelCheck())
@@ -2160,6 +2194,18 @@ if (Input::GetKeyDown(Key::NumPad4))
 	m_scenes[9]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 	m_register = m_scenes[9]->GetScene();
 	m_activeScene = m_scenes[9];
+
+	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
+}
+if (Input::GetKeyDown(Key::NumPad5))
+{
+	SceneEditor::ResetEditor();
+
+	m_activeScene->Unload();
+
+	m_scenes[10]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[10]->GetScene();
+	m_activeScene = m_scenes[10];
 
 	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }

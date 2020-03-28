@@ -73,6 +73,103 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		m_background = entity;
 		m_background2 = entity2;
 	}
+
+	//Flowers
+	{
+		auto flowerAnim = File::LoadJSON("Flowers.json");
+		std::string fileName = "Flowers.png";
+
+		auto entity = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+		animController.AddAnimation(flowerAnim["FlowerSway"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 30, 14, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(96.f, -81.8f, 70.f));
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Flower Anim 1");
+
+		auto entity2 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity2);
+		ECS::AttachComponent<Transform>(entity2);
+		ECS::AttachComponent<AnimationController>(entity2);
+		auto& animController2 = ECS::GetComponent<AnimationController>(entity2);
+		animController2.InitUVs(fileName);
+		animController2.AddAnimation(flowerAnim["FlowerSway"]);
+		animController2.GetAnimation(0);
+		animController2.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity2).LoadSprite(fileName, 30, 14, true, &animController2);
+		ECS::GetComponent<Transform>(entity2).SetPosition(vec3(139.f, -81.8f, 70.f));
+		unsigned int bitHolder2 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity2, bitHolder2, "Flower Anim 2");
+
+		auto entity3 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity3);
+		ECS::AttachComponent<Transform>(entity3);
+		ECS::AttachComponent<AnimationController>(entity3);
+		auto& animController3 = ECS::GetComponent<AnimationController>(entity3);
+		animController3.InitUVs(fileName);
+		animController3.AddAnimation(flowerAnim["FlowerSway"]);
+		animController3.GetAnimation(0);
+		animController3.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity3).LoadSprite(fileName, 30, 14, true, &animController3);
+		ECS::GetComponent<Transform>(entity3).SetPosition(vec3(-110.f, -82.f, 70.f));
+		unsigned int bitHolder3 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity3, bitHolder3, "Flower Anim 3");
+	}
+	
+	//Grass
+	{
+		auto grassAnim = File::LoadJSON("Grass.json");
+		std::string fileName = "GrassV2.png";
+
+		auto entity2 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity2);
+		ECS::AttachComponent<Transform>(entity2);
+		ECS::AttachComponent<AnimationController>(entity2);
+		auto& animController2 = ECS::GetComponent<AnimationController>(entity2);
+		animController2.InitUVs(fileName);
+		animController2.AddAnimation(grassAnim["GrassSway"]);
+		animController2.GetAnimation(0);
+		animController2.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity2).LoadSprite(fileName, 50, 7, true, &animController2);
+		ECS::GetComponent<Transform>(entity2).SetPosition(vec3(-143.f, 30.f, 70.f));
+		unsigned int bitHolder2 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity2, bitHolder2, "Grass Anim 1");
+
+		auto entity3 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity3);
+		ECS::AttachComponent<Transform>(entity3);
+		ECS::AttachComponent<AnimationController>(entity3);
+		auto& animController3 = ECS::GetComponent<AnimationController>(entity3);
+		animController3.InitUVs(fileName);
+		animController3.AddAnimation(grassAnim["GrassSway"]);
+		animController3.GetAnimation(0);
+		animController3.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity3).LoadSprite(fileName, 50, 7, true, &animController3);
+		ECS::GetComponent<Transform>(entity3).SetPosition(vec3(121.f, -13.f, 70.f));
+		unsigned int bitHolder3 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity3, bitHolder3, "Grass Anim 2");
+
+		auto entity4 = ECS::CreateEntity();
+		ECS::AttachComponent<Sprite>(entity4);
+		ECS::AttachComponent<Transform>(entity4);
+		ECS::AttachComponent<AnimationController>(entity4);
+		auto& animController4 = ECS::GetComponent<AnimationController>(entity4);
+		animController4.InitUVs(fileName);
+		animController4.AddAnimation(grassAnim["GrassSway"]);
+		animController4.GetAnimation(0);
+		animController4.SetActiveAnim(0);
+		ECS::GetComponent<Sprite>(entity4).LoadSprite(fileName, 50, 7, true, &animController4);
+		ECS::GetComponent<Transform>(entity4).SetPosition(vec3(-151.f, -85.f, 70.f));
+		unsigned int bitHolder4 = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity4, bitHolder4, "Grass Anim 3");
+	}
+
 #pragma endregion
 
 #pragma region PLAYER ENTITIES
@@ -249,7 +346,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-132.f), float32(36.f));
+		tempDef.position.Set(float32(-132.f), float32(27.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -273,7 +370,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-84.f), float32(24.f));
+		tempDef.position.Set(float32(-84.f), float32(15.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -282,7 +379,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody = PhysicsBody(tempBody, 1, 23, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(box1, bitHolder, "Left Bot Plat Facing Box");
+		ECS::SetUpIdentifier(box1, bitHolder, "Left Side Plat Facing Box");
 	}
 	{
 		auto box1 = ECS::CreateEntity();
@@ -297,7 +394,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-132.f), float32(13.f));
+		tempDef.position.Set(float32(-132.f), float32(4.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -306,7 +403,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody = PhysicsBody(tempBody, 97, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
-		ECS::SetUpIdentifier(box1, bitHolder, "Left Side Plat Facing Box");
+		ECS::SetUpIdentifier(box1, bitHolder, "Left Bot Plat Facing Box");
 	}
 	{
 		auto box1 = ECS::CreateEntity();
@@ -457,7 +554,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(1);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-104.f, 39.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-104.f, 29.5f, 100.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top Blue Button Anim");
@@ -513,7 +610,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(0);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 26, 5, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(163.f, -13.f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(163.f, -13.5f, 100.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Red Button Anim");
@@ -534,7 +631,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-113.f), float32(39.f));
+		tempDef.position.Set(float32(-113.f), float32(30.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -557,7 +654,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-95.f), float32(39.f));
+		tempDef.position.Set(float32(-95.f), float32(30.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -580,7 +677,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-104.f), float32(41.5f));
+		tempDef.position.Set(float32(-104.f), float32(32.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -603,7 +700,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(57.f), float32(-86.f));
+		tempDef.position.Set(float32(57.f), float32(-85.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -626,7 +723,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(75.f), float32(-86.f));
+		tempDef.position.Set(float32(75.f), float32(-85.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -811,7 +908,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(107.f), float32(-42.f));
+		tempDef.position.Set(float32(107.5f), float32(-42.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -859,7 +956,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(-107.f), float32(10.f));
+		tempDef.position.Set(float32(-108.f), float32(1.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -916,12 +1013,12 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_kinematicBody;
-		tempDef.position.Set(float32(0.f), float32(-84.f));
+		tempDef.position.Set(float32(0.f), float32(-85.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, 71, 1, vec2(0.f, 0.f), false);
+		tempPhsBody = PhysicsBody(tempBody, 69, 1, vec2(0.f, 0.f), false);
 
 		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::JelloBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Top of Jello");
@@ -939,7 +1036,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(35.f), float32(-91.f));
+		tempDef.position.Set(float32(35.f), float32(-92.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -962,7 +1059,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_staticBody;
-		tempDef.position.Set(float32(-35.f), float32(-91.f));
+		tempDef.position.Set(float32(-34.5f), float32(-92.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetUserData((void*)entity);
@@ -994,12 +1091,59 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		animController.SetActiveAnim(1);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 52, 30, true, &animController);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-151.f, 51.5f, 100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-151.f, 42.f, 100.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Fruit Bowl Anim");
 
 		m_fruitBowl = entity;
+	}
+	//Fruit Bowl Bodies
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-153.f), float32(38.f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 48, 1, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit() | EntityIdentifier::FruitBowlBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Top of Fruit Bowl");
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<PhysicsBody>(entity);
+
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, 100.f));
+
+		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+		b2Body* tempBody;
+		b2BodyDef tempDef;
+		tempDef.type = b2_staticBody;
+		tempDef.position.Set(float32(-128.f), float32(31.5f));
+
+		tempBody = m_physicsWorld->CreateBody(&tempDef);
+		tempBody->SetUserData((void*)entity);
+
+		tempPhsBody = PhysicsBody(tempBody, 1, 14, vec2(0.f, 0.f), false);
+
+		unsigned int bitHolder = EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Right of Fruit Bowl");
 	}
 #pragma endregion
 
