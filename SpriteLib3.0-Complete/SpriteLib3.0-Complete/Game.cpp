@@ -153,6 +153,8 @@ if (change)
 			ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
 			auto medal = scene->GetMedal();
 			ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+			auto lock = scene->GetLock1();
+			ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 		}
 		if (level2Cleared)
 		{
@@ -160,6 +162,10 @@ if (change)
 			ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 			auto medal = scene->GetMedal2();
 			ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+			auto lock = scene->GetLock1();
+			ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
+			auto lock2 = scene->GetLock2();
+			ECS::GetComponent<Sprite>(lock2).SetTransparency(0.0f);
 		}
 		if (level3Cleared)
 		{
@@ -167,6 +173,12 @@ if (change)
 			ECS::GetComponent<Sprite>(level4).SetTransparency(1.0f);
 			auto medal = scene->GetMedal3();
 			ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+			auto lock = scene->GetLock1();
+			ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
+			auto lock2 = scene->GetLock2();
+			ECS::GetComponent<Sprite>(lock2).SetTransparency(0.0f);
+			auto lock3 = scene->GetLock3();
+			ECS::GetComponent<Sprite>(lock3).SetTransparency(0.0f);
 		}
 		if (level4Cleared)
 		{
@@ -174,6 +186,14 @@ if (change)
 			ECS::GetComponent<Sprite>(level5).SetTransparency(1.0f);
 			auto medal = scene->GetMedal4();
 			ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+			auto lock = scene->GetLock1();
+			ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
+			auto lock2 = scene->GetLock2();
+			ECS::GetComponent<Sprite>(lock2).SetTransparency(0.0f);
+			auto lock3 = scene->GetLock3();
+			ECS::GetComponent<Sprite>(lock3).SetTransparency(0.0f);
+			auto lock4 = scene->GetLock4();
+			ECS::GetComponent<Sprite>(lock4).SetTransparency(0.0f);
 		}
 		if (level5Cleared)
 		{
@@ -2730,6 +2750,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(liste
 		auto medal = scene->GetMedal();
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+		auto lock = scene->GetLock1();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level2Cleared)
 	{
@@ -2737,6 +2759,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(liste
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 		auto medal = scene->GetMedal2();
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+		auto lock = scene->GetLock2();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level3Cleared)
 	{
@@ -2744,6 +2768,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(liste
 		ECS::GetComponent<Sprite>(level4).SetTransparency(1.0f);
 		auto medal3 = scene->GetMedal3();
 		ECS::GetComponent<Sprite>(medal3).SetTransparency(1.0f);
+		auto lock = scene->GetLock3();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level4Cleared)
 	{
@@ -2751,6 +2777,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[8] && !(liste
 		ECS::GetComponent<Sprite>(level5).SetTransparency(1.0f);
 		auto medal4 = scene->GetMedal4();
 		ECS::GetComponent<Sprite>(medal4).SetTransparency(1.0f);
+		auto lock = scene->GetLock4();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level5Cleared)
 	{
@@ -2784,6 +2812,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[11] && !(list
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
 		auto medal1 = scene->GetMedal2();
 		ECS::GetComponent<Sprite>(medal1).SetTransparency(1.0f);
+		auto lock = scene->GetLock1();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}	
 	if (level2Cleared)
 	{
@@ -2793,6 +2823,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[11] && !(list
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+		auto lock = scene->GetLock2();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level3Cleared)
 	{
@@ -2800,6 +2832,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[11] && !(list
 		ECS::GetComponent<Sprite>(level4).SetTransparency(1.0f);
 		auto medal = scene->GetMedal3();
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+		auto lock = scene->GetLock3();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level4Cleared)
 	{
@@ -2807,6 +2841,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[11] && !(list
 		ECS::GetComponent<Sprite>(level5).SetTransparency(1.0f);
 		auto medal = scene->GetMedal4();
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
+		auto lock = scene->GetLock4();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level5Cleared)
 	{
@@ -2843,11 +2879,15 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9] && !(liste
 		ECS::GetComponent<Sprite>(medal1).SetTransparency(1.0f);
 		auto medal2 = scene->GetMedal3();
 		ECS::GetComponent<Sprite>(medal2).SetTransparency(1.0f);
+		auto lock = scene->GetLock1();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level2Cleared)
 	{
 		auto level3 = scene->GetSelect3();
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+		auto lock = scene->GetLock2();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level3Cleared)
 	{
@@ -2855,6 +2895,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9] && !(liste
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 		auto level4 = scene->GetSelect4();
 		ECS::GetComponent<Sprite>(level4).SetTransparency(1.0f);
+		auto lock = scene->GetLock3();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level4Cleared)
 	{
@@ -2862,6 +2904,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[9] && !(liste
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 		auto level5 = scene->GetSelect5();
 		ECS::GetComponent<Sprite>(level5).SetTransparency(1.0f);
+		auto lock = scene->GetLock4();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level5Cleared)
 	{
@@ -2893,6 +2937,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[12] && !(list
 	{
 		auto medal1 = scene->GetMedal2();
 		ECS::GetComponent<Sprite>(medal1).SetTransparency(1.0f);
+		auto lock = scene->GetLock1();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level2Cleared)
 	{
@@ -2900,6 +2946,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[12] && !(list
 		ECS::GetComponent<Sprite>(medal1).SetTransparency(1.0f);
 		auto level2 = scene->GetSelect2();
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+		auto lock = scene->GetLock2();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level3Cleared)
 	{
@@ -2909,6 +2957,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[12] && !(list
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
 		auto level4 = scene->GetSelect4();
 		ECS::GetComponent<Sprite>(level4).SetTransparency(1.0f);
+		auto lock = scene->GetLock3();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level4Cleared)
 	{
@@ -2916,6 +2966,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[12] && !(list
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 		auto level5 = scene->GetSelect5();
 		ECS::GetComponent<Sprite>(level5).SetTransparency(1.0f);
+		auto lock = scene->GetLock4();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level5Cleared)
 	{
@@ -2946,6 +2998,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[10] && !(list
 	{
 		auto medal1 = scene->GetMedal2();
 		ECS::GetComponent<Sprite>(medal1).SetTransparency(1.0f);
+		auto lock = scene->GetLock1();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level2Cleared)
 	{
@@ -2953,6 +3007,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[10] && !(list
 		ECS::GetComponent<Sprite>(medal1).SetTransparency(1.0f);
 		auto level2 = scene->GetSelect2();
 		ECS::GetComponent<Sprite>(level2).SetTransparency(1.0f);
+		auto lock = scene->GetLock2();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level3Cleared)
 	{
@@ -2960,6 +3016,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[10] && !(list
 		ECS::GetComponent<Sprite>(medal1).SetTransparency(1.0f);
 		auto level3 = scene->GetSelect3();
 		ECS::GetComponent<Sprite>(level3).SetTransparency(1.0f);
+		auto lock = scene->GetLock3();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level4Cleared)
 	{
@@ -2969,6 +3027,8 @@ if (Input::GetKeyDown(Key::Backspace) && m_activeScene == m_scenes[10] && !(list
 		ECS::GetComponent<Sprite>(level4).SetTransparency(1.0f);
 		auto level5 = scene->GetSelect5();
 		ECS::GetComponent<Sprite>(level5).SetTransparency(1.0f);
+		auto lock = scene->GetLock4();
+		ECS::GetComponent<Sprite>(lock).SetTransparency(0.0f);
 	}
 	if (level5Cleared)
 	{
