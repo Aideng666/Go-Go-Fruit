@@ -281,10 +281,6 @@ void LevelSelect3::Update()
 			timer = 0.f;
 		}
 	}
-	else
-	{
-		timer = 0;
-	}
 }
 
 void LevelSelect3::FadeBackground()

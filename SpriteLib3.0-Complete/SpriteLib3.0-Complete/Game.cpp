@@ -127,7 +127,6 @@ void Game::Update()
 	//Updates the active scene
 	m_activeScene->Update();
 
-//Add fade to m_scenes[12] and m_scenes[10] IN THAT ORDER (Level 4 is m_scenes[12], 5 is m_scenes[10]
 #pragma region Fade Effect
 //Fades the Menu 
 if (change)
@@ -239,7 +238,7 @@ if (change5)
 		m_scenes[12]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 		m_register = m_scenes[12]->GetScene();
 		m_activeScene = m_scenes[12];
-
+		timer = 0.f;
 		change5 = false;
 		loading = false;
 
@@ -260,7 +259,7 @@ if (change6)
 		m_scenes[10]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 		m_register = m_scenes[10]->GetScene();
 		m_activeScene = m_scenes[10];
-
+		timer = 0.f;
 		change6 = false;
 		loading = false;
 
@@ -1853,7 +1852,7 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[5] && !l
 	//}
 }
 //Level Select 4 to Level Select 5
-else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[6])
+else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[6] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 	
@@ -1866,7 +1865,7 @@ else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[6])
 	m_activeScene = m_scenes[7];
 }
 //Level Select 4 to Level Select 3
-else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[6])
+else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[6] && !loading)
 {
 	sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 	
@@ -1879,7 +1878,7 @@ else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[6])
 	m_activeScene = m_scenes[5];
 }
 //Level Select 5 to Level Select 1
-else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[7])
+else if (Input::GetKeyDown(Key::RightArrow) && m_activeScene == m_scenes[7] && !loading)
 {
 sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 
@@ -1892,7 +1891,7 @@ m_register = m_scenes[3]->GetScene();
 m_activeScene = m_scenes[3];
 }
 //Level Select 5 to Level Select 4
-else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[7])
+else if (Input::GetKeyDown(Key::LeftArrow) && m_activeScene == m_scenes[7] && !loading)
 {
 sndPlaySound("MenuClick.wav", SND_FILENAME | SND_ASYNC);
 

@@ -462,10 +462,6 @@ void LevelSelect2::Update()
 			timer = 0.f;
 		}
 	}
-	else
-	{
-		timer = 0;
-	}
 }
 
 void LevelSelect2::FadeBackground()
