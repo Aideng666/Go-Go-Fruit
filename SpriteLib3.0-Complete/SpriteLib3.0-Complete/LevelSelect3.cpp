@@ -266,6 +266,7 @@ void LevelSelect3::InitScene(float windowWidth, float windowHeight)
 		m_play = entity;
 	}
 
+#pragma region Medals
 	{
 		auto medalAnim = File::LoadJSON("Medal.json");
 
@@ -293,6 +294,120 @@ void LevelSelect3::InitScene(float windowWidth, float windowHeight)
 
 		m_medal = entity;
 	}
+
+	{
+		auto medalAnim = File::LoadJSON("Medal.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "MedalSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(medalAnim["Shine"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 15, 15, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-80.f, 60.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Lvl 1 Medal");
+
+		m_medal2 = entity;
+	}
+
+	{
+		auto medalAnim = File::LoadJSON("Medal.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "MedalSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(medalAnim["Shine"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 15, 15, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(38.f, 60.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Lvl 2 Medal");
+
+		m_medal3 = entity;
+	}
+
+	{
+		auto medalAnim = File::LoadJSON("Medal.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "MedalSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(medalAnim["Shine"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 15, 15, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-80.f, -25.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Lvl 4 Medal");
+
+		m_medal4 = entity;
+	}
+
+	{
+		auto medalAnim = File::LoadJSON("Medal.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "MedalSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(medalAnim["Shine"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 15, 15, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(156.f, -25.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Lvl 5 Medal");
+
+		m_medal5 = entity;
+	}
+#pragma endregion
+
 }
 void LevelSelect3::Update()
 {
@@ -425,4 +540,24 @@ int LevelSelect3::GetPlay()
 int LevelSelect3::GetMedal()
 {
 	return m_medal;
+}
+
+int LevelSelect3::GetMedal2()
+{
+	return m_medal2;
+}
+
+int LevelSelect3::GetMedal3()
+{
+	return m_medal3;
+}
+
+int LevelSelect3::GetMedal4()
+{
+	return m_medal4;
+}
+
+int LevelSelect3::GetMedal5()
+{
+	return m_medal5;
 }
