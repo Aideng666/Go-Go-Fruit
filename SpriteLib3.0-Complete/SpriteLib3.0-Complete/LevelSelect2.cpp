@@ -267,6 +267,7 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 		m_play = entity;
 	}
 
+#pragma region Medals
 	{
 		auto medalAnim = File::LoadJSON("Medal.json");
 
@@ -294,7 +295,6 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		m_medal = entity;
 	}
-
 	{
 		auto medalAnim = File::LoadJSON("Medal.json");
 
@@ -322,7 +322,6 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		m_medal2 = entity;
 	}
-
 	{
 		auto medalAnim = File::LoadJSON("Medal.json");
 
@@ -350,7 +349,6 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		m_medal3 = entity;
 	}
-
 	{
 		auto medalAnim = File::LoadJSON("Medal.json");
 
@@ -378,7 +376,6 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		m_medal4 = entity;
 	}
-
 	{
 		auto medalAnim = File::LoadJSON("Medal.json");
 
@@ -406,6 +403,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		m_medal5 = entity;
 	}
+#pragma endregion
+
 }
 
 void LevelSelect2::Update()
