@@ -39,6 +39,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select Text");
+
+		m_text = entity;
 	}
 
 #pragma region Level Images
@@ -56,6 +58,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 1");
+
+		select1 = entity;
 	}
 
 	{
@@ -71,6 +75,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 2");
+
+		select2 = entity;
 	}
 
 	{
@@ -87,6 +93,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 3");
+
+		select3 = entity;
 	}
 
 	{
@@ -103,6 +111,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 4");
+
+		select4 = entity;
 	}
 
 	{
@@ -119,6 +129,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level Select 5");
+
+		select5 = entity;
 	}
 #pragma endregion
 
@@ -136,6 +148,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 1 Label");
+
+		label1 = entity;
 	}
 
 	{
@@ -151,6 +165,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 2 Label");
+
+		label2 = entity;
 	}
 
 	{
@@ -166,6 +182,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 3 Label");
+
+		label3 = entity;
 	}
 
 	{
@@ -181,6 +199,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 4 Label");
+
+		label4 = entity;
 	}
 
 	{
@@ -196,6 +216,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Level 5 Label");
+
+		label5 = entity;
 	}
 #pragma endregion
 
@@ -213,6 +235,8 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Border");
+
+		m_border = entity;
 	}
 
 	//Press Play Text
@@ -240,7 +264,7 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blink Play Text");
 
-		//m_play = entity;
+		m_play = entity;
 	}
 
 	//{
@@ -491,14 +515,64 @@ int LevelSelect2::GetMenu()
 	return m_menu;
 }
 
-int LevelSelect2::GetRight()
+int LevelSelect2::GetSelect1()
 {
-	return m_right;
+	return select1;
 }
 
-int LevelSelect2::GetLeft()
+int LevelSelect2::GetSelect2()
 {
-	return m_left;
+	return select2;
+}
+
+int LevelSelect2::GetSelect3()
+{
+	return select3;
+}
+
+int LevelSelect2::GetSelect4()
+{
+	return select4;
+}
+
+int LevelSelect2::GetSelect5()
+{
+	return select5;
+}
+
+int LevelSelect2::GetLabel1()
+{
+	return label1;
+}
+
+int LevelSelect2::GetLabel2()
+{
+	return label2;
+}
+
+int LevelSelect2::GetLabel3()
+{
+	return label3;
+}
+
+int LevelSelect2::GetLabel4()
+{
+	return label4;
+}
+
+int LevelSelect2::GetLabel5()
+{
+	return label5;
+}
+
+int LevelSelect2::GetText()
+{
+	return m_text;
+}
+
+int LevelSelect2::GetBorder()
+{
+	return m_border;
 }
 
 int LevelSelect2::GetPlay()

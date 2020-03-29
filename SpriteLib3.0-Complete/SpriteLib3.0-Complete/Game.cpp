@@ -225,6 +225,48 @@ if (change4)
 		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
 }
+
+if (change5)
+{
+	timer += Timer::deltaTime;
+
+	if (timer >= 2.f)
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[12]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[12]->GetScene();
+		m_activeScene = m_scenes[12];
+
+		change5 = false;
+		loading = false;
+
+		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
+	}
+}
+
+if (change6)
+{
+	timer += Timer::deltaTime;
+
+	if (timer >= 2.f)
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[10]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[10]->GetScene();
+		m_activeScene = m_scenes[10];
+
+		change6 = false;
+		loading = false;
+
+		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
+	}
+}
 #pragma endregion
 
 #pragma region Shake Effect
@@ -1875,9 +1917,19 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[3])
 	loading = true;
 
 	//ECS::DestroyEntity(scene->GetMenu());
-	//ECS::DestroyEntity(scene->GetRight());
-	//ECS::DestroyEntity(scene->GetLeft());
-	////ECS::DestroyEntity(scene->GetPlay());
+	ECS::DestroyEntity(scene->GetSelect1());
+	ECS::DestroyEntity(scene->GetSelect2());
+	ECS::DestroyEntity(scene->GetSelect3());
+	ECS::DestroyEntity(scene->GetSelect4());
+	ECS::DestroyEntity(scene->GetSelect5());
+	ECS::DestroyEntity(scene->GetLabel1());
+	ECS::DestroyEntity(scene->GetLabel2());
+	ECS::DestroyEntity(scene->GetLabel3());
+	ECS::DestroyEntity(scene->GetLabel4());
+	ECS::DestroyEntity(scene->GetLabel5());
+	ECS::DestroyEntity(scene->GetText());
+	ECS::DestroyEntity(scene->GetBorder());
+	ECS::DestroyEntity(scene->GetPlay());
 	//ECS::DestroyEntity(scene->GetLevel1Template());
 	//ECS::DestroyEntity(scene->GetLevel2Template());
 	//ECS::DestroyEntity(scene->GetLevel3Template());
@@ -1896,9 +1948,19 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[4] /*&& level1Cle
 	loading = true;
 
 	//ECS::DestroyEntity(scene->GetMenu());
-	//ECS::DestroyEntity(scene->GetRight());
-	//ECS::DestroyEntity(scene->GetLeft());
-	////ECS::DestroyEntity(scene->GetPlay());
+	ECS::DestroyEntity(scene->GetSelect1());
+	ECS::DestroyEntity(scene->GetSelect2());
+	ECS::DestroyEntity(scene->GetSelect3());
+	ECS::DestroyEntity(scene->GetSelect4());
+	ECS::DestroyEntity(scene->GetSelect5());
+	ECS::DestroyEntity(scene->GetLabel1());
+	ECS::DestroyEntity(scene->GetLabel2());
+	ECS::DestroyEntity(scene->GetLabel3());
+	ECS::DestroyEntity(scene->GetLabel4());
+	ECS::DestroyEntity(scene->GetLabel5());
+	ECS::DestroyEntity(scene->GetText());
+	ECS::DestroyEntity(scene->GetBorder());
+	ECS::DestroyEntity(scene->GetPlay());
 	//ECS::DestroyEntity(scene->GetLevel1Template());
 	//ECS::DestroyEntity(scene->GetLevel2Template());
 	//ECS::DestroyEntity(scene->GetLevel3Template());
@@ -1917,9 +1979,19 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[5] /*&& level2Cle
 	loading = true;
 
 	//ECS::DestroyEntity(scene->GetMenu());
-	//ECS::DestroyEntity(scene->GetRight());
-	//ECS::DestroyEntity(scene->GetLeft());
-	////ECS::DestroyEntity(scene->GetPlay());
+	ECS::DestroyEntity(scene->GetSelect1());
+	ECS::DestroyEntity(scene->GetSelect2());
+	ECS::DestroyEntity(scene->GetSelect3());
+	ECS::DestroyEntity(scene->GetSelect4());
+	ECS::DestroyEntity(scene->GetSelect5());
+	ECS::DestroyEntity(scene->GetLabel1());
+	ECS::DestroyEntity(scene->GetLabel2());
+	ECS::DestroyEntity(scene->GetLabel3());
+	ECS::DestroyEntity(scene->GetLabel4());
+	ECS::DestroyEntity(scene->GetLabel5());
+	ECS::DestroyEntity(scene->GetText());
+	ECS::DestroyEntity(scene->GetBorder());
+	ECS::DestroyEntity(scene->GetPlay());
 	//ECS::DestroyEntity(scene->GetMedal());
 	//ECS::DestroyEntity(scene->GetLevel1Template());
 	//ECS::DestroyEntity(scene->GetLevel2Template());
@@ -1930,30 +2002,56 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[6])
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 
-	SceneEditor::ResetEditor();
 
-	m_activeScene->Unload();
+	LevelSelect4* scene = (LevelSelect4*)m_activeScene;
 
-	m_scenes[12]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[12]->GetScene();
-	m_activeScene = m_scenes[12];
+	scene->SetFade(true);
 
-	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
+	change5 = true;
+	loading = true;
+
+	//ECS::DestroyEntity(scene->GetMenu());
+	ECS::DestroyEntity(scene->GetSelect1());
+	ECS::DestroyEntity(scene->GetSelect2());
+	ECS::DestroyEntity(scene->GetSelect3());
+	ECS::DestroyEntity(scene->GetSelect4());
+	ECS::DestroyEntity(scene->GetSelect5());
+	ECS::DestroyEntity(scene->GetLabel1());
+	ECS::DestroyEntity(scene->GetLabel2());
+	ECS::DestroyEntity(scene->GetLabel3());
+	ECS::DestroyEntity(scene->GetLabel4());
+	ECS::DestroyEntity(scene->GetLabel5());
+	ECS::DestroyEntity(scene->GetText());
+	ECS::DestroyEntity(scene->GetBorder());
+	ECS::DestroyEntity(scene->GetPlay());
 }
 //Level Select 5 to Level 5
 if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[7])
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 
-	SceneEditor::ResetEditor();
+	LevelSelect5* scene = (LevelSelect5*)m_activeScene;
 
-	m_activeScene->Unload();
+	scene->SetFade(true);
 
-	m_scenes[10]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[10]->GetScene();
-	m_activeScene = m_scenes[10];
+	change6 = true;
+	loading = true;
 
-	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
+	//ECS::DestroyEntity(scene->GetMenu());
+	ECS::DestroyEntity(scene->GetSelect1());
+	ECS::DestroyEntity(scene->GetSelect2());
+	ECS::DestroyEntity(scene->GetSelect3());
+	ECS::DestroyEntity(scene->GetSelect4());
+	ECS::DestroyEntity(scene->GetSelect5());
+	ECS::DestroyEntity(scene->GetLabel1());
+	ECS::DestroyEntity(scene->GetLabel2());
+	ECS::DestroyEntity(scene->GetLabel3());
+	ECS::DestroyEntity(scene->GetLabel4());
+	ECS::DestroyEntity(scene->GetLabel5());
+	ECS::DestroyEntity(scene->GetText());
+	ECS::DestroyEntity(scene->GetBorder());
+	ECS::DestroyEntity(scene->GetPlay());
+
 }
 #pragma endregion
 
