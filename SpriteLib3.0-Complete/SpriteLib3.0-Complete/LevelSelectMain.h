@@ -28,11 +28,7 @@ public:
 	int GetText();
 	int GetBorder();
 	int GetPlay();
-	int GetMedal();
-
-	int GetLevel1Template();
-	int GetLevel2Template();
-	int GetLevel3Template();
+	int GetMedal(), GetMedal2(), GetMedal3(), GetMedal4(), GetMedal5();
 
 private:
 	float m_repeatTime = 1.f;
@@ -54,14 +50,10 @@ private:
 	int m_text;
 	int m_border;
 	int m_play;
-	int m_medal;
+	int m_medal, m_medal2, m_medal3, m_medal4, m_medal5;
 	float timer = 0.f;
 	vec4 m_clearColor2 = vec4(0.f, 0.f, 0.f, 1.f);
 	vec4 m_clearColor1 = vec4(0.7058823529f, 0.9803921569f, 1.f, 1.f);
 	vec4 m_clearColor3 = vec4(0.753f, 1.f, 1.f, 1.f);
 	vec4 m_clearColor4 = vec4(0.984f, 0.855f, 0.984f, 1.f);
-
-	int level1Template;
-	int level2Template;
-	int level3Template;
 };

@@ -30,10 +30,6 @@ public:
 	int GetPlay();
 	int GetMedal();
 
-	int GetLevel1Template();
-	int GetLevel2Template();
-	int GetLevel3Template();
-
 private:
 	float m_repeatTime = 1.f;
 	float m_lerpVal = 0.f;
@@ -60,8 +56,4 @@ private:
 	vec4 m_clearColor1 = vec4(0.7058823529f, 0.9803921569f, 1.f, 1.f);
 	vec4 m_clearColor3 = vec4(1.f, 0.796f, 0.584f, 1.f);
 	vec4 m_clearColor4 = vec4(0.796f, 0.831f, 1.f, 1.f);
-
-	int level1Template;
-	int level2Template;
-	int level3Template;
 };

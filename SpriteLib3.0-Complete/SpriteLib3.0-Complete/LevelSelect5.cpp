@@ -53,7 +53,6 @@ void LevelSelect5::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "LevelSelect1Temp.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 100, 56);
-		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-118.f, 42.f, -98.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
@@ -125,6 +124,7 @@ void LevelSelect5::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "LevelSelect5Temp.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 100, 56);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(118.f, -42.f, -98.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
@@ -266,6 +266,63 @@ void LevelSelect5::InitScene(float windowWidth, float windowHeight)
 
 		m_play = entity;
 	}
+
+
+	{
+		auto medalAnim = File::LoadJSON("Medal.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "MedalSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(medalAnim["Shine"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 15, 15, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(156.f, -25.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Medal");
+
+		m_medal = entity;
+	}
+
+	{
+		auto medalAnim = File::LoadJSON("Medal.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "MedalSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(medalAnim["Shine"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 15, 15, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-80.f, -60.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Lvl 1 Medal");
+
+		m_medal2 = entity;
+	}
 }
 
 void LevelSelect5::Update()
@@ -405,17 +462,7 @@ int LevelSelect5::GetMedal()
 	return m_medal;
 }
 
-int LevelSelect5::GetLevel1Template()
+int LevelSelect5::GetMedal2()
 {
-	return level1Template;
-}
-
-int LevelSelect5::GetLevel2Template()
-{
-	return level2Template;
-}
-
-int LevelSelect5::GetLevel3Template()
-{
-	return level3Template;
+	return m_medal2;
 }

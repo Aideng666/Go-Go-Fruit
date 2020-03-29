@@ -53,7 +53,6 @@ void LevelSelect4::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "LevelSelect1Temp.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 100, 56);
-		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-118.f, 42.f, -98.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
@@ -107,6 +106,7 @@ void LevelSelect4::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "LevelSelect4Temp.png";
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 100, 56);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.7f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-118.f, -42.f, -98.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
@@ -266,6 +266,34 @@ void LevelSelect4::InitScene(float windowWidth, float windowHeight)
 
 		m_play = entity;
 	}
+
+	{
+		auto medalAnim = File::LoadJSON("Medal.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "MedalSS.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(medalAnim["Shine"]);
+		animController.GetAnimation(0);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 15, 15, true, &animController);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-80.f, -25.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Medal");
+
+		m_medal = entity;
+	}
 }
 
 void LevelSelect4::Update()
@@ -398,19 +426,4 @@ int LevelSelect4::GetPlay()
 int LevelSelect4::GetMedal()
 {
 	return m_medal;
-}
-
-int LevelSelect4::GetLevel1Template()
-{
-	return level1Template;
-}
-
-int LevelSelect4::GetLevel2Template()
-{
-	return level2Template;
-}
-
-int LevelSelect4::GetLevel3Template()
-{
-	return level3Template;
 }
