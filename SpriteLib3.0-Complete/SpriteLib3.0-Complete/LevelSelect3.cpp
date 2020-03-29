@@ -257,7 +257,7 @@ void LevelSelect3::InitScene(float windowWidth, float windowHeight)
 		animController.GetAnimation(0);
 		animController.SetActiveAnim(0);
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 100, 30, true, &animController);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 130, 39, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, -35.f, -97.f));
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();

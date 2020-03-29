@@ -57,8 +57,8 @@ private:
 	float timer = 0.f;
 	vec4 m_clearColor2 = vec4(0.f, 0.f, 0.f, 1.f);
 	vec4 m_clearColor1 = vec4(0.7058823529f, 0.9803921569f, 1.f, 1.f);
-	vec4 m_clearColor3 = vec4(0.153f, 0.992f, 0.961f, 1.f);
-	vec4 m_clearColor4 = vec4(0.969f, 0.396f, 0.722f, 1.f);
+	vec4 m_clearColor3 = vec4(0.863f, 0.812f, 1.f, 1.f);
+	vec4 m_clearColor4 = vec4(1.f, 0.796f, 0.835f, 1.f);
 
 	int level1Template;
 	int level2Template;
