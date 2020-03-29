@@ -408,6 +408,74 @@ void LevelSelect3::InitScene(float windowWidth, float windowHeight)
 	}
 #pragma endregion
 
+#pragma region Locks
+	//Lock Sprite
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "Lock.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 31);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 44.f, -97.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Lock 1");
+
+		m_lock1 = entity;
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "Lock.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 31);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(120.f, 44.f, -97.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Lock 2");
+
+		m_lock2 = entity;
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "Lock.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 31);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-117.f, -40.f, -97.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Lock 3");
+
+		m_lock3 = entity;
+	}
+	{
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "Lock.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 31);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(120.f, -40.f, -97.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Lock 4");
+
+		m_lock4 = entity;
+	}
+#pragma endregion
+
 }
 void LevelSelect3::Update()
 {
@@ -560,4 +628,24 @@ int LevelSelect3::GetMedal4()
 int LevelSelect3::GetMedal5()
 {
 	return m_medal5;
+}
+
+int LevelSelect3::GetLock1()
+{
+	return m_lock1;
+}
+
+int LevelSelect3::GetLock2()
+{
+	return m_lock2;
+}
+
+int LevelSelect3::GetLock3()
+{
+	return m_lock3;
+}
+
+int LevelSelect3::GetLock4()
+{
+	return m_lock4;
 }
