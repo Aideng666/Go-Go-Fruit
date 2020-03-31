@@ -16,7 +16,7 @@ void LevelTwo::InitScene(float windowWidth, float windowHeight)
 
 	float aspectRatio = windowWidth / windowHeight;
 
-	//sndPlaySound("BGM.wav", SND_FILENAME | SND_ASYNC | SND_LOOP);
+	sndPlaySound("BGM.wav", SND_FILENAME | SND_ASYNC | SND_LOOP);
 
 	//Game Camera
 	{
