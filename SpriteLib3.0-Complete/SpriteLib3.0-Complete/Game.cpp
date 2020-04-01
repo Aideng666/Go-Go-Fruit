@@ -1734,11 +1734,13 @@ void Game::KeyboardHold()
 			{
 				blueSpeed = -12.f;
 				blueAnim.SetActiveAnim(0);
+				dir = LEFT;
 			}
 			if (Input::GetKey(Key::D))
 			{
 				blueSpeed = 12.f;
 				blueAnim.SetActiveAnim(1);
+				dir = RIGHT;
 			}
 			if (Input::GetKey(Key::LeftArrow))
 			{
@@ -3138,27 +3140,6 @@ if (Input::GetKeyDown(Key::NumPad5))
 }
 #pragma endregion
 
-	if (Input::GetKeyDown(Key::One))
-	{
-		level1Cleared = true;
-	}
-	if (Input::GetKeyDown(Key::Two))
-	{
-		level2Cleared = true;
-	}
-	if (Input::GetKeyDown(Key::Three))
-	{
-		level3Cleared = true;
-	}
-	if (Input::GetKeyDown(Key::Four))
-	{
-		level4Cleared = true;
-	}
-	if (Input::GetKeyDown(Key::Five))
-	{
-		level5Cleared = true;
-	}
-
 }
 
 void Game::KeyboardUp()
@@ -3179,6 +3160,25 @@ void Game::KeyboardUp()
 	if (Input::GetKeyUp(Key::P))
 	{
 		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
+	}
+
+	for (int i = 8; i < m_scenes.size(); ++i)
+	{
+		if (m_activeScene == m_scenes[i])
+		{
+			auto& blueAnim = ECS::GetComponent<AnimationController>(EntityIdentifier::MainPlayer());
+
+			if (Input::GetKeyUp(Key::A) && dir == LEFT)
+			{
+				blueAnim.SetActiveAnim(2);
+				blueAnim.GetAnimation(2).Reset();
+			}
+			if (Input::GetKeyUp(Key::D) && dir == RIGHT)
+			{
+				blueAnim.SetActiveAnim(3);
+				blueAnim.GetAnimation(3).Reset();
+			}										
+		}
 	}
 }
 

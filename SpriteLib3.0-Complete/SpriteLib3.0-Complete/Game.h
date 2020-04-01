@@ -128,6 +128,10 @@ private:
 
 	float levelTimer = 0.f;
 	float jelloTimer = 0.f;
+
+	const int LEFT = 0;
+	const int RIGHT = 1;
+	int dir = RIGHT;
 };
 
 

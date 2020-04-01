@@ -186,7 +186,7 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 #pragma region Player Entities
 	//Blueberry
 	{
-		auto blueberryAnim = File::LoadJSON("Blueberry.json");
+		auto blueberryAnim = File::LoadJSON("BlueberryFinal.json");
 
 		auto entity = ECS::CreateEntity();
 
@@ -198,37 +198,41 @@ void LevelFour::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<PhysicsBody>(entity);
 		ECS::AttachComponent<AnimationController>(entity);
 
-		std::string fileName = "BlueberrySS.png";
+		std::string fileName = "BlueberryFull.png";
 
 		auto& animController = ECS::GetComponent<AnimationController>(entity);
 		animController.InitUVs(fileName);
 
-		animController.AddAnimation(blueberryAnim["WalkLeft"]);
+		animController.AddAnimation(blueberryAnim["LeftWalk"]);
 		animController.GetAnimation(0);
-		animController.AddAnimation(blueberryAnim["WalkRight"]);
+		animController.AddAnimation(blueberryAnim["RightWalk"]);
 		animController.GetAnimation(1);
-		animController.SetActiveAnim(1);
+		animController.AddAnimation(blueberryAnim["LeftIdle"]);
+		animController.GetAnimation(2);
+		animController.AddAnimation(blueberryAnim["RightIdle"]);
+		animController.GetAnimation(3);
+		animController.SetActiveAnim(3);
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40.f, 34.f, true, &animController);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40.f, 40.f, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-100.f, 50.f, 99.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 		float shrinkX = tempSpr.GetWidth() / 40.f + 26;
-		float shrinkY = tempSpr.GetWidth() / 34.f + 18;
+		float shrinkY = tempSpr.GetWidth() / 40.f + 21;
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-118.f), float32(-75.f));
+		tempDef.position.Set(float32(-118.f), float32(-74.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(1.f, -9.f), false);
+			vec2(1.f, -10.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(60.f);
