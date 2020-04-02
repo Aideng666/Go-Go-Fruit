@@ -347,10 +347,12 @@ void GoGoIntro::PlayIntro()
 
 	if (start)
 	{
+
 		step1 = true;
 		start = false;
 
 		ECS::DestroyEntity(text);
+		sndPlaySound("Intro Music.wav", SND_FILENAME | SND_ASYNC);
 	}
 
 	if (step1)
@@ -435,6 +437,7 @@ void GoGoIntro::PlayIntro()
 			timer = 0.f;
 			step5 = false;
 			step6 = true;
+			sndPlaySound("Whoosh.wav", SND_FILENAME | SND_ASYNC);
 		}
 	}
 
@@ -450,6 +453,7 @@ void GoGoIntro::PlayIntro()
 			timer = 0.f;
 			step6 = false;
 			step7 = true;
+			sndPlaySound("Run.wav", SND_FILENAME | SND_ASYNC);
 		}
 	}
 
