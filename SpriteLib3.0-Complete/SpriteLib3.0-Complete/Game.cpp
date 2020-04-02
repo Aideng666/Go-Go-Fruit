@@ -71,9 +71,9 @@ void Game::InitGame()
 	m_scenes.push_back(new GoGoIntro(introName));
 
 	//Sets active scene reference to our scene
-	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[1]->GetScene();
-	m_activeScene = m_scenes[1];
+	m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[8]->GetScene();
+	m_activeScene = m_scenes[8];
 	PhysicsSystem::Init();
 	
 	for (int i = 8; i < 13; ++i)
@@ -1777,9 +1777,11 @@ void Game::KeyboardHold()
 			float waterChange = waterSpeed - waterVel.x;
 			float blueForce = (blueBody->GetMass() * blueChange);
 			float waterForce = (waterBody->GetMass() * waterChange);
-	
+			if (!(listener.GetWin()))
+			{
 			blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
 			waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
+			}
 		}
 	}
 #pragma endregion

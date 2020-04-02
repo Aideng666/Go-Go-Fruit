@@ -220,8 +220,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		tempBody->SetFixedRotation(true);
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(1.f, -10.f), false);
+		tempPhsBody = PhysicsBody(tempBody, float(14), float(19), vec2(1.f, -10.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(60.f);
@@ -342,8 +341,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 		tempBody->SetFixedRotation(true);
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(-1.f, -3.f), false);
+		tempPhsBody = PhysicsBody(tempBody, float(24), float(22), vec2(-1.f, -3.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(60.f);
