@@ -71,9 +71,9 @@ void Game::InitGame()
 	m_scenes.push_back(new GoGoIntro(introName));
 
 	//Sets active scene reference to our scene
-	m_scenes[13]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[13]->GetScene();
-	m_activeScene = m_scenes[13];
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
 	PhysicsSystem::Init();
 	
 	for (int i = 8; i < 13; ++i)
@@ -1747,12 +1747,14 @@ void Game::KeyboardHold()
 			if (Input::GetKey(Key::LeftArrow))
 			{
 				waterSpeed = -12.f;
-				waterAnim.SetActiveAnim(0);
+				waterAnim.SetActiveAnim(2);
+				dir2 = LEFT2;
 			}
 			if (Input::GetKey(Key::RightArrow))
 			{
 				waterSpeed = 12.f;
-				waterAnim.SetActiveAnim(1);
+				waterAnim.SetActiveAnim(3);
+				dir2 = RIGHT2;
 			}
 	
 			float blueChange = blueSpeed - blueVel.x;
@@ -3398,6 +3400,7 @@ void Game::KeyboardUp()
 		if (m_activeScene == m_scenes[i])
 		{
 			auto& blueAnim = ECS::GetComponent<AnimationController>(EntityIdentifier::MainPlayer());
+			auto& waterAnim = ECS::GetComponent<AnimationController>(EntityIdentifier::MainPlayer2());
 
 			if (Input::GetKeyUp(Key::A) && dir == LEFT)
 			{
@@ -3408,7 +3411,18 @@ void Game::KeyboardUp()
 			{
 				blueAnim.SetActiveAnim(3);
 				blueAnim.GetAnimation(3).Reset();
-			}										
+			}	
+
+			if (Input::GetKeyUp(Key::LeftArrow) && dir2 == LEFT2)
+			{
+				waterAnim.SetActiveAnim(1);
+				waterAnim.GetAnimation(1).Reset();
+			}
+			if (Input::GetKeyUp(Key::RightArrow) && dir2 == RIGHT2)
+			{
+				waterAnim.SetActiveAnim(0);
+				waterAnim.GetAnimation(0).Reset();
+			}
 		}
 	}
 }

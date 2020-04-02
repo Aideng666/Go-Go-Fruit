@@ -133,6 +133,9 @@ private:
 	const int LEFT = 0;
 	const int RIGHT = 1;
 	int dir = RIGHT;
+	const int LEFT2 = 0;
+	const int RIGHT2 = 1;
+	int dir2 = RIGHT;
 };
 
 

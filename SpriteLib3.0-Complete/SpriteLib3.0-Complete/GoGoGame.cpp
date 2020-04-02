@@ -253,7 +253,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 	//Watermelon
 	{
-		auto waterAnim = File::LoadJSON("Watermelon.json");
+		auto waterAnim = File::LoadJSON("WatermelonFinal.json");
 
 		auto entity = ECS::CreateEntity();
 
@@ -265,37 +265,105 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<PhysicsBody>(entity);
 		ECS::AttachComponent<AnimationController>(entity);
 
-		std::string fileName = "WatermelonSS.png";
+		std::string fileName = "WatermelonFull.png";
 
 		auto& animController = ECS::GetComponent<AnimationController>(entity);
 		animController.InitUVs(fileName);
 
-		animController.AddAnimation(waterAnim["WalkLeft"]);
-		animController.GetAnimation(0);
-		animController.AddAnimation(waterAnim["WalkRight"]);
-		animController.GetAnimation(1);
-		animController.SetActiveAnim(1);
+		animController.AddAnimation(Animation());
+		auto& anim = animController.GetAnimation(0);
+		anim.AddFrame(vec2(1301.f, 2599.f), vec2(1949.f, 1951.f));
+		anim.AddFrame(vec2(1951.f, 2599.f), vec2(2599.f, 1951.f));
+		anim.AddFrame(vec2(1.f, 3899.f), vec2(649.f, 3251.f));
+		anim.AddFrame(vec2(1.f, 3899.f), vec2(649.f, 3251.f));
+		anim.AddFrame(vec2(3901.f, 3899.f), vec2(4549.f, 3251.f));
+		anim.AddFrame(vec2(1.f, 4549.f), vec2(649.f, 3901.f));
+		anim.AddFrame(vec2(651.f, 4549.f), vec2(1299.f, 3901.f));
+		anim.AddFrame(vec2(651.f, 4549.f), vec2(1299.f, 3901.f));
+		anim.AddFrame(vec2(1301.f, 4549.f), vec2(1949.f, 3901.f));
+		anim.AddFrame(vec2(1951.f, 4549.f), vec2(2599.f, 3901.f));
+		anim.AddFrame(vec2(2601.f, 2599.f), vec2(3249.f, 1951.f));
+		anim.AddFrame(vec2(2601.f, 2599.f), vec2(3249.f, 1951.f));
+		anim.AddFrame(vec2(2601.f, 2599.f), vec2(3249.f, 1951.f));
+		anim.AddFrame(vec2(3251.f, 2599.f), vec2(3899.f, 1951.f));
+		anim.AddFrame(vec2(3901.f, 2599.f), vec2(4549.f, 1951.f));
+		anim.AddFrame(vec2(3901.f, 2599.f), vec2(4549.f, 1951.f));
+		anim.AddFrame(vec2(4551.f, 2599.f), vec2(5199.f, 1951.f));
+		anim.AddFrame(vec2(5201.f, 2599.f), vec2(5849.f, 1951.f));
+		anim.AddFrame(vec2(1.f, 3249.f), vec2(649.f, 2601.f));
+		anim.AddFrame(vec2(1.f, 3249.f), vec2(649.f, 2601.f));
+		anim.AddFrame(vec2(651.f, 3249.f), vec2(1299.f, 2601.f));
+		anim.AddFrame(vec2(1301.f, 3249.f), vec2(1949.f, 2601.f));
+		anim.AddFrame(vec2(1951.f, 3249.f), vec2(2599.f, 2601.f));
+		anim.AddFrame(vec2(1951.f, 3249.f), vec2(2599.f, 2601.f));
+		anim.AddFrame(vec2(2601.f, 3249.f), vec2(3249.f, 2601.f));
+		anim.AddFrame(vec2(3251.f, 3249.f), vec2(3899.f, 2601.f));
+		anim.AddFrame(vec2(3901.f, 3249.f), vec2(4549.f, 2601.f));
+		anim.AddFrame(vec2(3901.f, 3249.f), vec2(4549.f, 2601.f));
+		anim.AddFrame(vec2(4551.f, 3249.f), vec2(5199.f, 2601.f));
+		anim.AddFrame(vec2(5201.f, 3249.f), vec2(5849.f, 2601.f));
+		anim.AddFrame(vec2(651.f, 3899.f), vec2(1299.f, 3251.f));
+		anim.AddFrame(vec2(651.f, 3899.f), vec2(1299.f, 3251.f));
+		anim.AddFrame(vec2(1301.f, 3899.f), vec2(1949.f, 3251.f));
+		anim.AddFrame(vec2(1951.f, 3899.f), vec2(2599.f, 3251.f));
+		anim.AddFrame(vec2(1951.f, 3899.f), vec2(2599.f, 3251.f));
+		anim.AddFrame(vec2(1951.f, 3899.f), vec2(2599.f, 3251.f));
+		anim.AddFrame(vec2(2601.f, 3899.f), vec2(3249.f, 3251.f));
+		anim.AddFrame(vec2(3251.f, 3899.f), vec2(3899.f, 3251.f));
+		anim.AddFrame(vec2(3251.f, 3899.f), vec2(3899.f, 3251.f));
+		anim.AddFrame(vec2(2601.f, 3899.f), vec2(3249.f, 3251.f));
+		anim.AddFrame(vec2(1301.f, 3899.f), vec2(1949.f, 3251.f));
+		anim.AddFrame(vec2(651.f, 3899.f), vec2(1299.f, 3251.f));
+		anim.AddFrame(vec2(651.f, 3899.f), vec2(1299.f, 3251.f));
+		anim.AddFrame(vec2(5201.f, 3249.f), vec2(5849.f, 2601.f));
+		anim.AddFrame(vec2(1951.f, 3899.f), vec2(2599.f, 3251.f));
+		anim.AddFrame(vec2(1951.f, 3899.f), vec2(2599.f, 3251.f));
+		anim.AddFrame(vec2(1951.f, 3899.f), vec2(2599.f, 3251.f));
+		anim.AddFrame(vec2(4551.f, 3899.f), vec2(5199.f, 3251.f));
+		anim.AddFrame(vec2(5201.f, 3899.f), vec2(5849.f, 3251.f));
+		anim.AddFrame(vec2(3251.f, 3899.f), vec2(3899.f, 3251.f));
+		anim.AddFrame(vec2(2601.f, 3899.f), vec2(3249.f, 3251.f));
+		anim.AddFrame(vec2(1301.f, 3899.f), vec2(1949.f, 3251.f));
+		anim.AddFrame(vec2(651.f, 3899.f), vec2(1299.f, 3251.f));
+		anim.AddFrame(vec2(651.f, 3899.f), vec2(1299.f, 3251.f));
+		anim.AddFrame(vec2(5201.f, 3249.f), vec2(5849.f, 2601.f));
+		anim.AddFrame(vec2(2601.f, 3249.f), vec2(3249.f, 2601.f));
+		anim.AddFrame(vec2(2601.f, 3249.f), vec2(3249.f, 2601.f));
+		anim.AddFrame(vec2(3251.f, 3249.f), vec2(3899.f, 2601.f));
+		anim.AddFrame(vec2(5201.f, 3249.f), vec2(5849.f, 2601.f));
+		anim.AddFrame(vec2(651.f, 3899.f), vec2(1299.f, 3251.f));
+		anim.AddFrame(vec2(651.f, 3899.f), vec2(1299.f, 3251.f));
+		anim.SetRepeating(true);
+		anim.SetSecPerFrame(0.04f);
 
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 35.f, 35.f, true, &animController);
+		animController.AddAnimation(waterAnim["LeftIdle"]);
+		animController.GetAnimation(1);
+		animController.AddAnimation(waterAnim["LeftWalk"]);
+		animController.GetAnimation(2);
+		animController.AddAnimation(waterAnim["RightWalk"]);
+		animController.GetAnimation(3);
+		animController.SetActiveAnim(0);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 48.f, 48.f, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-160.f, 60.f, 99.f));
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 35.f + 20;
-		float shrinkY = tempSpr.GetWidth() / 35.f + 14;
+		float shrinkX = tempSpr.GetWidth() / 48.f + 22;
+		float shrinkY = tempSpr.GetWidth() / 48.f + 26;
 
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(-150.f), float32(-85.f));
+		tempDef.position.Set(float32(-150.f), float32(-86.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 		tempBody->SetFixedRotation(true);
 		tempBody->SetUserData((void*)entity);
 
 		tempPhsBody = PhysicsBody(tempBody, float(tempSpr.GetWidth() - shrinkX), float(tempSpr.GetHeight() - shrinkY),
-			vec2(0.f, -7.f), false);
+			vec2(-1.f, -3.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(60.f);
