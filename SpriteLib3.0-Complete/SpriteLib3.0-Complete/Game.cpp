@@ -71,9 +71,9 @@ void Game::InitGame()
 	m_scenes.push_back(new GoGoIntro(introName));
 
 	//Sets active scene reference to our scene
-	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[3]->GetScene();
-	m_activeScene = m_scenes[3];
+	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[1]->GetScene();
+	m_activeScene = m_scenes[1];
 	PhysicsSystem::Init();
 	
 	for (int i = 8; i < 13; ++i)
@@ -141,9 +141,9 @@ if (change)
 
 		m_activeScene->Unload();
 
-		m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[3]->GetScene();
-		m_activeScene = m_scenes[3];
+		m_scenes[13]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[13]->GetScene();
+		m_activeScene = m_scenes[13];
 		timer = 0.f;
 		change = false;
 
@@ -1608,6 +1608,22 @@ if (change6)
 		}
 	}
 #pragma endregion
+
+	if (m_activeScene == m_scenes[13])
+	{
+		GoGoIntro* scene = (GoGoIntro*)m_activeScene;
+
+		if (scene->GetEnd())
+		{
+			SceneEditor::ResetEditor();
+
+			m_activeScene->Unload();
+
+			m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+			m_register = m_scenes[3]->GetScene();
+			m_activeScene = m_scenes[3];
+		}
+	}
 }
 
 void Game::GUI()
@@ -1806,6 +1822,15 @@ else if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 	spikeDestroyed = true;
 	ECS::DestroyEntity(scene->GetSpike1());
 	ECS::DestroyEntity(scene->GetSpike2());
+}
+//Space on intro to start intro
+else if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[13])
+{
+
+	GoGoIntro* scene = (GoGoIntro*)m_activeScene;
+
+	scene->SetStart(true);
+
 }
 //Up arrow goes from menu to exit
 if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
