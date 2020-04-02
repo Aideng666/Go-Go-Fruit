@@ -198,6 +198,9 @@
     <ClInclude Include="LevelSelect5.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GoGoIntro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\imgui\imgui.cpp">
@@ -375,6 +378,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelSelect5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GoGoIntro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

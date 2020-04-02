@@ -43,6 +43,7 @@ void Game::InitGame()
 	std::string level3   = "Level 3";
 	std::string level4 = "Level 4";
 	std::string level5 = "Level 5";
+	std::string introName = "Intro";
 
 	m_name = menuName;
 	m_clearColor = vec4(0.f, 0.f, 0.f, 1.f);
@@ -67,14 +68,15 @@ void Game::InitGame()
 	m_scenes.push_back(new LevelThree(level3));
 	m_scenes.push_back(new LevelFour(level4));
 	m_scenes.push_back(new LevelFive(level5));
+	m_scenes.push_back(new GoGoIntro(introName));
 
 	//Sets active scene reference to our scene
-	m_scenes[0]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[0]->GetScene();
-	m_activeScene = m_scenes[0];
+	m_scenes[13]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[13]->GetScene();
+	m_activeScene = m_scenes[13];
 	PhysicsSystem::Init();
 	
-	for (int i = 8; i < m_scenes.size(); ++i)
+	for (int i = 8; i < 13; ++i)
 	{
 		m_scenes[i]->GetPhysicsWorld().SetContactListener(&listener);
 	}
@@ -1717,7 +1719,7 @@ void Game::KeyboardHold()
 {
 #pragma region MOVEMENT SYSTEM
 	//MOVEMENT
-	for (int i = 8; i < m_scenes.size(); ++i)
+	for (int i = 8; i < 13; ++i)
 	{
 		if (m_activeScene == m_scenes[i])
 		{
@@ -3391,7 +3393,7 @@ void Game::KeyboardUp()
 		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
 	}
 
-	for (int i = 8; i < m_scenes.size(); ++i)
+	for (int i = 8; i < 13; ++i)
 	{
 		if (m_activeScene == m_scenes[i])
 		{

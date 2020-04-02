@@ -150,6 +150,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GoGoExit.h" />
     <ClInclude Include="GoGoGame.h" />
+    <ClInclude Include="GoGoIntro.h" />
     <ClInclude Include="GoGoMenu.h" />
     <ClInclude Include="GoGoTitle.h" />
     <ClInclude Include="GrainEffect.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GoGoExit.cpp" />
     <ClCompile Include="GoGoGame.cpp" />
+    <ClCompile Include="GoGoIntro.cpp" />
     <ClCompile Include="GoGoMenu.cpp" />
     <ClCompile Include="GoGoTitle.cpp" />
     <ClCompile Include="GrainEffect.cpp" />
