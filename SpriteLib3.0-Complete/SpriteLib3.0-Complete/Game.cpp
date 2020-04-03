@@ -71,9 +71,9 @@ void Game::InitGame()
 	m_scenes.push_back(new GoGoIntro(introName));
 
 	//Sets active scene reference to our scene
-	m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[8]->GetScene();
-	m_activeScene = m_scenes[8];
+	m_scenes[12]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[12]->GetScene();
+	m_activeScene = m_scenes[12];
 	PhysicsSystem::Init();
 	
 	for (int i = 8; i < 13; ++i)
@@ -130,6 +130,24 @@ void Game::Update()
 	m_activeScene->Update();
 
 #pragma region Fade Effect
+//Fades Title to Intro
+if (changeT)
+{
+	timer += Timer::deltaTime;
+
+	if (timer >= 1.f)
+	{
+		SceneEditor::ResetEditor();
+
+		m_activeScene->Unload();
+
+		m_scenes[13]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[13]->GetScene();
+		m_activeScene = m_scenes[13];
+		timer = 0.f;
+		changeT = false;
+	}
+}
 //Fades the Menu
 if (change)
 {
@@ -141,7 +159,6 @@ if (change)
 
 		m_activeScene->Unload();
 
-		//Can't go to scene 13 cause then the stuff in LevelSelectMain won't show due to change wanting to go into 13 everytime
 		m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
 		m_register = m_scenes[3]->GetScene();
 		m_activeScene = m_scenes[3];
@@ -205,7 +222,6 @@ if (change)
 		}
 	}
 }
-
 //Fades into Level 1
 if (change2)
 {
@@ -1623,9 +1639,9 @@ if (change6)
 
 			m_activeScene->Unload();
 
-			m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-			m_register = m_scenes[3]->GetScene();
-			m_activeScene = m_scenes[3];
+			m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+			m_register = m_scenes[1]->GetScene();
+			m_activeScene = m_scenes[1];
 		}
 	}
 #pragma endregion
@@ -1835,13 +1851,16 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
 
-	SceneEditor::ResetEditor();
+	GoGoTitle* scene = (GoGoTitle*)m_activeScene;
 
-	m_activeScene->Unload();
+	scene->SetFade(true);
 
-	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[1]->GetScene();
-	m_activeScene = m_scenes[1];
+	changeT = true;
+
+	ECS::DestroyEntity(scene->GetImage());
+	ECS::DestroyEntity(scene->GetText());
+	ECS::DestroyEntity(scene->GetBlueStripe());
+	ECS::DestroyEntity(scene->GetRedStripe());
 }
 //Space on play goes to intro
 else if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])

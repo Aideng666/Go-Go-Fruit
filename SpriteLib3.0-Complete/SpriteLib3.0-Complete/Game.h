@@ -114,7 +114,7 @@ private:
 	float timer3 = 0.f;
 	float num = 0.f; 
 	bool reset;
-	bool change;
+	bool change, changeT;
 	bool change2, change3, change4, change5, change6;
 	bool loading;
 	bool orth;

@@ -1,4 +1,5 @@
 #include "GoGoTitle.h"
+#include "Utilities.h"
 
 GoGoTitle::GoGoTitle(std::string name)
 	: Scene(name)
@@ -39,6 +40,8 @@ void GoGoTitle::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Go Go Fruit Title");
+
+		m_image = entity;
 	}
 
 	//Blink Text
@@ -65,6 +68,8 @@ void GoGoTitle::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Text");
+
+		m_text = entity;
 	}
 
 	//Red Stripe
@@ -81,6 +86,8 @@ void GoGoTitle::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Red Stripe");
+
+		m_redStripe = entity;
 	}
 
 	//Blue Stripe
@@ -97,5 +104,47 @@ void GoGoTitle::InitScene(float windowWidth, float windowHeight)
 
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Blue Stripe");
+
+		m_blueStripe = entity;
 	}
+}
+
+void GoGoTitle::Update()
+{
+	if (fade)
+	{
+		FadeBackground();
+		timer += Timer::deltaTime;
+		if (timer >= (m_repeatTime * 2))
+		{
+			fade = false;
+			timer = 0.f;
+		}
+	}
+}
+
+void GoGoTitle::FadeBackground()
+{
+	m_clearColor = Util::Lerp<vec4>(m_clearColor1, m_clearColor2, m_lerpVal);
+
+	if (m_lerpVal >= 1.f)
+	{
+		vec4 temp = m_clearColor2;
+		m_clearColor2 = m_clearColor1;
+		m_clearColor1 = temp;
+
+		m_lerpVal = 0.f;
+	}
+
+	m_lerpVal += Timer::deltaTime / m_repeatTime;
+}
+
+bool GoGoTitle::GetFade()
+{
+	return fade;
+}
+
+void GoGoTitle::SetFade(bool fade)
+{
+	this->fade = fade;
 }

@@ -18,7 +18,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 
 	float aspectRatio = windowWidth / windowHeight;
 
-	sndPlaySound("BGM.wav", SND_FILENAME | SND_ASYNC | SND_LOOP);
+	//sndPlaySound("BGM.wav", SND_FILENAME | SND_ASYNC | SND_LOOP);
 	
 	//Game Camera
 	{
@@ -228,9 +228,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 40.f + 26;
-		float shrinkY = tempSpr.GetWidth() / 40.f + 21;
-
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
@@ -240,7 +237,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempBody->SetFixedRotation(true);
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, float(14), float(19), vec2(1.f, -10.f), false);
+		tempPhsBody = PhysicsBody(tempBody, float(13), float(19), vec2(1.f, -10.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(60.f);
@@ -349,9 +346,6 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
-		float shrinkX = tempSpr.GetWidth() / 48.f + 22;
-		float shrinkY = tempSpr.GetWidth() / 48.f + 26;
-
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
@@ -361,7 +355,7 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		tempBody->SetFixedRotation(true);
 		tempBody->SetUserData((void*)entity);
 
-		tempPhsBody = PhysicsBody(tempBody, float(24), float(22), vec2(-1.f, -3.f), false);
+		tempPhsBody = PhysicsBody(tempBody, float(20), float(20), vec2(-1.f, -3.f), false);
 
 		tempPhsBody.SetFriction(0.15f);
 		tempPhsBody.SetMaxVelo(60.f);
