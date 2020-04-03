@@ -477,7 +477,7 @@ void GoGoIntro::PlayIntro()
 		timer += Timer::deltaTime;
 		ECS::GetComponent<Transform>(text3).SetPosition(vec3(0.f, 0.f, 100.f));
 
-		if (timer > 5.f)
+		if (timer > 4.f)
 		{
 			ECS::DestroyEntity(text3);
 			timer = 0.f;
