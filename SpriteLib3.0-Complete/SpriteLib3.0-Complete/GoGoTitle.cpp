@@ -118,7 +118,7 @@ void GoGoTitle::InitScene(float windowWidth, float windowHeight)
 	
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 375, 200);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -100.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -99.f));
 	
 		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Loading");
