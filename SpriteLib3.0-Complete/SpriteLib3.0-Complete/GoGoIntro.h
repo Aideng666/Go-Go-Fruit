@@ -42,5 +42,4 @@ private:
 	bool step7;
 	bool step8;
 	bool end;
-
 };

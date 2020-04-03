@@ -71,9 +71,9 @@ void Game::InitGame()
 	m_scenes.push_back(new GoGoIntro(introName));
 
 	//Sets active scene reference to our scene
-	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[3]->GetScene();
-	m_activeScene = m_scenes[3];
+	m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[8]->GetScene();
+	m_activeScene = m_scenes[8];
 	PhysicsSystem::Init();
 	
 	for (int i = 8; i < 13; ++i)
@@ -130,7 +130,7 @@ void Game::Update()
 	m_activeScene->Update();
 
 #pragma region Fade Effect
-//Fades the Menu 
+//Fades the Menu
 if (change)
 {
 	timer += Timer::deltaTime;
@@ -141,9 +141,10 @@ if (change)
 
 		m_activeScene->Unload();
 
-		m_scenes[13]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-		m_register = m_scenes[13]->GetScene();
-		m_activeScene = m_scenes[13];
+		//Can't go to scene 13 cause then the stuff in LevelSelectMain won't show due to change wanting to go into 13 everytime
+		m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+		m_register = m_scenes[3]->GetScene();
+		m_activeScene = m_scenes[3];
 		timer = 0.f;
 		change = false;
 
@@ -204,6 +205,7 @@ if (change)
 		}
 	}
 }
+
 //Fades into Level 1
 if (change2)
 {
@@ -267,7 +269,7 @@ if (change4)
 		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
 }
-
+//Fades into Level 4
 if (change5)
 {
 	timer += Timer::deltaTime;
@@ -288,7 +290,7 @@ if (change5)
 		m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 	}
 }
-
+//Fades into Level 5
 if (change6)
 {
 	timer += Timer::deltaTime;
@@ -1608,6 +1610,8 @@ if (change6)
 		}
 	}
 #pragma endregion
+
+#pragma region Intro
 	//ends the game intro
 	if (m_activeScene == m_scenes[13])
 	{
@@ -1624,7 +1628,9 @@ if (change6)
 			m_activeScene = m_scenes[3];
 		}
 	}
+#pragma endregion
 
+#pragma region Tutorial Animations
 	if (m_activeScene == m_scenes[8])
 	{
 		GoGoGame* scene = (GoGoGame*)m_activeScene;
@@ -1644,9 +1650,8 @@ if (change6)
 		{
 			animController2.SetActiveAnim(0);
 		}
-
 	}
-
+#pragma endregion
 
 }
 
@@ -1805,10 +1810,11 @@ void Game::KeyboardHold()
 			float waterChange = waterSpeed - waterVel.x;
 			float blueForce = (blueBody->GetMass() * blueChange);
 			float waterForce = (waterBody->GetMass() * waterChange);
+
 			if (!(listener.GetWin()))
 			{
-			blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
-			waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
+				blueBody->ApplyForce(b2Vec2(blueForce, 0), blueBody->GetWorldCenter(), true);
+				waterBody->ApplyForce(b2Vec2(waterForce, 0), waterBody->GetWorldCenter(), true);
 			}
 		}
 	}
@@ -1837,7 +1843,7 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 	m_register = m_scenes[1]->GetScene();
 	m_activeScene = m_scenes[1];
 }
-//Space on play goes to game
+//Space on play goes to intro
 else if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 {
 	sndPlaySound("MenuSelect.wav", SND_FILENAME | SND_ASYNC);
@@ -1856,11 +1862,9 @@ else if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
 //Space on intro to start intro
 else if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[13])
 {
-
 	GoGoIntro* scene = (GoGoIntro*)m_activeScene;
 
 	scene->SetStart(true);
-
 }
 //Up arrow goes from menu to exit
 if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[1])
@@ -3340,93 +3344,32 @@ if (m_activeScene == m_scenes[8] || m_activeScene == m_scenes[9] || m_activeScen
 	const float blueJumpForce = 30.f;
 	const float waterJumpForce = 22.f;
 
-	if (listener.GetBJump() || listener.GetBGrounded())
+	if (!(listener.GetWin()))
 	{
-		if (Input::GetKeyDown(Key::W))
+		if (listener.GetBJump() || listener.GetBGrounded())
 		{
-			tutorialCheckB2 = true;
-			float impulse = blueBody->GetMass() * blueJumpForce;
-			blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
-			listener.SetBGrounded(false);
-			listener.SetBJump(false);
+			if (Input::GetKeyDown(Key::W))
+			{
+				tutorialCheckB2 = true;
+				float impulse = blueBody->GetMass() * blueJumpForce;
+				blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
+				listener.SetBGrounded(false);
+				listener.SetBJump(false);
+			}
 		}
+
+		if (listener.GetWJump() || listener.GetWGrounded())
+		{
+			if (Input::GetKeyDown(Key::UpArrow))
+			{
+				tutorialCheckW2 = true;
+				float impulse = waterBody->GetMass() * waterJumpForce;
+				waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
+				listener.SetWGrounded(false);
+				listener.SetWJump(false);
+			}
+		}	
 	}
-
-	if (listener.GetWJump() || listener.GetWGrounded())
-	{
-		if (Input::GetKeyDown(Key::UpArrow))
-		{
-			tutorialCheckW2 = true;
-			float impulse = waterBody->GetMass() * waterJumpForce;
-			waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
-			listener.SetWGrounded(false);
-			listener.SetWJump(false);
-		}
-	}	
-}
-#pragma endregion
-
-#pragma region DEV TOOLS
-//Hotkeys
-if (Input::GetKeyDown(Key::NumPad1))
-{
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
-	m_scenes[8]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[8]->GetScene();
-	m_activeScene = m_scenes[8];
-
-	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
-}
-if (Input::GetKeyDown(Key::NumPad2))
-{
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
-	m_scenes[9]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[9]->GetScene();
-	m_activeScene = m_scenes[9];
-
-	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
-}
-if (Input::GetKeyDown(Key::NumPad3))
-{
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
-	m_scenes[10]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[10]->GetScene();
-	m_activeScene = m_scenes[10];
-
-	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
-}
-if (Input::GetKeyDown(Key::NumPad4))
-{
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
-	m_scenes[11]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[11]->GetScene();
-	m_activeScene = m_scenes[11];
-
-	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
-}
-if (Input::GetKeyDown(Key::NumPad5))
-{
-	SceneEditor::ResetEditor();
-
-	m_activeScene->Unload();
-
-	m_scenes[12]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[12]->GetScene();
-	m_activeScene = m_scenes[12];
-
-	m_activeScene->GetPhysicsWorld().SetContactListener(&listener);
 }
 #pragma endregion
 
@@ -3452,6 +3395,7 @@ void Game::KeyboardUp()
 		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
 	}
 
+#pragma region Sets Idle Animations
 	for (int i = 8; i < 13; ++i)
 	{
 		if (m_activeScene == m_scenes[i])
@@ -3482,6 +3426,8 @@ void Game::KeyboardUp()
 			}
 		}
 	}
+#pragma endregion
+
 }
 
 void Game::MouseMotion(SDL_MouseMotionEvent evnt)
