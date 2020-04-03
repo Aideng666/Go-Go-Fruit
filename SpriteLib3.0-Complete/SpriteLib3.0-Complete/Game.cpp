@@ -71,9 +71,9 @@ void Game::InitGame()
 	m_scenes.push_back(new GoGoIntro(introName));
 
 	//Sets active scene reference to our scene
-	m_scenes[1]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[1]->GetScene();
-	m_activeScene = m_scenes[1];
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
 	PhysicsSystem::Init();
 	
 	for (int i = 8; i < 13; ++i)
@@ -1608,7 +1608,7 @@ if (change6)
 		}
 	}
 #pragma endregion
-
+	//ends the game intro
 	if (m_activeScene == m_scenes[13])
 	{
 		GoGoIntro* scene = (GoGoIntro*)m_activeScene;
@@ -1624,6 +1624,30 @@ if (change6)
 			m_activeScene = m_scenes[3];
 		}
 	}
+
+	if (m_activeScene == m_scenes[8])
+	{
+		GoGoGame* scene = (GoGoGame*)m_activeScene;
+		auto cloud = scene->GetCloud1();
+		auto cloud2 = scene->GetCloud2();
+		auto& animController = ECS::GetComponent<AnimationController>(cloud);
+		auto& animController2 = ECS::GetComponent<AnimationController>(cloud2);
+
+		animController.SetActiveAnim(2);
+		animController2.SetActiveAnim(2);
+
+		if (tutorialCheckW1 && tutorialCheckW2)
+		{
+			animController.SetActiveAnim(0);
+		}
+		if (tutorialCheckB1 && tutorialCheckB2)
+		{
+			animController2.SetActiveAnim(0);
+		}
+
+	}
+
+
 }
 
 void Game::GUI()
@@ -1753,24 +1777,28 @@ void Game::KeyboardHold()
 				blueSpeed = -12.f;
 				blueAnim.SetActiveAnim(0);
 				dir = LEFT;
+				tutorialCheckB1 = true;
 			}
 			if (Input::GetKey(Key::D))
 			{
 				blueSpeed = 12.f;
 				blueAnim.SetActiveAnim(1);
 				dir = RIGHT;
+				tutorialCheckB1 = true;
 			}
 			if (Input::GetKey(Key::LeftArrow))
 			{
 				waterSpeed = -12.f;
 				waterAnim.SetActiveAnim(2);
 				dir2 = LEFT2;
+				tutorialCheckW1 = true;
 			}
 			if (Input::GetKey(Key::RightArrow))
 			{
 				waterSpeed = 12.f;
 				waterAnim.SetActiveAnim(3);
 				dir2 = RIGHT2;
+				tutorialCheckW1 = true;
 			}
 	
 			float blueChange = blueSpeed - blueVel.x;
@@ -3316,6 +3344,7 @@ if (m_activeScene == m_scenes[8] || m_activeScene == m_scenes[9] || m_activeScen
 	{
 		if (Input::GetKeyDown(Key::W))
 		{
+			tutorialCheckB2 = true;
 			float impulse = blueBody->GetMass() * blueJumpForce;
 			blueBody->ApplyLinearImpulse(b2Vec2(0, impulse), blueBody->GetWorldCenter(), true);
 			listener.SetBGrounded(false);
@@ -3327,6 +3356,7 @@ if (m_activeScene == m_scenes[8] || m_activeScene == m_scenes[9] || m_activeScen
 	{
 		if (Input::GetKeyDown(Key::UpArrow))
 		{
+			tutorialCheckW2 = true;
 			float impulse = waterBody->GetMass() * waterJumpForce;
 			waterBody->ApplyLinearImpulse(b2Vec2(0, impulse), waterBody->GetWorldCenter(), true);
 			listener.SetWGrounded(false);

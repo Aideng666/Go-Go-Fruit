@@ -166,7 +166,7 @@ void GoGoIntro::InitScene(float windowWidth, float windowHeight)
 		animController.GetAnimation(2);
 		animController.AddAnimation(blueberryAnim["RightIdle"]);
 		animController.GetAnimation(3);
-		animController.SetActiveAnim(3);
+		animController.SetActiveAnim(1);
 
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 40.f, 40.f, true, &animController);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-100.f, 50.f, 99.f));
@@ -431,7 +431,7 @@ void GoGoIntro::PlayIntro()
 		timer += Timer::deltaTime;
 		ECS::GetComponent<Transform>(text2).SetPosition(vec3(0.f, 0.f, 100.f));
 
-		if (timer > 5.f)
+		if (timer > 4.5f)
 		{
 			ECS::DestroyEntity(text2);
 			timer = 0.f;

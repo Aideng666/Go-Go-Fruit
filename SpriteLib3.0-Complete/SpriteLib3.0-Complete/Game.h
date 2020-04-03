@@ -127,6 +127,11 @@ private:
 	bool level4Cleared = false;
 	bool level5Cleared = false;
 
+	bool tutorialCheckW1;
+	bool tutorialCheckW2;
+	bool tutorialCheckB1;
+	bool tutorialCheckB2;
+
 	float levelTimer = 0.f;
 	float jelloTimer = 0.f;
 

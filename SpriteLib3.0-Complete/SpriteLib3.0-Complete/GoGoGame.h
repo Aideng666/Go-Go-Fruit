@@ -14,6 +14,8 @@ public:
 	int GetCam();
 	int GetElevator();
 	int GetFruitBowl();
+	int GetCloud1();
+	int GetCloud2();
 
 	bool GetButtonOn();
 
@@ -24,6 +26,8 @@ private:
 	int m_cam;
 	int m_elevator;
 	int m_fruitBowl;
+	int m_cloud1;
+	int m_cloud2;
 
 	bool turnOn = false;
 };

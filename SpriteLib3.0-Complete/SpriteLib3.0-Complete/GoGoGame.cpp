@@ -826,6 +826,68 @@ void GoGoGame::InitScene(float windowWidth, float windowHeight)
 		unsigned int bitHolder = EntityIdentifier::TransformBit();
 		ECS::SetUpIdentifier(entity, bitHolder, "Right of Fruit Bowl");
 	}
+	//Tutorial clouds
+	{
+		auto blueButton = File::LoadJSON("Cloud.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "WatermelonCloud.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(blueButton["FadeIn"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(blueButton["FadeOut"]);
+		animController.GetAnimation(1);
+		animController.AddAnimation(blueButton["Hover"]);
+		animController.GetAnimation(2);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 78, 66, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-140.f, 0.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Watermelon Clouds");
+
+		m_cloud1 = entity;
+	}
+	{
+		auto blueButton = File::LoadJSON("Cloud.json");
+
+		auto entity = ECS::CreateEntity();
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+		ECS::AttachComponent<AnimationController>(entity);
+
+		std::string fileName = "BlueberryCloud.png";
+
+		auto& animController = ECS::GetComponent<AnimationController>(entity);
+		animController.InitUVs(fileName);
+
+		animController.AddAnimation(blueButton["FadeIn"]);
+		animController.GetAnimation(0);
+		animController.AddAnimation(blueButton["FadeOut"]);
+		animController.GetAnimation(1);
+		animController.AddAnimation(blueButton["Hover"]);
+		animController.GetAnimation(2);
+		animController.SetActiveAnim(1);
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 78, 66, true, &animController);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(-80.f, 0.f, 100.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit() | EntityIdentifier::AnimationBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Blueberry Clouds");
+
+		m_cloud2 = entity;
+
+	}
 #pragma endregion
 }
 
@@ -853,6 +915,16 @@ int GoGoGame::GetElevator()
 int GoGoGame::GetFruitBowl()
 {
 	return m_fruitBowl;
+}
+
+int GoGoGame::GetCloud1()
+{
+	return m_cloud1;
+}
+
+int GoGoGame::GetCloud2()
+{
+	return m_cloud2;
 }
 
 bool GoGoGame::GetButtonOn()
