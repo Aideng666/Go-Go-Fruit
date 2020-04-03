@@ -71,9 +71,9 @@ void Game::InitGame()
 	m_scenes.push_back(new GoGoIntro(introName));
 
 	//Sets active scene reference to our scene
-	m_scenes[12]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
-	m_register = m_scenes[12]->GetScene();
-	m_activeScene = m_scenes[12];
+	m_scenes[3]->InitScene(float(BackEnd::GetWindowWidth()), float(BackEnd::GetWindowHeight()));
+	m_register = m_scenes[3]->GetScene();
+	m_activeScene = m_scenes[3];
 	PhysicsSystem::Init();
 	
 	for (int i = 8; i < 13; ++i)
@@ -225,6 +225,9 @@ if (change)
 //Fades into Level 1
 if (change2)
 {
+	LevelSelectMain* scene = (LevelSelectMain*)m_activeScene;
+	ECS::GetComponent<Sprite>(scene->GetLoading()).SetTransparency(1.f);
+
 	timer += Timer::deltaTime;
 
 	if (timer >= 2.f)
@@ -246,6 +249,9 @@ if (change2)
 //Fades into Level 2
 if (change3)
 {
+	LevelSelect2* scene = (LevelSelect2*)m_activeScene;
+	ECS::GetComponent<Sprite>(scene->GetLoading()).SetTransparency(1.f);
+
 	timer += Timer::deltaTime;
 
 	if (timer >= 2.f)
@@ -267,6 +273,9 @@ if (change3)
 //Fades into Level 3
 if (change4)
 {
+	LevelSelect3* scene = (LevelSelect3*)m_activeScene;
+	ECS::GetComponent<Sprite>(scene->GetLoading()).SetTransparency(1.f);
+
 	timer += Timer::deltaTime;
 
 	if (timer >= 2.f)
@@ -288,6 +297,9 @@ if (change4)
 //Fades into Level 4
 if (change5)
 {
+	LevelSelect4* scene = (LevelSelect4*)m_activeScene;
+	ECS::GetComponent<Sprite>(scene->GetLoading()).SetTransparency(1.f);
+
 	timer += Timer::deltaTime;
 
 	if (timer >= 2.f)
@@ -309,6 +321,9 @@ if (change5)
 //Fades into Level 5
 if (change6)
 {
+	LevelSelect5* scene = (LevelSelect5*)m_activeScene;
+	ECS::GetComponent<Sprite>(scene->GetLoading()).SetTransparency(1.f);
+
 	timer += Timer::deltaTime;
 
 	if (timer >= 2.f)
@@ -1861,6 +1876,8 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[0])
 	ECS::DestroyEntity(scene->GetText());
 	ECS::DestroyEntity(scene->GetBlueStripe());
 	ECS::DestroyEntity(scene->GetRedStripe());
+
+	ECS::GetComponent<Sprite>(scene->GetLoading()).SetTransparency(1.0f);
 }
 //Space on play goes to intro
 else if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[1])
@@ -2587,7 +2604,6 @@ else if (Input::GetKeyDown(Key::DownArrow) && m_activeScene == m_scenes[3] && !l
 		ECS::GetComponent<Sprite>(medal).SetTransparency(1.0f);
 	}
 }
-
 //Level Select 4 to Level Select 1
 else if (Input::GetKeyDown(Key::UpArrow) && m_activeScene == m_scenes[6] && !loading)
 {

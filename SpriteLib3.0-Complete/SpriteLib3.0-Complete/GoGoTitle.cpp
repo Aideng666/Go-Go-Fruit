@@ -107,6 +107,24 @@ void GoGoTitle::InitScene(float windowWidth, float windowHeight)
 
 		m_blueStripe = entity;
 	}
+
+	{
+		auto entity = ECS::CreateEntity();
+	
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+	
+		std::string fileName = "Loading.png";
+	
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 375, 200);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -100.f));
+	
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Loading");
+	
+		m_loading = entity;
+	}
 }
 
 void GoGoTitle::Update()

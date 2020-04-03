@@ -336,14 +336,12 @@ void GoGoIntro::SetStart(bool start)
 
 void GoGoIntro::PlayIntro()
 {
-
 	auto blueBody = ECS::GetComponent<PhysicsBody>(berry).GetBody();
 	auto waterBody = ECS::GetComponent<PhysicsBody>(melon).GetBody();
 	auto bowlBody = ECS::GetComponent<PhysicsBody>(bowl).GetBody();
 	auto bowlTrans = ECS::GetComponent<Transform>(bowl);
 	auto blueTrans = ECS::GetComponent<Transform>(berry);
 	auto waterTrans = ECS::GetComponent<Transform>(melon);
-
 
 	if (start)
 	{

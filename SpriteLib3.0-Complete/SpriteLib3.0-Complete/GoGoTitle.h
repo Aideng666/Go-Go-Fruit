@@ -19,6 +19,8 @@ public:
 	int GetRedStripe() { return m_redStripe; }
 	int GetText() { return m_text; }
 
+	int GetLoading() { return m_loading; }
+
 private:
 	float m_repeatTime = 1.f;
 	float m_lerpVal = 0.f;
@@ -31,4 +33,6 @@ private:
 	int m_blueStripe;
 	int m_redStripe;
 	int m_text;
+
+	int m_loading;
 };

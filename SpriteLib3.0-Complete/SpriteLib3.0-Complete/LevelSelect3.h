@@ -31,6 +31,8 @@ public:
 	int GetMedal(), GetMedal2(), GetMedal3(), GetMedal4(), GetMedal5();
 	int GetLock1(), GetLock2(), GetLock3(), GetLock4();
 
+	int GetLoading() { return m_loading; }
+
 private:
 	float m_repeatTime = 1.f;
 	float m_lerpVal = 0.f;
@@ -58,4 +60,6 @@ private:
 	vec4 m_clearColor1 = vec4(0.7058823529f, 0.9803921569f, 1.f, 1.f);
 	vec4 m_clearColor3 = vec4(1.f, 0.796f, 0.584f, 1.f);
 	vec4 m_clearColor4 = vec4(0.796f, 0.831f, 1.f, 1.f);
+
+	int m_loading;
 };

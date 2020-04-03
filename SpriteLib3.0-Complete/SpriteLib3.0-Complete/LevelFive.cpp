@@ -15,7 +15,7 @@ void LevelFive::InitScene(float windowWidth, float windowHeight)
 
 	float aspectRatio = windowWidth / windowHeight;
 
-	//sndPlaySound("Level 5.wav", SND_FILENAME | SND_ASYNC | SND_LOOP);
+	sndPlaySound("Level 5.wav", SND_FILENAME | SND_ASYNC | SND_LOOP);
 
 	//Game Camera
 	{

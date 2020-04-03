@@ -267,6 +267,25 @@ void LevelSelect2::InitScene(float windowWidth, float windowHeight)
 		m_play = entity;
 	}
 
+	{
+		auto entity = ECS::CreateEntity();
+
+
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "LevelLoading.png";
+
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 375, 200);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(0.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 0.f, -97.f));
+
+		unsigned int bitHolder = EntityIdentifier::SpriteBit() | EntityIdentifier::TransformBit();
+		ECS::SetUpIdentifier(entity, bitHolder, "Level Loading");
+
+		m_loading = entity;
+	}
+
 #pragma region Medals
 	{
 		auto medalAnim = File::LoadJSON("Medal.json");
