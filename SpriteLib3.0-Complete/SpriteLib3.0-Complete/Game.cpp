@@ -2789,6 +2789,10 @@ if (Input::GetKeyDown(Key::Space) && m_activeScene == m_scenes[3])
 
 	change2 = true;
 	loading = true;
+	tutorialCheckB1 = false;
+	tutorialCheckB2 = false;
+	tutorialCheckW1 = false;
+	tutorialCheckW2 = false;
 
 	ECS::DestroyEntity(scene->GetSelect1());
 	ECS::DestroyEntity(scene->GetSelect2());
